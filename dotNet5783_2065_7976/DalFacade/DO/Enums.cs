@@ -1,5 +1,6 @@
-﻿namespace DalFacade.DO;
+﻿namespace Dal;
 
 public struct  Enums
 {
+   
 }
