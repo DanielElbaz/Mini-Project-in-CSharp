@@ -39,7 +39,7 @@ internal static class DataSource
               {
             OI_arr[i] = new OrderItem();
             OI_arr[i].ID = Config.OrderItemLastId;
-            OI_arr[i].OrderID =  
+            OI_arr[i].OrderID = O_arr[rand.Next(0, 100)].ID; 
 
 
             i++;
@@ -48,11 +48,15 @@ internal static class DataSource
         }
         private static void addOrder() {
 
+        DateTime date1 = DateTime.now;
         for (int i = 0; i < 20; i++)
         {
-            O_arr[i] = new order();
+            O_arr[i] = new Order();
             O_arr[i].ID = Config.OrderLastId; 
-            o_arr[i] = pro;
+            O_arr[i].ShipDate = DateTime.MinValue;
+            O_arr[i].OrderDate = O_arr[i].ShipDate - TimeSpan;
+
+
             i++;
 
         }
