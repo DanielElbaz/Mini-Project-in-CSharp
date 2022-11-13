@@ -1,13 +1,32 @@
 ﻿namespace Dal;
-
+/// <summary>
+/// struct for order item
+/// </summary>
 public struct OrderItem
 {
     public int ID { get; set; }
-    public int OrderID { get; set; }    
+    /// <summary>
+    /// id
+    /// </summary>
+    public int OrderID { get; set; } 
+    /// <summary>
+    /// order id    
+    /// </summary>
     public int ProductID { get; set; }
-    public double Price { get; set; }
-    public int Amount { get; set; }
-    public override string ToString() => $@"
+    /// <summary>
+    /// product id
+    /// </summary>
+    public double Price { get; set; } 
+    /// <summary>
+    /// price 
+    /// </summary>
+    public int Amount { get; set; } 
+    /// <summary>
+    /// amount 
+    /// </summary>
+    /// <returns></returns>
+    /// tostring method
+    public override string ToString() => $@"  
     Order ID={ID}: {OrderID}, 
     ProductID - {ProductID}
     PricePerUnit: {Price}
