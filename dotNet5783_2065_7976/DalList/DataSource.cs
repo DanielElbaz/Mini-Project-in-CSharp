@@ -48,7 +48,7 @@ internal static class DataSource
         }
         private static void addOrder() {
 
-        DateTime date1 = DateTime.now;
+        DateTime date1 = DateTime.Now;
         for (int i = 0; i < 20; i++)
         {
             O_arr[i] = new Order();
