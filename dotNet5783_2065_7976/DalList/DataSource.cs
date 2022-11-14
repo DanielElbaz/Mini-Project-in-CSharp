@@ -9,7 +9,7 @@ internal static class DataSource
     //{
     //    internal static string ConfigPath { get; set; }   
     //}
-    //internal static readonly int Rand{ get; } = 2650;
+    internal static Random random = new Random();
     internal static int OI_capacity = 200;
     internal static int P_capacity = 50;
     internal static int O_capacity = 100;
