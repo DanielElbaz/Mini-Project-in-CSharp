@@ -2,17 +2,21 @@
 /// <summary>
 /// struct for product
 /// </summary>
+/// 
+
 public struct Product
 {
+   // enum cat { a, b, c };
+
     public int ID { get; set; } 
     /// <summary>
     /// id
     /// </summary>
-    public string Name { get; set; } 
+    public string Name { get; set; }
     /// <summary>
     /// name
     /// </summary>
-    public string Category { get; set; } 
+    public Enums Category   { get; set; } 
     /// <summary>
     /// category
     /// </summary>

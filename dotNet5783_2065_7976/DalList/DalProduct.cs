@@ -2,5 +2,6 @@
 
 public class DalProduct
 {
+    Product product;
 
 }
