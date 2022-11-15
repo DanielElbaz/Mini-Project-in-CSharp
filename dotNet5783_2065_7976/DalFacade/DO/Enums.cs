@@ -1,6 +1,5 @@
-﻿namespace Dal;
+﻿
+namespace D0;
 
-public struct Enums
-{
-    public enum Categories { Phones, Computers, tablets };
-}
+    public enum Categories { Phones, Computers, Tablets };
+
