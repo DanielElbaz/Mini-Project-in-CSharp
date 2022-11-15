@@ -43,12 +43,15 @@ internal static class DataSource
         {
             for(int i = 0; i < 40; i++)
               {
+            Product P = P_arr[Config.rand.Next(Config.ProductFirstClear)]; // draw of any product
+
             OI_arr[i] = new OrderItem();
             OI_arr[i].ID = Config.rand.Next(100000, 999999);
-            OI_arr[i].ProductID = P_arr[Config.rand.Next(Config.ProductFirstClear)].ID;// get a randomal id of existing product
+            OI_arr[i].ProductID = P.ID;// get a randomal id of existing product
             OI_arr[i].OrderID = O_arr[Config.rand.Next(Config.OrderItemFirstClear)].ID;
             OI_arr[i].Amount = Config.rand.Next(1, 5);
-            OI_arr[i].Price =   
+            OI_arr[i].Price = P.Price;
+            
 
             i++;
 
