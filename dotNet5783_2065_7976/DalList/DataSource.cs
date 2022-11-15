@@ -35,9 +35,9 @@ internal static class DataSource
         internal static int P_capacity = 50;
         internal static int O_capacity = 100;
 
-        internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
-        internal static Product[] P_arr = new Product[P_capacity];
-        internal static Order[] O_arr = new Order[O_capacity];
+   internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
+   internal static Product[] P_arr = new Product[P_capacity];
+   internal static Order[] O_arr = new Order[O_capacity];
 
         private static void addOrderItem()
         {
@@ -98,7 +98,7 @@ internal static class DataSource
             i++;
             Config.ProductFirstClear++;
 
-        }
+         }
     }
         private static void s_Initialize()
         {
