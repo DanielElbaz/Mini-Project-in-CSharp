@@ -10,13 +10,13 @@ internal static class DataSource
     {
        
         internal static int OrderItemFirstClear = 0;
-        internal static int ProductFirstClear = 0;
+        internal static int ProductFirstClear = 0; // the first index in the array which is clear
         internal static int OrderFirstClear = 0;
 
         static internal Random rand = new Random();
 
        
-        internal static int OrderLastId;
+        internal static int OrderLastId; // running index number
         internal static int getOrderLastId()
         {
             return OrderLastId++;
@@ -39,11 +39,11 @@ internal static class DataSource
    internal static Product[] P_arr = new Product[P_capacity];
    internal static Order[] O_arr = new Order[O_capacity];
 
-        private static void addOrderItem()
+        private static void addOrderItem() // initialize order item
         {
             for(int i = 0; i < 40; i++)
               {
-            Product P = P_arr[Config.rand.Next(Config.ProductFirstClear)]; // draw of any product
+            Product P = P_arr[Config.rand.Next(Config.ProductFirstClear)]; // draw of any product randomally
 
             OI_arr[i] = new OrderItem();
             OI_arr[i].ID = Config.rand.Next(100000, 999999);
@@ -57,7 +57,8 @@ internal static class DataSource
 
                   }
         }
-        private static void addOrder() {
+        private static void addOrder() // initilize order
+    { 
 
         String[] emails = new String[] { "Whitneytense@wanadoo.fr", "angryAlberto36@earthlink.net","Luismysterious@yahoo.com",
             "jitteryKurt47@yahoo.ca","grotesqueElizabeth21@msn.com" ,"splendidCrystal@aim.com",
