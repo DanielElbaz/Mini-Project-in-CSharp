@@ -1,6 +1,6 @@
 ﻿namespace Dal;
 
-public enum  C
+public struct  Enums
 {
    
 }
