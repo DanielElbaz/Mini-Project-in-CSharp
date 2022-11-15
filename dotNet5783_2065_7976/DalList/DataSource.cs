@@ -16,7 +16,7 @@ internal static class DataSource
         static internal Random rand = new Random();
 
        
-        internal static int OrderLastId; // running index number
+        internal static int OrderLastId; // running index number of order
         internal static int getOrderLastId()
         {
             return OrderLastId++;

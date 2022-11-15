@@ -3,13 +3,15 @@
 
 public class DalProduct
 {
+   
     public int Add(Product P)
     {
+        //int clearIndex = 0;
         for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)
         {
             if (P.ID == DataSource.P_arr[i].ID)
-                return P.ID;
-        }
+                throw new Exception("product already exist ");
+        }    
         DataSource.P_arr[DataSource.Config.ProductFirstClear] = P;
         DataSource.Config.ProductFirstClear++;
         return P.ID;
@@ -22,27 +24,46 @@ public class DalProduct
         for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)
         {
             if (id == DataSource.P_arr[i].ID)
-                DataSource.P_arr[i].ID = 0;
-            //  Product temp = new Product;
-            //  Product  temp = DataSource.P_arr[i];
-            // for (int j = i; j < DataSource.Config.ProductFirstClear; j++)
-            //  { }
-            //    DataSource.P_arr[i] = ;
+            {
+                for (int j = i; j < DataSource.Config.ProductFirstClear; j++)
+                    DataSource.P_arr[j] = DataSource.P_arr[j + 1];
+                DataSource.Config.ProductFirstClear--;
+            }
         }
     }
 
-    public void update(Product oldP, Product newP)
+    public void update(Product oldP, Product newP) // update old with new
       {
-        for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)
-        
+        for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
             if (DataSource.P_arr[i].ID == oldP.ID)
                 DataSource.P_arr[i] = newP;
 
     }
 
-    public Product[] read()
+     public Product GetProduct(int id)
+
     {
-        return DataSource.P_arr;
+        int i;
+        Boolean f = false;
+        for (i = 0; i < DataSource.Config.ProductFirstClear; i++)
+            if (DataSource.P_arr[i].ID == id)
+            { f = true; break; }
+        if (!f)
+            throw new Exception("Product doesnt exist");
+           return DataSource.P_arr[i];
+    }
+
+    public Product[] getAllProducts() // read funct
+    {
+
+        Product[] products = new Product[DataSource.Config.ProductFirstClear + 1];
+        // read funct
+        {
+            for (int i = 0; i < products.Length; i++)
+                products[i] = DataSource.P_arr[i];
+            return products;
+        }
+
     }
 
 
