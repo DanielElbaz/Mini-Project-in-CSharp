@@ -31,6 +31,7 @@ namespace DalTest
 
                     case choice.product:
                         {
+                            MainProduct();
                         }
                         break;
 
@@ -64,7 +65,7 @@ namespace DalTest
 
 
         }
-        public void MainProduct()
+        public static void MainProduct()
         {
                              Console.WriteLine("What would you like to do? \n" +
                                          "a- Add a new product.\n" +
@@ -78,22 +79,113 @@ namespace DalTest
             switch(c)
             {
                 case 'a':
-                    int id, price, stock;
-                    Console.WriteLine("enter id, category, name, price and in stock \n");
-                         id = Convert.ToInt32(Console.ReadLine());
-                         string category = System.Console.ReadLine();
-                         string n = System.Console.ReadLine();
-                         price = Convert.ToInt32(Console.ReadLine());
-                         stock = Convert.ToInt32(Console.ReadLine());
+                    {
+                        int id, price, stock;
+                        string? category; string? name = " ";
+                        Console.WriteLine("enter id, category, name, price and in stock \n");
 
+                        int.TryParse(Console.ReadLine(), out id);
+                        category = System.Console.ReadLine();
+                        name = System.Console.ReadLine();
+                        int.TryParse(Console.ReadLine(), out price);
+                        int.TryParse(Console.ReadLine(), out stock);
+
+                        Product p = new Product();
+                        p.ID = id;
+                        p.Name = name?? "avi ";
+                        p.Category = category;
+                        p.InStock = stock;
+                        p.Price = price;
+
+                        try { Console.WriteLine("successfully added product " + product.Add(p)); }
+                        catch(Exception st)
+                        {
+                            Console.WriteLine(st);
+                        }
+                    }
+
+                    break;
+
+                case 'b':
+                    {
+                        int id;
+                        Console.WriteLine("enter id of product to view");
+                        int.TryParse(Console.ReadLine(), out id);
+                        Product p = product.GetProduct(id);
+                        Console.WriteLine(p);
+
+
+                    }
+                    break;
+                case 'c':
+                    {
+                        Product[] products = product.getAllProducts();
+                        foreach (Product P in products)
+                            Console.WriteLine(P + "\n");
+
+                    }
+
+
+                    break;
+                case 'd':
+                    {
+                        try
+                        {
+                           
+                            int id, price, stock, newId;
+                            string? category; string? name = " ";
+                            Console.WriteLine("enter id of old product");
+                            int.TryParse(Console.ReadLine(), out newId);
+                            Console.WriteLine("enter of product to update: id, category, name, price and in stock \n");
+
+                            int.TryParse(Console.ReadLine(), out id);
+                            category = System.Console.ReadLine();
+                            name = System.Console.ReadLine();
+                            int.TryParse(Console.ReadLine(), out price);
+                            int.TryParse(Console.ReadLine(), out stock);
+
+                            Product p = new Product();
+                            p.ID = id;
+                            p.Name = name ?? "avi ";
+                            p.Category = category;
+                            p.InStock = stock;
+                            p.Price = price;
+                            product.update(newId, p);
+                            Console.WriteLine("successfully updated product number" + id);                            
+
+                        }
+                        catch(Exception str)
+                        {
+                            Console.WriteLine(str);
+                        }
+                    }
+                    break;
+                case 'e':
+                    {
+                        int id;
+                        Console.WriteLine("enter id of product to delete");
+                        int.TryParse(Console.ReadLine(), out id);
+
+                        try
+                        {
+                            product.Delete(id);
+                            Console.WriteLine(+id + "successfully deleted");
+                        }
+                        catch (Exception str)
+                        { Console.WriteLine(str); }
+                    }
                     break;
             }
 
 
         }
-        public void MainProduct();
-        public void MainProduct();
+        public void MainOrder()
+        { }
+        public void MainOrderItem()
+        {
+
+        }
+
 
     }
-}
 }
