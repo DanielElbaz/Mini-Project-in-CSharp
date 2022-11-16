@@ -1,5 +1,5 @@
 ﻿
-using D0;
+using DO;
 
 namespace Dal;
 
@@ -50,12 +50,12 @@ internal static class DataSource
             OI_arr[i].ProductID = P.ID;// get a randomal id of existing product
             OI_arr[i].OrderID = O_arr[Config.rand.Next(Config.OrderItemFirstClear)].ID;
             OI_arr[i].Amount = Config.rand.Next(1, 5);
-            OI_arr[i].Price = P.Price;
-            
+            OI_arr[i].Price = P.Price;       
 
             i++;
+            Config.OrderItemFirstClear++;
 
-                  }
+        }
         }
         private static void addOrder() // initilize order
     { 
@@ -77,7 +77,7 @@ internal static class DataSource
             O_arr[i].ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
             O_arr[i].DeliveryDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
             i++;
-
+            Config.OrderFirstClear++;
         }
     }
         private static void addProduct() // add 10 products

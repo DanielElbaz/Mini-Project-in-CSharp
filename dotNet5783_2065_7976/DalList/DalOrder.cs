@@ -57,7 +57,7 @@ public class DalOrder
             throw new Exception("Order doesnt exist");
         return DataSource.O_arr[i];
     }
-    public Order[] getallOrders()
+    public Order[] getAllOrders()
 
     {
         Order[] orders = new Order[DataSource.Config.OrderFirstClear+1];
