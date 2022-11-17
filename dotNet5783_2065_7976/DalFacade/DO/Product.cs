@@ -1,4 +1,6 @@
-﻿namespace Dal;
+﻿using DO;
+
+namespace Dal;
 /// <summary>
 /// struct for product
 /// </summary>
@@ -16,7 +18,7 @@ public struct Product
     /// <summary>
     /// name
     /// </summary>
-    public Enums Category   { get; set; } 
+    public Categories Category   { get; set; } 
     /// <summary>
     /// category
     /// </summary>

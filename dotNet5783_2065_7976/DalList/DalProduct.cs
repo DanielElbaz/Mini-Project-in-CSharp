@@ -21,22 +21,32 @@ public class DalProduct
 
     public void Delete(int id) // delete product by id
     {
+        Boolean f = false;
         for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)
         {
             if (id == DataSource.P_arr[i].ID)
             {
+                f = true;
                 for (int j = i; j < DataSource.Config.ProductFirstClear; j++)
                     DataSource.P_arr[j] = DataSource.P_arr[j + 1];
                 DataSource.Config.ProductFirstClear--;
             }
         }
+        if (!f)
+            throw new Exception("product not found ");
     }
 
-    public void update(Product oldP, Product newP) // update old with new
+    public void update(int  id, Product newP) // update old with new
       {
+        Boolean f = false;
         for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
-            if (DataSource.P_arr[i].ID == oldP.ID)
+            if (DataSource.P_arr[i].ID == id)
+            {
+                f = true;
                 DataSource.P_arr[i] = newP;
+            }
+        if (!f)
+            throw new Exception("product not found");
 
     }
 

@@ -1,4 +1,5 @@
 ﻿namespace Dal;
+using DO;
 /// <summary>
 /// struct for order item
 /// </summary>
