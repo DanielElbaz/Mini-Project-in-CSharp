@@ -65,7 +65,7 @@ public class DalOrderItem
             throw new Exception("Order Item doesnt exist");
          return DataSource.OI_arr[i];
     }
-    public OrderItem[] getallOrderItems()
+    public OrderItem[] getAllOrderItems()
 
     {
         OrderItem[]  orderItems = new OrderItem[DataSource.Config.OrderItemFirstClear + 1];
