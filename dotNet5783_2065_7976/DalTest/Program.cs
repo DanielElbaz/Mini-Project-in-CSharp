@@ -18,11 +18,11 @@ namespace DalTest
 
             do
             {
-                Console.WriteLine("enter \n" +
-                                   "1 for product, \n" +
-                                   "2 for order, \n" +
-                                   "3 for order item, \n" +
-                                   "0 for exit \n");
+                Console.WriteLine("Hi, please press: \n" +
+                                   "1: For product. \n" +
+                                   "2: For order. \n" +
+                                   "3: For order item. \n" +
+                                   "0: For exit: \n");
                 /*while (!*/
                 Enum.TryParse(Console.ReadLine(), out ch);
                 //{
@@ -76,14 +76,14 @@ namespace DalTest
                         int id, price, stock;
                         // string? category = "Phones"; 
                         Categories category;
-                        string name, id1;
-                        Console.WriteLine("enter id,  name, category, price and in stock \n");
-
-
-                        name = Console.ReadLine();
+                        string? name, id1;
+                        Console.WriteLine("enter id,  name, category, price and in stock \n");                        
 
                         id1 = Console.ReadLine();
                         int.TryParse(id1, out id);
+                        //int.TryParse(Console.ReadLine(), out id);
+                        name = Console.ReadLine();
+
                         category = (Categories)int.Parse(Console.ReadLine());
                         // price = Console.Read();
                         // stock = Console.Read();
@@ -127,7 +127,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        Product[] products = dalProduct.getAllProducts();
+                        List<Product> products =dalProduct.getAllProducts();
                         foreach (Product P in products)
                             Console.WriteLine(P + "\n");
 
@@ -158,7 +158,7 @@ namespace DalTest
                             p.Category = (Categories)Enum.Parse(typeof(Categories), category);
                             p.InStock = stock;
                             p.Price = price;
-                            dalProduct.update(newId, p);
+                            dalProduct.Update(newId, p);
                             Console.WriteLine("successfully updated product number" + id);
 
                         }
@@ -257,7 +257,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        Order[] orders = dalOrder.getAllOrders();
+                        List<Order> orders = dalOrder.getAllOrders();
                         foreach (Order order in orders)
                             Console.WriteLine(order + "\n");
                     }
@@ -289,7 +289,7 @@ namespace DalTest
                         order.DeliveryDate = deliveryDate;
                         try
                         {
-                            dalOrder.update(oldId, order);
+                            dalOrder.Update(oldId, order);
                             Console.WriteLine("successfully updated order number" + oldId);
                         }
 
@@ -381,7 +381,7 @@ namespace DalTest
 
                 case 'c':
                     {
-                        OrderItem[] orderItems = dalOrderItem.getAllOrderItems();
+                        List<OrderItem> orderItems = dalOrderItem.getAllOrderItems();
                         foreach (OrderItem orderItem in orderItems)
                             Console.WriteLine(orderItem + "\n");
 

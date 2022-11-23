@@ -35,29 +35,34 @@ internal static class DataSource
         internal static int P_capacity = 50;
         internal static int O_capacity = 100;
 
-   internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
-   internal static Product[] P_arr = new Product[P_capacity];
-   internal static Order[] O_arr = new Order[O_capacity];
+    //internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
+   internal static List<OrderItem> OI_list = new List<OrderItem>();
+    //internal static Product[] P_arr = new Product[P_capacity];
+   internal static List<Product> P_list = new List<Product>();
+   //internal static Order[] O_arr = new Order[O_capacity];
+   internal static List<Order> O_list = new List<Order>();
 
-        private static void addOrderItem() // initialize order item
+    private static void addOrderItem() // initialize order item
+    {
+
+        for (int i = 0; i < 40; i++)
         {
-            for(int i = 0; i < 40; i++)
-              {
-            Product P = P_arr[Config.rand.Next(Config.ProductFirstClear)]; // draw of any product randomally
+            int index = Config.rand.Next(P_list.Count);
+            Product p = P_list[index]; // draw of any product randomally
 
-            OI_arr[i] = new OrderItem();
-            OI_arr[i].ID = Config.rand.Next(100000, 999999);
-            OI_arr[i].ProductID = P.ID;// get a randomal id of existing product
-            OI_arr[i].OrderID = O_arr[Config.rand.Next(Config.OrderItemFirstClear)].ID;
-            OI_arr[i].Amount = Config.rand.Next(1, 5);
-            OI_arr[i].Price = P.Price;       
-
+            OrderItem oi = new OrderItem();
+            oi.ID = Config.rand.Next(100000, 999999);
+            oi.ProductID = p.ID;// get a random id of שמ existing product
+            oi.OrderID = OI_list[Config.rand.Next(Config.OrderItemFirstClear)].ID;
+            oi.Amount = Config.rand.Next(1, 5);
+            oi.Price = p.Price;
+            OI_list.Add(oi);
             i++;
             Config.OrderItemFirstClear++;
 
         }
-        }
-        private static void addOrder() // initilize order
+    }
+        private static void addOrder() // initialize order
     { 
 
         String[] emails = new String[] { "Whitneytense@wanadoo.fr", "angryAlberto36@earthlink.net","Luismysterious@yahoo.com",
@@ -68,38 +73,43 @@ internal static class DataSource
 
         for (int i = 0; i < 20; i++)
         {
-
-            O_arr[i] = new Order();
-            O_arr[i].ID = Config.OrderLastId; 
-            O_arr[i].CustomerEmail = emails[Config.rand.Next(20)] ;
-            O_arr[i].OrderDate = DateTime.Now - new TimeSpan(Config.rand.NextInt64(10L *1000L * 3600L * 24L *10L));
-            O_arr[i].CustomerAdress = i + "/" + 2 * i + "begin street jerusalem";
-            O_arr[i].ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-            O_arr[i].DeliveryDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
+            Order o = new Order();
+            o = new Order();
+            o.ID = Config.OrderLastId; 
+            o.CustomerEmail = emails[Config.rand.Next(20)] ;
+            o.OrderDate = DateTime.Now - new TimeSpan(Config.rand.NextInt64(10L *1000L * 3600L * 24L *10L));
+            o.CustomerAdress = i + "/" + 2 * i + "begin road jerusalem";
+            o.ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
+            o.DeliveryDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
             i++;
+            O_list.Add(o);
             Config.OrderFirstClear++;
         }
     }
         private static void addProduct() // add 10 products
     {
-        String[] ProdactNames = new String[] { "iphone 11 ", "galaxy s5", "galaxy s6", "galaxy s7", "galaxy s8", "galaxy s9", "galaxy s10", "iphone 12 " };
+        String[] ProductNames = new String[] { "iPhone 11 ", "Galaxy S5", "Galaxy S6", "Galaxy S7", "Galaxy S8", "Galaxy S9", "Galaxy S10", "iPhone 12 " };
        
 
 
         for (int i = 0; i < 10; i++)
         {
-            P_arr[i] = new Product();
-            P_arr[i].ID = Config.rand.Next(100000, 999999);
-            for (int j = 0; j< Config.ProductFirstClear; j++) //check if there is no other prodact with the same id
-                while(P_arr[j].ID == P_arr[i].ID) // if theres prodact with same id
-                    P_arr[i].ID = Config.rand.Next(100000, 999999);
+            Product p = new Product();
+            
+            p.ID = Config.rand.Next(100000, 999999);
+            //for (int j = 0; j< Config.ProductFirstClear; j++) //check if there is no other product with the same id
+              //  while(P_arr[j].ID == P_arr[i].ID) // if theres product with same id
+              foreach (Product pr in P_list )
+                  if(p.ID == pr.ID)
+                    p.ID = Config.rand.Next(100000, 999999);
 
-            P_arr[i].ID = Config.rand.Next(100000, 999999);
-            P_arr[i].Category = Categories.Phones;
-            P_arr[i].Name = ProdactNames [Config.rand.Next(0,7 )];
-            P_arr[i].Price = Config.rand.Next(2000, 5000);
-            P_arr[i].InStock = Config.rand.Next(0, 20);
+            p.ID = Config.rand.Next(100000, 999999);
+            p.Category = Categories.Phones;
+            p.Name = ProductNames [Config.rand.Next(0,7 )];
+            p.Price = Config.rand.Next(2000, 5000);
+            p.InStock = Config.rand.Next(0, 20);
             i++;
+            P_list.Add(p);
             Config.ProductFirstClear++;
 
          }
@@ -109,7 +119,6 @@ internal static class DataSource
         addProduct();
         addOrder();        
         addOrderItem();
-
         }
 
     }

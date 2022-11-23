@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using DalApi;
+using System.Data;
 
 namespace Dal;
 
@@ -11,72 +12,101 @@ public class DalOrderItem
     /// <returns>id <returns>
     public int Add( OrderItem oi)
     {
-        
-        for (int i = 0; i < DataSource.Config.OrderItemFirstClear; i++)
-        {
-            if (oi.ID == DataSource.OI_arr[i].ID) // it exist
-                throw new Exception("order item already exist ");
-
-        }
-        DataSource.OI_arr[DataSource.Config.OrderItemFirstClear] = oi;
-        DataSource.Config.ProductFirstClear++;
+        foreach(OrderItem oi1 in DataSource.OI_list)
+            if (oi1.ID == oi.ID)
+                throw new Exception("Order Item already exists ");
+        DataSource.OI_list.Add(oi);
         return oi.ID;
+        //for (int i = 0; i < DataSource.Config.OrderItemFirstClear; i++)
+        //{
+        //    if (oi.ID == DataSource.OI_arr[i].ID) // it exist
+        //        throw new Exception("order item already exist ");
+
+        //}
+        //DataSource.OI_arr[DataSource.Config.OrderItemFirstClear] = oi;
+        //DataSource.Config.ProductFirstClear++;
+        
     }
     public void Delete(int id)
 
     {
-        Boolean f = false;
-        for (int i = 0; i < DataSource.Config.OrderItemFirstClear; i++)
+        Boolean flag = false;
+        foreach (OrderItem oi in DataSource.OI_list)
         {
-            if (id == DataSource.OI_arr[i].ID)
+            if (id == oi.ID)
             {
-                f = true;
-                for (int j = i; j < DataSource.Config.OrderItemFirstClear; j++)
-                    DataSource.OI_arr[j] = DataSource.OI_arr[j + 1];
-                DataSource.Config.OrderItemFirstClear--;
+                flag = true;
+                DataSource.OI_list.Remove(oi);
             }
-
+            if (!flag)
+                throw new Exception("Order Item not found ");
         }
-        if(!f)
-            throw new Exception("order item not found ");
+        //for (int i = 0; i < DataSource.Config.OrderItemFirstClear; i++)
+        //{
+        //    if (id == DataSource.OI_arr[i].ID)
+        //    {
+        //        flag = true;
+        //        for (int j = i; j < DataSource.Config.OrderItemFirstClear; j++)
+        //            DataSource.OI_arr[j] = DataSource.OI_arr[j + 1];
+        //        DataSource.Config.OrderItemFirstClear--;
+        //    }
+
+        
+
 
     }
     public void Update(int id, OrderItem newOI)
     {
-        Boolean f = false; 
-        for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
-            if (DataSource.OI_arr[i].ID == id)
+        Boolean flag = false;
+        foreach (OrderItem orderitem in DataSource.OI_list)
+            if (id == orderitem.ID)
             {
-                f = true;
-                DataSource.OI_arr[i] = newOI;
+                flag = true;
+                int index = DataSource.OI_list.IndexOf(orderitem);
+                DataSource.OI_list[index] = newOI;
+
             }
-        if (!f)
-            throw new Exception("order item not found");
+        if (!flag)
+            throw new Exception("Order Item not found");//for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
+        //    if (DataSource.OI_arr[i].ID == id)
+        //    {
+        //        f = true;
+        //        DataSource.OI_arr[i] = newOI;
+        //    }
+       
     }
 
     public OrderItem getOneOrderItem(int id )
     {
-        int i;
-        Boolean f = false;
-        for (i = 0; i < DataSource.Config.OrderItemFirstClear; i++)
-            if (DataSource.OI_arr[i].ID == id)
-            { f = true; break; }
-        if (!f)
-            throw new Exception("Order Item doesnt exist");
-         return DataSource.OI_arr[i];
+        //int i;
+        int index = -1;
+        Boolean flag = false;
+        foreach (OrderItem orderitem in DataSource.OI_list)
+
+            if (id == orderitem.ID)
+            {
+                //flag = true;
+
+                index = DataSource.OI_list.IndexOf(orderitem);
+                break;
+            }
+        //for (i = 0; i < DataSource.Config.OrderItemFirstClear; i++)
+        //    if (DataSource.OI_arr[i].ID == id)
+        //    { f = true; break; }
+        if (!flag)
+            throw new Exception("Order Item does not exist");
+         return DataSource.OI_list[index];
     }
-    public OrderItem[] getAllOrderItems()
+    public List<OrderItem> getAllOrderItems()
 
     {
-        OrderItem[]  orderItems = new OrderItem[DataSource.Config.OrderItemFirstClear + 1];
+        return DataSource.OI_list;
+        //OrderItem[]  orderItems = new OrderItem[DataSource.Config.OrderItemFirstClear + 1];
         // read funct
-        {
-            for (int i = 0; i < orderItems.Length; i++)
-                orderItems[i] = DataSource.OI_arr[i];
-            return orderItems;
-        }
-
-
+        //{
+        //    for (int i = 0; i < orderItems.Length; i++)
+        //        orderItems[i] = DataSource.OI_arr[i];
+        //    return orderItems;
+        //}
     }
-
 }
