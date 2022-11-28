@@ -1,11 +1,13 @@
 ﻿using DO;
 using Dal;
 using System;
+using DalApi;
 
 namespace DalTest
 {
     class Program
     {
+         static IDal dal = new DalList();
         private static DalOrder dalOrder = new DalOrder();
         private static DalOrderItem dalOrderItem = new DalOrderItem();
         private static DalProduct dalProduct = new DalProduct();
