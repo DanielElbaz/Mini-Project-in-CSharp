@@ -2,86 +2,98 @@
 using DO;
 using System.Data;
 
-namespace Dal;
-
-internal class DalOrderItem: IOrderItem
+namespace Dal
 {
-    /// <summary>
-    /// add new order item
-    /// </summary>
-    /// <param name="oi"></param>
-    /// <returns>id <returns>
-    public int Add( OrderItem oi)
-    {
-        foreach(OrderItem oi1 in DataSource.OI_list)
-            if (oi1.ID == oi.ID)
-                throw new DuplicateID();
-        //throw new Exception("Order Item already exists ");
-        DataSource.OI_list.Add(oi);
-        return oi.ID;
-                        
-    }
-    public void Delete(int id)
 
+    public class DalOrderItem : IOrderItem
     {
-        Boolean flag = false;
-        foreach (OrderItem oi in DataSource.OI_list)
+        /// <summary>
+        /// add new order item
+        /// </summary>
+        /// <param name="oi"></param>
+        /// <returns>id <returns>
+        public int Add(OrderItem oi)
         {
-            if (id == oi.ID)
+            foreach (OrderItem oi1 in DataSource.OI_list)
+                if (oi1.ID == oi.ID)
+                    throw new DuplicateID();
+            //throw new Exception("Order Item already exists ");
+            DataSource.OI_list.Add(oi);
+            return oi.ID;
+
+        }
+        public void Delete(int id)
+
+        {
+            Boolean flag = false;
+            foreach (OrderItem oi in DataSource.OI_list)
             {
-                flag = true;
-                DataSource.OI_list.Remove(oi);
+                if (id == oi.ID)
+                {
+                    flag = true;
+                    DataSource.OI_list.Remove(oi);
+                }
+                if (!flag)
+                    throw new MissingID();
+                // throw new Exception("Order Item not found ");
             }
+
+
+
+
+        }
+        public void Update(int id, OrderItem newOI)
+        {
+            Boolean flag = false;
+            foreach (OrderItem orderitem in DataSource.OI_list)
+                if (id == orderitem.ID)
+                {
+                    flag = true;
+                    int index = DataSource.OI_list.IndexOf(orderitem);
+                    DataSource.OI_list[index] = newOI;
+
+                }
             if (!flag)
                 throw new MissingID();
-            // throw new Exception("Order Item not found ");
+            // throw new Exception("Order Item not found");//for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
+
         }
-      
-        
 
+        public OrderItem GetByID(int id)
+        {
+            //int i;
+            int index = -1;
+            Boolean flag = false;
+            foreach (OrderItem orderitem in DataSource.OI_list)
 
-    }
-    public void Update(int id, OrderItem newOI)
-    {
-        Boolean flag = false;
-        foreach (OrderItem orderitem in DataSource.OI_list)
-            if (id == orderitem.ID)
+                if (id == orderitem.ID)
+                {
+                    //flag = true;
+
+                    index = DataSource.OI_list.IndexOf(orderitem);
+                    break;
+                }
+
+            if (!flag)
+                throw new MissingID();
+            //throw new Exception("Order Item does not exist");
+            return DataSource.OI_list[index];
+        }
+        public IEnumerable<OrderItem> GetAll()
+        {
+            int count = 0, i = 0;
+            foreach (var p in DataSource.OI_list)
             {
-                flag = true;
-                int index = DataSource.OI_list.IndexOf(orderitem);
-                DataSource.OI_list[index] = newOI;
-
+                count++;
             }
-        if (!flag)
-            throw new MissingID();
-        // throw new Exception("Order Item not found");//for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
-      
-    }
 
-    public OrderItem GetByID(int id )
-    {
-        //int i;
-        int index = -1;
-        Boolean flag = false;
-        foreach (OrderItem orderitem in DataSource.OI_list)
+            OrderItem[] arr = new OrderItem[count];
 
-            if (id == orderitem.ID)
+            foreach (var p in DataSource.OI_list)
             {
-                //flag = true;
-
-                index = DataSource.OI_list.IndexOf(orderitem);
-                break;
+                arr[i++] = p;
             }
-       
-        if (!flag)
-            throw new MissingID();
-        //throw new Exception("Order Item does not exist");
-        return DataSource.OI_list[index];
-    }
-    public IEnumerable<OrderItem> GetAll()
-
-    {
-        return DataSource.OI_list;
-       
+            return arr;
+        }
     }
 }

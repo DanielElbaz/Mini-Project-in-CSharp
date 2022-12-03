@@ -1,5 +1,5 @@
 ﻿using DO;
-using Dal;
+//using Dal;
 namespace DalApi;
 
 public interface IOrder : ICrud<Order>   

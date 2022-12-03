@@ -1,12 +1,13 @@
 ﻿using DO;
-using Dal;
+//using Dal;
 
-namespace DalApi;
-
-public interface IDal 
+namespace DalApi
 {
-    IProduct Product { get; }
-    IOrder Order { get; }   
-    IOrderItem OrderItem { get; }
+    public interface IDal
+    {
+        IProduct Product { get; }
+        IOrder Order { get; }
+        IOrderItem OrderItem { get; }
 
+    }
 }

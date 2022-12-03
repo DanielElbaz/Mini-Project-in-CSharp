@@ -5,33 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 
-namespace BlApi;
-/// <summary>
-/// interface for cart
-/// </summary>
-public interface ICart
+namespace BlApi
 {
     /// <summary>
-    /// add product to cart
-    /// returns cart
+    /// interface for cart
     /// </summary>
-    /// 
-    public Cart AddProductInCart(Cart cart, int productId);
-    /// <summary>
-    /// update amount of product
-    /// </summary>
-    /// 
-    public Cart UpdateAmountOfProduct(Cart cart, int productId, int newAmount);
-    /// <summary>
-    /// confirm cart for order
-    /// </summary>
-    public void ConfirmCart(Cart cart);
-    
+    public interface ICart
+    {
+        /// <summary>
+        /// add product to cart
+        /// returns cart
+        /// </summary>
+        /// 
+        public Cart AddProductInCart(Cart cart, int productId);
+        /// <summary>
+        /// update amount of product
+        /// </summary>
+        /// 
+        public Cart UpdateAmountOfProduct(Cart cart, int productId, int newAmount);
+        /// <summary>
+        /// confirm cart for order
+        /// </summary>
+        public void ConfirmCart(Cart cart);
 
-    
-    
-   
-   
 
+
+
+
+
+
+    }
 }
-

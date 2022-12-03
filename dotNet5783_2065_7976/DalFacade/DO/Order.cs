@@ -1,7 +1,8 @@
 ﻿
 using System.Diagnostics;
-using DO;
-namespace Dal;
+//using DO;
+namespace DO
+{ 
 
 /// <summary>
 /// structure for order
@@ -46,5 +47,5 @@ public struct Order
     ShipDate: {ShipDate}
     DeliveryDate: {DeliveryDate}";
 }
-
+}
 

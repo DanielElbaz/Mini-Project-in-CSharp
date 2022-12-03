@@ -6,15 +6,29 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+
+
+    [Serializable]
+    public class invalidInputException : Exception
+    {
+        public invalidInputException() : base(" invalid input") { }
+        public invalidInputException(string message) : base(message) { }
+        public invalidInputException(string message, Exception inner) : base(message, inner) { }
+        protected invalidInputException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+
     public class incorrectData : Exception
     {
-        public override string Message => "The data is incorrect ";
-        public override string ToString()
-        {
-            return Message;
-
-        }
+        public incorrectData() : base(" invalid input") { }
+        public incorrectData(string message) : base(message) { }
+        public incorrectData(string message, Exception inner) : base(message, inner) { }
+        protected incorrectData(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
+
 
 
     /// <summary>
@@ -22,12 +36,12 @@ namespace BO
     /// </summary>
     public class MissingID : Exception
     {
-        public override string Message => "The object doesnt exist ";
-        public override string ToString()
-        {
-            return Message;
-
-        }
+        public MissingID() : base(" invalid input") { }
+        public MissingID(string message) : base(message) { }
+        public MissingID(string message, Exception inner) : base(message, inner) { }
+        protected MissingID(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
 
@@ -37,10 +51,11 @@ namespace BO
     /// </summary>
     public class DuplicateID : Exception
     {
-        public override string Message => "The object is already exists ";
-        public override string ToString()
-        {
-            return Message;
-
-        }
+        public DuplicateID() : base(" invalid input") { }
+        public DuplicateID(string message) : base(message) { }
+        public DuplicateID(string message, Exception inner) : base(message, inner) { }
+        protected DuplicateID(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
+}

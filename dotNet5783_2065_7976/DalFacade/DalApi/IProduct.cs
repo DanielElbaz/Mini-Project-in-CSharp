@@ -1,8 +1,10 @@
 ﻿using DO;
-using Dal;
+//using Dal;
 
-namespace DalApi;
-
-public interface IProduct:ICrud<Product>   
+namespace DalApi
 {
+
+    public interface IProduct : ICrud<Product>
+    {
+    }
 }

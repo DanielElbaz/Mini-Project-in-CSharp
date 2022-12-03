@@ -1,8 +1,10 @@
 ﻿using DO;
-using Dal;
+//using Dal;
 
-namespace DalApi;
+namespace DalApi
+{ 
 
 public interface IOrderItem :ICrud<OrderItem>
 {
+}
 }
