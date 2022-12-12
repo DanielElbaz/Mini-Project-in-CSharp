@@ -4,20 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-
+using BO;
+using Dal;
+using DalApi;
+//using DO;
 
 namespace BlImplementation
 {
-    internal class Order : IOrder
+    internal class Order : BlApi.IOrder
     {
-        private IDal dal = new DalList();
+        IDal dal = new DalList();
 
         /// <summary>
         /// returns list of orders
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<OrderForList> GetOrders()
-        { }
+        public IEnumerable<BO.OrderForList> GetOrders()
+        {
+            IEnumerable<DO.Order> doOrders = dal.Order.GetAll();
+            List<BO.OrderForList> orderForList = new List<BO.OrderForList>();
+            foreach (DO.Order doOrder in doOrders)
+            {
+                orderForList.Add(new BO.OrderForList()
+                {
+                    OrderID = doOrder.ID,
+                    CustomerName = doOrder.CustomerName,
+
+                    OrderStatus = doOrder.OrderDate,
+                    AmountOfItems = doOrder.
+                    TotalPrice = doOrder
+                });
+            }
+            return productsForList;
+        }
         /// <summary>
         /// returns details of order
         /// </summary>

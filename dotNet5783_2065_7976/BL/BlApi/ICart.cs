@@ -17,7 +17,7 @@ namespace BlApi
         /// returns cart
         /// </summary>
         /// 
-        public Cart AddProductInCart(Cart cart, int productId);
+        public Cart AddProduct(Cart cart, int productId);
         /// <summary>
         /// update amount of product
         /// </summary>
