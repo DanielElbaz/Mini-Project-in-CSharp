@@ -12,7 +12,7 @@ namespace Dal
         {
             foreach (Order order1 in DataSource.O_list)
                 if (order1.ID == order.ID)
-                    throw new DuplicateID(); //duplicateID
+                    throw new DuplicateIDExeption(); //duplicateID
                                              //  throw new Exception("order already exists ");
             DataSource.O_list.Add(order);
 
@@ -31,7 +31,7 @@ namespace Dal
                 }
 
                 if (!flag)
-                    throw new MissingID();
+                    throw new MissingIDException();
                 //  throw new Exception("order not found ");
             }
 
@@ -50,7 +50,7 @@ namespace Dal
 
                 }
             if (!flag)
-                throw new MissingID();
+                throw new MissingIDException();
             // throw new Exception("order not found");
 
 
@@ -71,7 +71,7 @@ namespace Dal
                     break;
                 }
             if (index != -1)
-                throw new MissingID();
+                throw new MissingIDException();
             // throw new Exception("Order doesnt exist");
             return DataSource.O_list[index];
             //for (i = 0; i < DataSource.Config.OrderFirstClear; i++)

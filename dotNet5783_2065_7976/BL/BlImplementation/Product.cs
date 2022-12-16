@@ -12,7 +12,7 @@ namespace BlImplementation
 {
     internal class Product : BlApi.IProduct
     {
-        IDal dal = new DalList();
+        IDal dal = DalList.Instance;
 
         bool Check(int id, string? name, double price, int instock)
         {
@@ -127,7 +127,7 @@ namespace BlImplementation
             {
                 dal.Product.Add(productToAdd);
             }
-            catch (DuplicateID e)
+            catch (DuplicateIDExeption e)
             {
 
                 ///????????????????????????????
@@ -187,7 +187,7 @@ namespace BlImplementation
             foreach (DO.OrderItem o in orders)
                 if (o.ProductID == id)
                 {
-                    throw new DuplicateID("Product found in exsited order...");
+                    throw new DuplicateIDExeption("Product found in exsited order...");
                 }
 
 
@@ -202,7 +202,7 @@ namespace BlImplementation
 
 
             }
-            throw new BO.MissingID("product not found");
+            throw new BO.MissingIDException("product not found");
 
 
 

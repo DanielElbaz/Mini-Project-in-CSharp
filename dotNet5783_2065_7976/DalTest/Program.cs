@@ -225,7 +225,7 @@ namespace DalTest
                         order.ID = id;
                         order.CustomerName = customerName;
                         order.CustomerEmail = customerEmail;
-                        order.CustomerAdress = customerAddress;
+                        order.CustomerAddress = customerAddress;
                         order.OrderDate = orderDate;
                         order.ShipDate = shipDate;
                         order.DeliveryDate = deliveryDate;
@@ -285,7 +285,7 @@ namespace DalTest
                         order.ID = newId;
                         order.CustomerName = customerName;
                         order.CustomerEmail = customerEmail;
-                        order.CustomerAdress = customerAddress;
+                        order.CustomerAddress = customerAddress;
                         order.OrderDate = orderDate;
                         order.ShipDate = shipDate;
                         order.DeliveryDate = deliveryDate;

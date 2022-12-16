@@ -7,13 +7,14 @@ using BlApi;
 using BO;
 using Dal;
 using DalApi;
+using DO;
 //using DO;
 
 namespace BlImplementation
 {
     internal class Order : BlApi.IOrder
     {
-        IDal dal = new DalList();
+        IDal dal = DalList.Instance;
 
         /// <summary>
         /// returns list of orders
@@ -21,21 +22,44 @@ namespace BlImplementation
         /// <returns></returns>
         public IEnumerable<BO.OrderForList> GetOrders()
         {
-            IEnumerable<DO.Order> doOrders = dal.Order.GetAll();
+            IEnumerable<DO.Order> doOrders;
+            IEnumerable<DO.OrderItem> doOrderItems;
+            //  DO.OrderItem orderItem  ;
+              
+                 doOrders = dal.Order.GetAll();
+               doOrderItems = dal.OrderItem.GetAll();
+            
+          
             List<BO.OrderForList> orderForList = new List<BO.OrderForList>();
-            foreach (DO.Order doOrder in doOrders)
-            {
-                orderForList.Add(new BO.OrderForList()
-                {
-                    OrderID = doOrder.ID,
-                    CustomerName = doOrder.CustomerName,
 
-                    OrderStatus = doOrder.OrderDate,
-                    AmountOfItems = doOrder.
-                    TotalPrice = doOrder
-                });
+
+            foreach (DO.Order doOrder in doOrders) //run on bo order list
+
+            {
+
+                int amount = 0; 
+                double totalPrice = 0;
+
+                foreach (DO.OrderItem doOrderItem in doOrderItems)
+                {
+
+                    if (doOrderItem.OrderID == doOrder.ID)
+
+                    {
+                        amount += doOrderItem.Amount;
+                        totalPrice += doOrderItem.Price * amount;
+                    }
+                }
+                    orderForList.Add(new BO.OrderForList()
+                    {
+                        OrderID = doOrder.ID,
+                        CustomerName = doOrder.CustomerName,
+                        AmountOfItems = amount,
+                        TotalPrice = totalPrice
+                    });
+                
             }
-            return productsForList;
+            return orderForList;
         }
         /// <summary>
         /// returns details of order

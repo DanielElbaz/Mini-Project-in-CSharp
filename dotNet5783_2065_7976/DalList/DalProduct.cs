@@ -14,7 +14,7 @@ namespace Dal
         {
             foreach (Product product1 in DataSource.P_list)
                 if (product1.ID == P.ID)
-                    throw new DuplicateID();
+                    throw new DuplicateIDExeption();
             // throw new Exception("Product already exists ");
             DataSource.P_list.Add(P);
             return P.ID;
@@ -33,7 +33,7 @@ namespace Dal
                 }
                 if (!flag)
                     // throw new Exception("product not found ");
-                    throw new MissingID();
+                    throw new MissingIDException();
 
 
             }
@@ -50,7 +50,7 @@ namespace Dal
 
                 }
             if (!flag)
-                throw new MissingID();
+                throw new MissingIDException();
             // throw new Exception("product not found");
 
 
@@ -71,7 +71,7 @@ namespace Dal
                     break;
                 }
             if (index != -1)
-                throw new MissingID();
+                throw new MissingIDException();
             // throw new Exception("Product doesn't exist");
             return DataSource.P_list[index];
 

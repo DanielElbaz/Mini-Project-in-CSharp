@@ -16,7 +16,7 @@ namespace Dal
         {
             foreach (OrderItem oi1 in DataSource.OI_list)
                 if (oi1.ID == oi.ID)
-                    throw new DuplicateID();
+                    throw new DuplicateIDExeption();
             //throw new Exception("Order Item already exists ");
             DataSource.OI_list.Add(oi);
             return oi.ID;
@@ -34,7 +34,7 @@ namespace Dal
                     DataSource.OI_list.Remove(oi);
                 }
                 if (!flag)
-                    throw new MissingID();
+                    throw new MissingIDException();
                 // throw new Exception("Order Item not found ");
             }
 
@@ -54,7 +54,7 @@ namespace Dal
 
                 }
             if (!flag)
-                throw new MissingID();
+                throw new MissingIDException();
             // throw new Exception("Order Item not found");//for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
 
         }
@@ -75,7 +75,7 @@ namespace Dal
                 }
 
             if (!flag)
-                throw new MissingID();
+                throw new MissingIDException();
             //throw new Exception("Order Item does not exist");
             return DataSource.OI_list[index];
         }

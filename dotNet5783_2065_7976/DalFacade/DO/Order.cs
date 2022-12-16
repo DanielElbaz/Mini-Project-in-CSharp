@@ -21,7 +21,7 @@ public struct Order
     /// <summary>
     /// costumer email
     /// </summary>
-    public string CustomerAdress{ get; set; }
+    public string CustomerAddress{ get; set; }
     /// <summary>
     /// customer address
     /// </summary>
@@ -42,7 +42,7 @@ public struct Order
     Order ID={ID}: , 
     CustomerName - {CustomerName}
     CustomerEmail: {CustomerEmail}
-    CustomerAdress: {CustomerAdress}
+    CustomerAdress: {CustomerAddress}
     OrderDate: {OrderDate}
     ShipDate: {ShipDate}
     DeliveryDate: {DeliveryDate}";

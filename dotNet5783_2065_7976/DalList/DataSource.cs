@@ -80,7 +80,7 @@ namespace Dal
                 o.ID = Config.OrderLastId;
                 o.CustomerEmail = emails[Config.rand.Next(20)];
                 o.OrderDate = DateTime.Now - new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-                o.CustomerAdress = i + "/" + 2 * i + "begin road jerusalem";
+                o.CustomerAddress = i + "/" + 2 * i + "begin road jerusalem";
                 o.ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 o.DeliveryDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 i++;
@@ -106,7 +106,7 @@ namespace Dal
                         p.ID = Config.rand.Next(100000, 999999);
 
                 p.ID = Config.rand.Next(100000, 999999);
-                p.Category = Categories.Phones;
+                p.Category = Category.Phones;
                 p.Name = ProductNames[Config.rand.Next(0, 7)];
                 p.Price = Config.rand.Next(2000, 5000);
                 p.InStock = Config.rand.Next(0, 20);

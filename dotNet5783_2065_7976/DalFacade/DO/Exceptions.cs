@@ -18,12 +18,12 @@ namespace DO
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class incorrectData : Exception
+    public class IncorrectDataException : Exception
     {
-        public incorrectData() : base(" invalid input") { }
-        public incorrectData(string message) : base(message) { }
-        public incorrectData(string message, Exception inner) : base(message, inner) { }
-        protected incorrectData(
+        public IncorrectDataException() : base(" invalid input") { }
+        public IncorrectDataException(string message) : base(message) { }
+        public IncorrectDataException(string message, Exception inner) : base(message, inner) { }
+        protected IncorrectDataException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
@@ -33,12 +33,12 @@ namespace DO
     /// <summary>
     /// throw when the id is wrong
     /// </summary>
-    public class MissingID : Exception
+    public class MissingIDException : Exception
     {
-        public MissingID() : base(" invalid input") { }
-        public MissingID(string message) : base(message) { }
-        public MissingID(string message, Exception inner) : base(message, inner) { }
-        protected MissingID(
+        public MissingIDException() : base(" invalid input") { }
+        public MissingIDException(string message) : base(message) { }
+        public MissingIDException(string message, Exception inner) : base(message, inner) { }
+        protected MissingIDException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
@@ -48,12 +48,12 @@ namespace DO
     /// <summary>
     /// throw when one or more of the data is incorrect
     /// </summary>
-    public class DuplicateID : Exception
+    public class DuplicateIDExeption : Exception
     {
-        public DuplicateID() : base(" invalid input") { }
-        public DuplicateID(string message) : base(message) { }
-        public DuplicateID(string message, Exception inner) : base(message, inner) { }
-        protected DuplicateID(
+        public DuplicateIDExeption() : base(" invalid input") { }
+        public DuplicateIDExeption(string message) : base(message) { }
+        public DuplicateIDExeption(string message, Exception inner) : base(message, inner) { }
+        protected DuplicateIDExeption(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }

@@ -15,12 +15,9 @@ namespace BlImplementation
 
     {
         public IOrder Order => new Order();
-        public IProduct Producty => new Product();
+        public IProduct Product => new Product();
         public ICart Cart => new Cart();
 
-
-
-
-
+        
     }
 }
