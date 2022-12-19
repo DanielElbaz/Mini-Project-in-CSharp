@@ -59,11 +59,13 @@ namespace Dal
 
         }
 
+
+
         public OrderItem GetByID(int id)
         {
             //int i;
             int index = -1;
-            Boolean flag = false;
+            //Boolean flag = false;
             foreach (OrderItem orderitem in DataSource.OI_list)
 
                 if (id == orderitem.ID)
@@ -74,13 +76,16 @@ namespace Dal
                     break;
                 }
 
-            if (!flag)
+            if (index ==-1)
                 throw new MissingIDException();
             //throw new Exception("Order Item does not exist");
             return DataSource.OI_list[index];
         }
         public IEnumerable<OrderItem> GetAll()
         {
+            //return DataSource.OI_list;
+            //return OI_list;
+
             int count = 0, i = 0;
             foreach (var p in DataSource.OI_list)
             {
@@ -95,5 +100,13 @@ namespace Dal
             }
             return arr;
         }
+
+        //public  IEnumerable<OrderItem> GetByOrderID(int id)
+        //{
+        //   List<OrderItem> arr; 
+        //    foreach (var p in DataSource.OI_list)
+        //        arr.Add(p) where(p.OrderID == id)
+
+        //}
     }
 }

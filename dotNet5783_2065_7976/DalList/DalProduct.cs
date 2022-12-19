@@ -70,7 +70,7 @@ namespace Dal
                     index = DataSource.P_list.IndexOf(product);
                     break;
                 }
-            if (index != -1)
+            if (index == -1)
                 throw new MissingIDException();
             // throw new Exception("Product doesn't exist");
             return DataSource.P_list[index];

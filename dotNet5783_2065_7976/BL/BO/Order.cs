@@ -12,7 +12,7 @@ namespace BO
         public int ID { get; set; }
         public string? CustomerName { get; set; }
         public string? CustomerEmail { get; set; }
-        public string? CustomerAdress { get; set; }
+        public string? CustomerAddress { get; set; }
         public OrderStatus OrderStatus { get; set; }
 
         public DateTime? OrderDate { get; set; }

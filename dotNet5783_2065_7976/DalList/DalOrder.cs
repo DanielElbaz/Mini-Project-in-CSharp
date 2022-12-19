@@ -70,7 +70,7 @@ namespace Dal
                     index = DataSource.O_list.IndexOf(order);
                     break;
                 }
-            if (index != -1)
+            if (index == -1)
                 throw new MissingIDException();
             // throw new Exception("Order doesnt exist");
             return DataSource.O_list[index];

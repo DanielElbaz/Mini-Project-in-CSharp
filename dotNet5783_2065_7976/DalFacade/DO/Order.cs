@@ -25,15 +25,15 @@ public struct Order
     /// <summary>
     /// customer address
     /// </summary>
-    public DateTime OrderDate { get; set; } 
+    public DateTime? OrderDate { get; set; } 
     /// <summary>
     /// date of the order
     /// </summary>
-    public DateTime ShipDate { get; set; }
+    public DateTime? ShipDate { get; set; }
     /// <summary>
     /// ship date
     /// </summary>
-    public DateTime DeliveryDate { get; set; } /// <summary>
+    public DateTime? DeliveryDate { get; set; } /// <summary>
     /// delivery time
     /// </summary>
     /// <returns></returns>
