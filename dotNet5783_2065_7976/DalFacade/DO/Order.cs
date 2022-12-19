@@ -21,7 +21,7 @@ public struct Order
     /// <summary>
     /// costumer email
     /// </summary>
-    public string CustomerAddress{ get; set; }
+    public string CustomerAdress{ get; set; }
     /// <summary>
     /// customer address
     /// </summary>
@@ -33,16 +33,19 @@ public struct Order
     /// <summary>
     /// ship date
     /// </summary>
-    public DateTime DeliveryDate { get; set; } /// <summary>
-    /// delivery time
-    /// </summary>
-    /// <returns></returns>
-    /// tostring method 
-    public override string ToString() => $@"
+    public DateTime DeliveryDate { get; set; }
+        public string CustomerAddress { get; set; }
+
+        /// <summary>
+        /// delivery time
+        /// </summary>
+        /// <returns></returns>
+        /// tostring method 
+        public override string ToString() => $@"
     Order ID={ID}: , 
     CustomerName - {CustomerName}
     CustomerEmail: {CustomerEmail}
-    CustomerAdress: {CustomerAddress}
+    CustomerAdress: {CustomerAdress}
     OrderDate: {OrderDate}
     ShipDate: {ShipDate}
     DeliveryDate: {DeliveryDate}";

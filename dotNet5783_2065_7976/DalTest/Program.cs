@@ -77,7 +77,7 @@ namespace DalTest
                     {
                         int id, price, stock;
                         // string? category = "Phones"; 
-                        Categories category;
+                        Category category;
                         string? name, id1;
                         Console.WriteLine("enter id,  name, category, price and in stock \n");                        
 
@@ -86,7 +86,7 @@ namespace DalTest
                         //int.TryParse(Console.ReadLine(), out id);
                         name = Console.ReadLine();
 
-                        category = (Categories)int.Parse(Console.ReadLine());
+                        category = (Category)int.Parse(Console.ReadLine());
                         // price = Console.Read();
                         // stock = Console.Read();
                         int.TryParse(Console.ReadLine(), out price);
@@ -116,7 +116,7 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out id);
                         try
                         {
-                            Product p = dalProduct.GetProduct(id);
+                            Product p = DalProduct.GetProduct(id);
                             Console.WriteLine(p);
                         }
                         catch (Exception st)
@@ -129,7 +129,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        List<Product> products =dalProduct.getAllProducts();
+                        List<Product> products =DalProduct.getAllProducts();
                         foreach (Product P in products)
                             Console.WriteLine(P + "\n");
 
@@ -157,7 +157,7 @@ namespace DalTest
                             Product p = new Product();
                             p.ID = id;
                             p.Name = name ?? "avi ";
-                            p.Category = (Categories)Enum.Parse(typeof(Categories), category);
+                            p.Category = (Category)Enum.Parse(typeof(Category), category);
                             p.InStock = stock;
                             p.Price = price;
                             dalProduct.Update(newId, p);
