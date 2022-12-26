@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using BL;
 using BlApi;
 using BO;
 using Dal;
@@ -39,6 +40,11 @@ namespace BlImplementation
             {
                 throw new BO.incorrectDataException("invalid product id", dex);
             }
+            catch (DO.MissingIDException dex)
+            {
+                throw new BO.MissingIDException("id not found", dex);
+            }
+
             var item = cart.Items?.FirstOrDefault(elem => elem.ProductID == productId);
             if (item == null) // new product item for cart
             {
@@ -57,6 +63,7 @@ namespace BlImplementation
                         cart.Items = new();
 
                     cart.Items.Add(item);
+                    cart.TotalPrice = product.Price;
                 }
             }
 
@@ -147,10 +154,7 @@ namespace BlImplementation
         /// <summary>
         /// confirm cart for order
         /// </summary>
-        public void ConfirmCart(Cart cart)
-        { }
-
-       
+               
 
         public void ConfirmCart(BO.Cart cart)
         {
@@ -165,18 +169,12 @@ namespace BlImplementation
                 var email = new EmailAddressAttribute();
                 if(!email.IsValid(cart.CustomerEmail) || !(cart.CustomerEmail.Equals(" ")))
                     throw new BO.incorrectDataException("invalid email address");
-
             }
 
             else
-            {
-                    throw new BO.incorrectDataException("invalid email address");
-
-            }
-
+               throw new BO.incorrectDataException("invalid email address");                      
             if (cart.CustomerName == null)
                 throw new BO.incorrectDataException("customer name is null ");
-
             if (cart.CustomerAddress == null)
                 throw new BO.incorrectDataException("customer address is null ");
 
@@ -192,7 +190,7 @@ namespace BlImplementation
                     throw new BO.MissingIDException() ;
                 } // get the product in the orderItem list
                 if (orderItem.Amount <= 0) // negative amount
-                    throw new BO.incorrectDataException("invalid amount if orderitem  " + orderItem.ProductName);
+                    throw new BO.incorrectDataException("invalid amount if order item  " + orderItem.ProductName);
                 if (product.InStock < orderItem.Amount)
                     throw new BO.incorrectDataException("not enough in stock for Product " + product.Name);
 
@@ -264,5 +262,6 @@ namespace BlImplementation
 
 
         }
+        
     }
 }

@@ -33,16 +33,17 @@ namespace Dal
         }
 
 
-        internal static int OI_capacity = 200;
-        internal static int P_capacity = 50;
-        internal static int O_capacity = 100;
+        //internal static int OI_capacity = 200;
+        //internal static int P_capacity = 50;
+        //internal static int O_capacity = 100;
 
         //internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
-        internal static List<OrderItem> OI_list = new List<OrderItem>();
         //internal static Product[] P_arr = new Product[P_capacity];
-        internal static List<Product> P_list = new List<Product>();
         //internal static Order[] O_arr = new Order[O_capacity];
-        internal static List<Order> O_list = new List<Order>();
+ 
+        internal static List<OrderItem> OI_list = new();
+        internal static List<Product> P_list = new();
+        internal static List<Order> O_list = new();
 
         private static void addOrderItem() // initialize order item
         {
@@ -52,18 +53,20 @@ namespace Dal
                 int index = Config.rand.Next(P_list.Count);
                 Product p = P_list[index]; // draw of any product randomally
 
-                OrderItem oi = new OrderItem();
-                oi.ID = Config.rand.Next(100000, 999999);
-                oi.ProductID = p.ID;// get a random id of an existing product
-                oi.OrderID = OI_list[Config.rand.Next(O_list.Count)].ID; // random order id from the order list
-                oi.Amount = Config.rand.Next(1, 5);
-                oi.Price = p.Price;
+                OrderItem oi = new OrderItem()
+                {
+                    ID = Config.rand.Next(100000, 999999),
+                    ProductID = p.ID,// get a random id of an existing product
+                    OrderID = O_list[Config.rand.Next(O_list.Count)].ID, // random order id from the order list
+                    Amount = Config.rand.Next(1, 5),
+                    Price = p.Price
+                };
                 OI_list.Add(oi);
-               // i++;
-               // Config.OrderItemFirstClear++;
+            // i++;
+            // Config.OrderItemFirstClear++;
 
-            }
         }
+    }
         private static void addOrder() // initialize order
         {
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,12 @@ namespace BO
         public OrderStatus OrderStatus { get; set; }        
        
         public List< Tuple<DateTime?, string>>?  StatusDescription { get; set; }
-        
+
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
+
 
     }
 }

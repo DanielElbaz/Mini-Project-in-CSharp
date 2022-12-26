@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,11 @@ namespace BO
         public DateTime? DeleveryDate { get; set; }
         public IEnumerable<OrderItem>? Items { get; set; }
         public double TotalPrice { get; set; }
+
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
 
 
     }

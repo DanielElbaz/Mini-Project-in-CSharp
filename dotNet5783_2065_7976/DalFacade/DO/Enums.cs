@@ -2,7 +2,7 @@
 namespace DO
 {
 
-    public enum Category { Phones, Computers, Tablets, EarPods, Gameplay };
+    public enum Category { Phones, Computers, Tablets, Earphones, Gameplay };
     public enum Phones { iPhone, Samsung, Xiaomi, OnePlus, Huawei };
     public enum Computers { HP, Dell, Lenovo, Asus, Mac };
     public enum Tablets { Apple, Samsung, Lenovo };

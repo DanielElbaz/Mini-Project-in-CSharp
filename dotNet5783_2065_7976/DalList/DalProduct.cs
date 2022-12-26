@@ -82,7 +82,7 @@ namespace Dal
             {
 
             List<Product> products = new List<Product>();
-            for(int i = 0; i<DataSource.P_list.Count -6 ; i++)
+            for(int i = 0; i<DataSource.P_list.Count  ; i++)
                 products.Add(DataSource.P_list[i]);
             return products;
 

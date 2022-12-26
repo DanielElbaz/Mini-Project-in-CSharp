@@ -1,4 +1,5 @@
 ﻿
+using BL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,9 @@ namespace BO
         public Category Category { get; set; }
         public Boolean IsAvailable { get; set; }
         public int AmountInCart { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

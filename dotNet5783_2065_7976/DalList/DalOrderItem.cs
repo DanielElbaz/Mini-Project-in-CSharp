@@ -83,22 +83,26 @@ namespace Dal
         }
         public IEnumerable<OrderItem> GetAll()
         {
-            //return DataSource.OI_list;
-            //return OI_list;
+            
 
-            int count = 0, i = 0;
-            foreach (var p in DataSource.OI_list)
-            {
-                count++;
-            }
+            List<OrderItem> orderItems = new List<OrderItem>();
+            for (int i = 0; i < DataSource.OI_list.Count; i++)
+                orderItems.Add(DataSource.OI_list[i]);
+            return orderItems;
 
-            OrderItem[] arr = new OrderItem[count];
+            //int count = 0, i = 0;
+            //foreach (var p in DataSource.OI_list)
+            //{
+            //    count++;
+            //}
 
-            foreach (var p in DataSource.OI_list)
-            {
-                arr[i++] = p;
-            }
-            return arr;
+            //OrderItem[] arr = new OrderItem[count];
+
+            //foreach (var p in DataSource.OI_list)
+            //{
+            //    arr[i++] = p;
+            //}
+            //return arr;
         }
 
         //public  IEnumerable<OrderItem> GetByOrderID(int id)

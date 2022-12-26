@@ -120,19 +120,24 @@ namespace Dal
 
         public IEnumerable<Order> GetAll()
         {
-            int count = 0, i = 0;
-            foreach (var p in DataSource.O_list)
-            {
-                count++;
-            }
 
-            Order[] arr = new Order[count];
+            List<Order> orders = new List<Order>();
+            for (int i = 0; i < DataSource.P_list.Count; i++)
+                orders.Add(DataSource.O_list[i]);
+            return orders;
+            //int count = 0, i = 0;
+            //foreach (var p in DataSource.O_list)
+            //{
+            //    count++;
+            //}
 
-            foreach (var p in DataSource.O_list)
-            {
-                arr[i++] = p;
-            }
-            return arr;
+            //Order[] arr = new Order[count];
+
+            //foreach (var p in DataSource.O_list)
+            //{
+            //    arr[i++] = p;
+            //}
+            //return arr;
         }
 
 
