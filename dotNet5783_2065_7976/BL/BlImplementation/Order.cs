@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
+//using BO;
 using Dal;
 using DalApi;
 using DO;
@@ -58,10 +58,10 @@ namespace BlImplementation
                         TotalPrice = totalPrice,
                         OrderStatus = doOrder switch
                         {
-                            { DeliveryDate: not null } => OrderStatus.delivered,
-                            { ShipDate: not null } => OrderStatus.shipped,
-                            { OrderDate: not null } => OrderStatus.ordered,
-                            _=> OrderStatus.nullState
+                            { DeliveryDate: not null } => BO.OrderStatus.delivered,
+                            { ShipDate: not null } => BO.OrderStatus.shipped,
+                            { OrderDate: not null } => BO.OrderStatus.ordered,
+                            _=> BO.OrderStatus.nullState
                         }
 
                     });
@@ -137,6 +137,7 @@ namespace BlImplementation
             if (doOrder.ShipDate != null) throw new BO.invalidInputException(" order is already in the system");
             IEnumerable<DO.OrderItem> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => orderItem.OrderID == id); // list if order items from data layer 
             doOrder.ShipDate = DateTime.Now; // update the DO order 
+            dal.Order.Update(doOrder.ID, doOrder);
             List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
             foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
             {
@@ -175,7 +176,7 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Order UpdateOrderSupply(int id)
+        public BO.Order UpdateOrderSupply(int id)
         {
 
             DO.Product doProduct;
@@ -183,16 +184,87 @@ namespace BlImplementation
             try { doOrder = dal.Order.GetByID(id); }
             catch (DO.MissingIDException) { throw new BO.MissingIDException("order ont found"); }
             if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
-            if (doOrder.ShipDate != null) throw new BO.invalidInputException(" order is already in the system");
+            if (doOrder.ShipDate == null) throw new BO.invalidInputException(" order ship date is null");
+            if (doOrder.DeliveryDate != null) throw new BO.invalidInputException(" order has already been delivered");
+
+            IEnumerable<DO.OrderItem> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => orderItem.OrderID == id); // list if order items from data layer 
+            doOrder.DeliveryDate = DateTime.Now;            // update the DO order 
+            dal.Order.Update(doOrder.ID, doOrder);
+            List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
+            foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
+            {
+                doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
+                BoOrderItems.Add(new()
+                {
+                    ItemID = DoOrderItem.ID,
+                    ProductID = DoOrderItem.ProductID,
+                    Amount = DoOrderItem.Amount,
+                    ProductName = doProduct.Name,
+                    ProductPrice = doProduct.Price,
+                    TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
+
+                });
+            }
+
+            BO.Order boOrder = new()// build new BO order
+            {
+                ID = doOrder.ID,
+                CustomerName = doOrder.CustomerName,
+                CustomerAddress = doOrder.CustomerAddress,
+                CustomerEmail = doOrder.CustomerEmail,
+                OrderDate = doOrder.OrderDate,
+                ShipDate = doOrder.ShipDate,
+                DeleveryDate = doOrder.DeliveryDate,
+                Items = BoOrderItems
+
+            };
+
+            return boOrder;
+
 
 
         }
         /// <summary>
-        /// returns order trackinf object
+        /// returns order track information object
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public OrderTracking OrderTracking(int id)
-        { }
+        public BO.OrderTracking OrderTracking(int id)
+        {
+            //DO.Product doProduct;
+            DO.Order doOrder;
+            try { doOrder = dal.Order.GetByID(id); }
+            catch (DO.MissingIDException) { throw new BO.MissingIDException("order ont found"); }
+            //if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
+           // if (doOrder.ShipDate == null) throw new BO.invalidInputException(" order ship date is null");
+            //if (doOrder.DeliveryDate == null) throw new BO.invalidInputException(" order has already been delivered");
+            List<Tuple<DateTime?, string> > statusDescription = new List<Tuple<DateTime?, string>>();
+            if (doOrder.OrderDate != null)
+                statusDescription.Add(Tuple.Create(doOrder.OrderDate, "order created on " + doOrder.OrderDate));
+            if (doOrder.ShipDate != null)
+                statusDescription.Add(Tuple.Create(doOrder.ShipDate, "order shipped on " + doOrder.ShipDate));
+            if (doOrder.DeliveryDate != null)
+                statusDescription.Add(Tuple.Create(doOrder.DeliveryDate, "order delivered on " + doOrder.DeliveryDate));
+
+            // statusDescription.Add 
+            BO.OrderTracking boOrderTracking = new()
+            {
+                OrderID = doOrder.ID,
+                StatusDescription = statusDescription,
+                OrderStatus = doOrder switch
+                {
+                    { DeliveryDate: not null } => BO.OrderStatus.delivered,
+                    { ShipDate: not null } => BO.OrderStatus.shipped,
+                    { OrderDate: not null } => BO.OrderStatus.ordered,
+                    _ => BO.OrderStatus.nullState
+                },
+
+               
+                
+            };
+
+
+            return boOrderTracking;
+        }
     }
 }

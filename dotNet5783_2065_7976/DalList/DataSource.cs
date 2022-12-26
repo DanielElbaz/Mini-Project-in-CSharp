@@ -11,9 +11,9 @@ namespace Dal
         internal class Config
         {
 
-            internal static int OrderItemFirstClear = 0;
-            internal static int ProductFirstClear = 0; // the first index in the array which is clear
-            internal static int OrderFirstClear = 0;
+            //internal static int OrderItemFirstClear = 0;
+            //internal static int ProductFirstClear = 0; // the first index in the array which is clear
+            //internal static int OrderFirstClear = 0;
 
             static internal Random rand = new Random();
 
@@ -54,13 +54,13 @@ namespace Dal
 
                 OrderItem oi = new OrderItem();
                 oi.ID = Config.rand.Next(100000, 999999);
-                oi.ProductID = p.ID;// get a random id of שמ existing product
-                oi.OrderID = OI_list[Config.rand.Next(Config.OrderItemFirstClear)].ID;
+                oi.ProductID = p.ID;// get a random id of an existing product
+                oi.OrderID = OI_list[Config.rand.Next(O_list.Count)].ID; // random order id from the order list
                 oi.Amount = Config.rand.Next(1, 5);
                 oi.Price = p.Price;
                 OI_list.Add(oi);
-                i++;
-                Config.OrderItemFirstClear++;
+               // i++;
+               // Config.OrderItemFirstClear++;
 
             }
         }
@@ -83,9 +83,9 @@ namespace Dal
                 o.CustomerAddress = i + "/" + 2 * i + "begin road jerusalem";
                 o.ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 o.DeliveryDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-                i++;
+               // i++;
                 O_list.Add(o);
-                Config.OrderFirstClear++;
+                //Config.OrderFirstClear++;
             }
         }
         private static void addProduct() // add 10 products
@@ -110,9 +110,9 @@ namespace Dal
                 p.Name = ProductNames[Config.rand.Next(0, 7)];
                 p.Price = Config.rand.Next(2000, 5000);
                 p.InStock = Config.rand.Next(0, 20);
-                i++;
+                //i++;
                 P_list.Add(p);
-                Config.ProductFirstClear++;
+                //Config.ProductFirstClear++;
 
             }
         }

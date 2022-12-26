@@ -80,19 +80,25 @@ namespace Dal
 
         public IEnumerable<Product> GetAll()
             {
-            int count = 0, i = 0;
-            foreach (var p in DataSource.P_list)
-            {
-                count++;
-            }
 
-            Product[] arr = new Product[count];
+            List<Product> products = new List<Product>();
+            for(int i = 0; i<DataSource.P_list.Count -6 ; i++)
+                products.Add(DataSource.P_list[i]);
+            return products;
 
-            foreach (var p in DataSource.P_list)
-            {
-                arr[i++] = p;
-            }
-            return arr;
+            //int count = 0, i = 0;
+            //foreach (var p in DataSource.P_list)
+            //{
+            //    count++;
+            //}
+
+            //Product[] arr = new Product[count];
+
+            //foreach (var p in DataSource.P_list)
+            //{
+            //    arr[i++] = p;
+            //}
+            //return arr;
         }
 
 

@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Dal
 {
@@ -55,6 +56,42 @@ namespace Dal
 
 
         }
+
+        //public void setDate ( int id, int date)
+        //{
+        //    Order order = new Order();
+        //    int i=0;
+        //    bool flag = false;
+        //    for (; i < DataSource.O_list.Count; i++)
+        //    {
+        //         order = DataSource.O_list[i];
+        //        if (order.ID == id)
+        //        {
+        //            if (date == 0)
+        //            {
+        //                order.ShipDate = DateTime.Now;
+        //                flag = true;
+        //                break;
+        //            }
+        //            else
+        //            if (date == 1)
+        //            {
+        //                order.DeliveryDate = DateTime.Now;
+        //                flag = true;
+        //                break;
+
+        //            }
+        //            else
+        //                throw new invalidInputException(" invalid input");
+        //        }
+        //        else
+        //            throw new MissingIDException(id + " not found in data");
+        //    }
+        //        if (flag)
+        //            DataSource.O_list[i] = order;
+
+        //    }
+                    
 
         public Order GetByID(int id)
         {

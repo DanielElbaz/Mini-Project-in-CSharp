@@ -5,7 +5,7 @@ using DalApi;
 
 namespace DalTest
 {
-    class Program
+    class Program1
     {
          static IDal dal = new DalList();
         private static DalOrder dalOrder = new DalOrder();
