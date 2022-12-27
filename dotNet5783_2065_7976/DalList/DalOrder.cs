@@ -29,6 +29,7 @@ namespace Dal
                 {
                     flag = true;
                     DataSource.O_list.Remove(order);
+                    break;
                 }
 
                 if (!flag)
@@ -48,6 +49,7 @@ namespace Dal
                     flag = true;
                     int index = DataSource.O_list.IndexOf(order);
                     DataSource.O_list[index] = newOrder;
+                    break;
 
                 }
             if (!flag)

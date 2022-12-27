@@ -32,6 +32,7 @@ namespace Dal
                 {
                     flag = true;
                     DataSource.OI_list.Remove(oi);
+                    break;
                 }
                 if (!flag)
                     throw new MissingIDException();
@@ -51,6 +52,7 @@ namespace Dal
                     flag = true;
                     int index = DataSource.OI_list.IndexOf(orderitem);
                     DataSource.OI_list[index] = newOI;
+                    break;
 
                 }
             if (!flag)

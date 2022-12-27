@@ -17,7 +17,7 @@ namespace BlImplementation
 
         bool Check(int id, string? name, double price, int instock)
         {
-            return (id > 0) && (name != null && name != "") && (price > 0) && (instock >= 0);
+            return (id > 100000&& id<1000000) && (name != null && name != "") && (price > 0) && (instock >= 0);
         }
 
         /// <summary>
@@ -37,7 +37,8 @@ namespace BlImplementation
                     Category = (BO.Category)doProduct.Category,
                     ProductID = doProduct.ID,
                     ProductName = doProduct.Name,
-                    ProductPrice = doProduct.Price,
+                    ProductPrice = doProduct.Price
+                    
                 });
             }
             return productsForList;
@@ -183,10 +184,8 @@ namespace BlImplementation
         /// <param name="id"></param>
         public void DeleteProduct(int id)
         {
-            Product product = new Product();
-           // Order order = new Order();
-           // DalOrderItem dalOrderItem = new DalOrderItem();
-            //DalProduct dalProduct = new DalProduct();
+            //Product product = new ();
+           
             //Check if the product found in other orders.
             IEnumerable<DO.OrderItem> orders = dal.OrderItem.GetAll();
             foreach (DO.OrderItem o in orders)
@@ -196,17 +195,31 @@ namespace BlImplementation
                 }
 
 
-            IEnumerable<BO.ProductForList> products = product.GetAll();
-            foreach (BO.ProductForList thisproduct in products)
+            //IEnumerable<BO.ProductForList> products = product.GetAll();
+            //foreach (BO.ProductForList thisproduct in products)
+            //{
+            //    if (thisproduct.ProductID == id)
+
+            try
             {
-                if (thisproduct.ProductID == id)
-                {
-                    dal.Product.Delete(id);
-                    return;
-                }
-
-
+                DO.Product doProduct = dal.Product.GetByID(id);// find the product in datasource
+                dal.Product.Delete(id); //delete
             }
+            catch (DO.MissingIDException ex)
+            { throw new BO.MissingIDException(ex.Message); }
+            return;
+            //        { throw new BO.MissingIDException(ex.Message); }
+            //        return;
+
+            //    {
+            //        try { dal.Product.Delete(id); }
+            //        catch(DO.MissingIDException ex)
+            //        { throw new BO.MissingIDException(ex.Message); }
+            //        return;
+            //    }
+
+
+            //}
             throw new BO.MissingIDException("product not found");
 
 

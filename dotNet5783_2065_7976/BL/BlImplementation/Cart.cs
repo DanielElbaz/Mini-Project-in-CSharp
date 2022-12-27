@@ -72,7 +72,9 @@ namespace BlImplementation
                 if (product.InStock >= item.Amount + 1)
                 {
                     item.Amount++; // add to the amount of the item
-                    cart.TotalPrice += product.Price; 
+                    cart.TotalPrice += product.Price;
+                    //product.InStock--; // reduce ammount
+                    
                 }
             }
 
@@ -131,20 +133,26 @@ namespace BlImplementation
                 {
                     item.Amount = newAmount;
                     cart.TotalPrice +=newAmount * product.Price;
+                    product.InStock += newAmount - item.Amount;
                 }
 
                 if (newAmount <= item.Amount)// new amount is smaller 
                 {
                     item.Amount = newAmount;
                     cart.TotalPrice -= newAmount * product.Price;
+                   // product.InStock += item.Amount - newAmount;
+
                 }
 
                 if (newAmount ==0)
                 {
                     cart.TotalPrice -= item!.TotalPrice; // reduce the total price of the cart
                     cart.Items!.Remove(item); // delete the order item
-                    
+                   // product.InStock += item.Amount;
+
+
                 }
+               
             }
                                 
 
@@ -191,7 +199,7 @@ namespace BlImplementation
                 } // get the product in the orderItem list
                 if (orderItem.Amount <= 0) // negative amount
                     throw new BO.incorrectDataException("invalid amount if order item  " + orderItem.ProductName);
-                if (product.InStock < orderItem.Amount)
+                if (product.InStock < orderItem.Amount)// not enough in stock
                     throw new BO.incorrectDataException("not enough in stock for Product " + product.Name);
 
              }
@@ -219,13 +227,7 @@ namespace BlImplementation
 
             //DO.OrderItem orderItem2 = new DO.OrderItem();
             foreach (BO.OrderItem orderItem1 in cart.Items)
-            {
-                ////orderItem2.ID = orderItem1.ItemID;
-                //orderItem2.Amount = orderItem1.Amount;
-                //// orderItem2.OrderID = orderItem1.
-                //orderItem2.Price = orderItem1.TotalPrice;
-                //orderItem2.OrderID = orderId;
-                //orderItem2.ProductID = orderItem1.ProductID;
+            {                
                 try
                 {
                     dal.OrderItem.Add(new DO.OrderItem
@@ -239,6 +241,7 @@ namespace BlImplementation
 
                     product = dal.Product.GetByID(orderItem1.ProductID);
                     product.InStock -= orderItem1.Amount;
+                    dal.Product.Update(product.ID,product);
 
 
                     // dal.OrderItem.Add(orderItem2);

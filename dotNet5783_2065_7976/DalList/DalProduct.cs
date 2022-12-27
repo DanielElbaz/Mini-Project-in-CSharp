@@ -30,13 +30,14 @@ namespace Dal
                 {
                     flag = true;
                     DataSource.P_list.Remove(product);
-                }
-                if (!flag)
-                    // throw new Exception("product not found ");
-                    throw new MissingIDException();
+                    break;
+                }           
 
 
             }
+            if (!flag)
+                // throw new Exception("product not found ");
+                throw new MissingIDException();
         }
         public void Update(int id, Product newP) // update old with new
         {
@@ -47,6 +48,7 @@ namespace Dal
                     flag = true;
                     int index = DataSource.P_list.IndexOf(product);
                     DataSource.P_list[index] = newP;
+                    break;
 
                 }
             if (!flag)
