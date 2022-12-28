@@ -79,17 +79,21 @@ namespace BlImplementation
         /// <returns>product item   </returns>
         public BO.ProductItem GetProductForCatalog(int id, BO.Cart cart)
         {
+            DO.Product doProdcut =new();
             if (id <= 0)
                 throw new BO.invalidInputException();
             if (cart == null)
                 throw new BO.invalidInputException();
 
-            DO.Product doProdcut = dal.Product.GetByID(id);
+            try {  doProdcut = dal.Product.GetByID(id); }
+            catch (DO.MissingIDException ex)
+            { throw new BO.MissingIDException(); }
             IEnumerable<BO.OrderItem>? orderItems = cart.Items;
             int amount = 0; // amount of the specified product in the customers cart
-            if (orderItems == null)
-                throw new BO.invalidInputException();
+            //if (orderItems == null)
+            //    throw new BO.invalidInputException("");
             // Search the product in the cart
+            if(orderItems!=null) // cart is not null
             foreach (BO.OrderItem orderItem in orderItems)
             {
                 if (orderItem.ProductID == id)
@@ -101,9 +105,8 @@ namespace BlImplementation
                 ProductName = doProdcut.Name,
                 ProductID = id,
                 ProductPrice = doProdcut.Price,
-                IsAvailable = true,
+                IsAvailable = (doProdcut.InStock>=1)? true: false,
                 Category = (BO.Category)doProdcut.Category,
-
                 AmountInCart = amount
             };
             return productItem;

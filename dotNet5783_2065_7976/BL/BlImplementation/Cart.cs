@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
@@ -136,8 +137,22 @@ namespace BlImplementation
         /// <summary>
         /// confirm cart for order
         /// </summary>
-               
 
+        public bool IsValid(string email)
+        {
+            var valid = true;
+
+            try
+            {
+                var emailAddress = new MailAddress(email);
+            }
+            catch
+            {
+                valid = false;
+            }
+
+            return valid;
+        }
         public void ConfirmCart(BO.Cart cart)
         {
             int orderId =0; // id of order to add 
@@ -145,20 +160,23 @@ namespace BlImplementation
             DO.Order order ;
             if (cart.Items == null)//no itmes in cart
                 throw new BO.incorrectDataException("no items in the cart");
-
+            
+            if( cart.CustomerEmail!= null && cart.CustomerEmail != " "&& !IsValid(cart.CustomerEmail))
+                throw new BO.incorrectDataException("invalid email address");
             //if (cart.CustomerEmail != null) // invalid mail
             //{
             //    var email = new EmailAddressAttribute();
-            //    if(!email.IsValid(cart.CustomerEmail) || !(cart.CustomerEmail.Equals(" ")))
+            //    if (!email.IsValid(cart.CustomerEmail) || !(cart.CustomerEmail.Equals(" ")))
             //        throw new BO.incorrectDataException("invalid email address");
             //}
 
             //else
-            //   throw new BO.incorrectDataException("invalid email address");                      
-            if (cart.CustomerName == null)
-                throw new BO.incorrectDataException("customer name is null ");
-            if (cart.CustomerAddress == null)
-                throw new BO.incorrectDataException("customer address is null ");
+            //    throw new BO.incorrectDataException("invalid email address");
+
+
+            if (cart.CustomerName == null || cart.CustomerAddress == null)
+                throw new BO.incorrectDataException("customer name or address null ");
+           
 
             foreach (BO.OrderItem orderItem in cart.Items)
             {

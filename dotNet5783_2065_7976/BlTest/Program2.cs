@@ -21,9 +21,9 @@ namespace BlTest
 
         static BO.Cart cart = new()
         {
-            CustomerName = "Uri Ehrlich",
-            CustomerEmail = "uriehrlich@gmail.com",
-            CustomerAddress = " tizen Emo",
+            CustomerName = "unknown",
+            CustomerEmail = "unknown",
+            CustomerAddress = "unknown",
             Items = null,
             TotalPrice = 0,
 
@@ -152,12 +152,16 @@ namespace BlTest
                         {
                             Console.WriteLine(ex.Message);
                         }
+                        catch (BO.MissingIDException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
 
                         //Console.WriteLine(" Enter details of cart: name, address, email,\n");
                         //name = Console.ReadLine();
                         //address = Console.ReadLine();
                         //email = Console.ReadLine();
-                        Console.WriteLine(productItem);
+                        // Console.WriteLine(productItem);
                         //MainProduct();
 
                     }
@@ -334,12 +338,10 @@ namespace BlTest
                         catch (BO.MissingIDException ex)
                         {
                             Console.WriteLine(ex.Message);
-                        }
-                        
+                        }                    
 
                     }
                     break;
-
 
                 case 'c'://update order sent
                     {
@@ -358,9 +360,7 @@ namespace BlTest
                         catch (BO.invalidInputException ex)
                         {
                             Console.WriteLine(ex.Message);
-                        }
-
-                       
+                        }                       
                     }
                     break;
                 case 'd':// update order delivered

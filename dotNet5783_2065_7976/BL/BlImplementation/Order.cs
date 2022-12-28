@@ -87,9 +87,11 @@ namespace BlImplementation
 
             IEnumerable<DO.OrderItem> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => orderItem.OrderID == id);
             List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
+            double orderTotalPrice = 0;// total price for the order 
             foreach (DO.OrderItem DoOrderItem in doOrderItems)
             {
                 doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
+                orderTotalPrice += DoOrderItem.Price * DoOrderItem.Amount;
                 BoOrderItems.Add(new()
                 {
                     ItemID = DoOrderItem.ID,
@@ -114,6 +116,7 @@ namespace BlImplementation
                 OrderDate = doOrder.OrderDate,
                 ShipDate =  doOrder.ShipDate,
                 DeliveryDate = doOrder.ShipDate,
+                TotalPrice = orderTotalPrice,
                 Items = BoOrderItems
             };
 
