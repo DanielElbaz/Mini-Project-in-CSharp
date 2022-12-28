@@ -18,13 +18,25 @@ namespace BO
 
         public DateTime? OrderDate { get; set; }
         public DateTime? ShipDate { get; set; }
-        public DateTime? DeleveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
         public IEnumerable<OrderItem>? Items { get; set; }
         public double TotalPrice { get; set; }
 
         public override string ToString()
         {
-            return this.ToStringProperty();
+           string str = "Order Date:" + OrderDate +'\n' +
+                         "Ship Date:" + ShipDate + '\n' +
+                         "Delivery Date:" + DeliveryDate + '\n'+
+                          "Total Price:" + TotalPrice + '\n' +
+                         "Items:" +'\n'; 
+            if(Items!=null)
+            foreach(OrderItem item in Items)
+            {
+                str += item.ProductName + " X" + item.Amount + '\n';
+            }
+
+
+            return str;
         }
 
 

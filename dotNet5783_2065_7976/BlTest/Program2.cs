@@ -437,7 +437,7 @@ namespace BlTest
                         try
                         { cart = bl.Cart.AddProduct(cart, id);
                              product = dal.Product.GetByID(id);
-                            Console.WriteLine("product added successfully \n" + product );
+                            Console.WriteLine("product added successfully to your cart\n" + cart );
                         }
                         catch (BO.incorrectDataException ex)
                         {
@@ -463,8 +463,9 @@ namespace BlTest
                         try { 
                             cart = bl.Cart.UpdateAmountOfProduct(cart, id, amount);
                             Console.WriteLine("Amount updated succesfully \n");
+                            Console.WriteLine(cart);
                         }
-                        catch (BO.incorrectDataException ex)
+                        catch (BO.MissingIDException ex)
                         {
                             Console.WriteLine(ex.Message);
                         }
@@ -488,12 +489,16 @@ namespace BlTest
                         cart.CustomerName = name;
                         cart.CustomerEmail = email_address;
                         cart.CustomerAddress = adress;
-                        try { bl.Cart.ConfirmCart(cart); }
+                        try {
+                            bl.Cart.ConfirmCart(cart);
+                            Console.WriteLine(" Cart confirmed successfully\n" + cart);                           
+                           // Console.WriteLine(cart);
+                            cart = new();// reset cart
+                        }
                         catch (BO.incorrectDataException ex) { Console.WriteLine(ex.Message); }
                         catch (BO.MissingIDException ex) { Console.WriteLine(ex.Message); }
                         catch (BO.DuplicateIDException ex) { Console.WriteLine(ex.Message); }
-                        Console.WriteLine(" Cart confirmed successfully\n" + cart );
-
+                        
                         MainCart();
                     }
                     break;

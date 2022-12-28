@@ -18,6 +18,7 @@ namespace Dal
                 if (oi1.ID == oi.ID)
                     throw new DuplicateIDExeption();
             //throw new Exception("Order Item already exists ");
+            oi.ID = DataSource.Config.getOrderItemLastId();
             DataSource.OI_list.Add(oi);
             return oi.ID;
 
@@ -92,27 +93,9 @@ namespace Dal
                 orderItems.Add(DataSource.OI_list[i]);
             return orderItems;
 
-            //int count = 0, i = 0;
-            //foreach (var p in DataSource.OI_list)
-            //{
-            //    count++;
-            //}
-
-            //OrderItem[] arr = new OrderItem[count];
-
-            //foreach (var p in DataSource.OI_list)
-            //{
-            //    arr[i++] = p;
-            //}
-            //return arr;
+            
         }
 
-        //public  IEnumerable<OrderItem> GetByOrderID(int id)
-        //{
-        //   List<OrderItem> arr; 
-        //    foreach (var p in DataSource.OI_list)
-        //        arr.Add(p) where(p.OrderID == id)
-
-        //}
+        
     }
 }

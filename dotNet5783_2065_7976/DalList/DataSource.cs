@@ -19,9 +19,15 @@ namespace Dal
 
 
             internal static int OrderLastId=1; // running index number of order
+            internal static int OrderItemLastId = 1;
+
             internal static int getOrderLastId()
             {
                 return OrderLastId++;
+            }
+            internal static int getOrderItemLastId()
+            {
+                return OrderItemLastId++;
             }
 
         }
@@ -86,7 +92,7 @@ namespace Dal
                 o.OrderDate = DateTime.Now - new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 o.CustomerAddress = i + "/" + 2 * i + "begin road jerusalem";
                 o.ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-                o.DeliveryDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
+                o.DeliveryDate = DateTime.Now + 2* new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                // i++;
                 O_list.Add(o);
                 //Config.OrderFirstClear++;

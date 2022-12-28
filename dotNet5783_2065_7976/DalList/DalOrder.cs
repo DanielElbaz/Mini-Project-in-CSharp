@@ -14,7 +14,8 @@ namespace Dal
             foreach (Order order1 in DataSource.O_list)
                 if (order1.ID == order.ID)
                     throw new DuplicateIDExeption(); //duplicateID
-                                             //  throw new Exception("order already exists ");
+                                                     //  throw new Exception("order already exists ");
+            order.ID = DataSource.Config.getOrderLastId();
             DataSource.O_list.Add(order);
 
             return order.ID;
@@ -59,41 +60,6 @@ namespace Dal
 
         }
 
-        //public void setDate ( int id, int date)
-        //{
-        //    Order order = new Order();
-        //    int i=0;
-        //    bool flag = false;
-        //    for (; i < DataSource.O_list.Count; i++)
-        //    {
-        //         order = DataSource.O_list[i];
-        //        if (order.ID == id)
-        //        {
-        //            if (date == 0)
-        //            {
-        //                order.ShipDate = DateTime.Now;
-        //                flag = true;
-        //                break;
-        //            }
-        //            else
-        //            if (date == 1)
-        //            {
-        //                order.DeliveryDate = DateTime.Now;
-        //                flag = true;
-        //                break;
-
-        //            }
-        //            else
-        //                throw new invalidInputException(" invalid input");
-        //        }
-        //        else
-        //            throw new MissingIDException(id + " not found in data");
-        //    }
-        //        if (flag)
-        //            DataSource.O_list[i] = order;
-
-        //    }
-                    
 
         public Order GetByID(int id)
         {
@@ -124,22 +90,11 @@ namespace Dal
         {
 
             List<Order> orders = new List<Order>();
-            for (int i = 0; i < DataSource.P_list.Count; i++)
+            for (int i = 0; i < DataSource.O_list.Count; i++)
                 orders.Add(DataSource.O_list[i]);
             return orders;
-            //int count = 0, i = 0;
-            //foreach (var p in DataSource.O_list)
-            //{
-            //    count++;
-            //}
-
-            //Order[] arr = new Order[count];
-
-            //foreach (var p in DataSource.O_list)
-            //{
-            //    arr[i++] = p;
-            //}
-            //return arr;
+            
+           
         }
 
 

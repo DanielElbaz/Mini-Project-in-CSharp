@@ -113,7 +113,7 @@ namespace BlImplementation
                 //OrderStatus =   doOrder.OrderStatus
                 OrderDate = doOrder.OrderDate,
                 ShipDate =  doOrder.ShipDate,
-                DeleveryDate = doOrder.ShipDate,
+                DeliveryDate = doOrder.ShipDate,
                 Items = BoOrderItems
             };
 
@@ -162,7 +162,7 @@ namespace BlImplementation
                 CustomerEmail = doOrder.CustomerEmail,
                 OrderDate =doOrder.OrderDate,
                 ShipDate = doOrder.ShipDate,
-                DeleveryDate = null,                
+                DeliveryDate = null,                
                 Items = BoOrderItems
 
                  };        
@@ -214,7 +214,7 @@ namespace BlImplementation
                 CustomerEmail = doOrder.CustomerEmail,
                 OrderDate = doOrder.OrderDate,
                 ShipDate = doOrder.ShipDate,
-                DeleveryDate = doOrder.DeliveryDate,
+                DeliveryDate = doOrder.DeliveryDate,
                 Items = BoOrderItems
 
             };
