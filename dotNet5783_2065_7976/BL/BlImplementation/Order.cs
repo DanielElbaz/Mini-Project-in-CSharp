@@ -20,10 +20,10 @@ namespace BlImplementation
         /// returns list of orders
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BO.OrderForList> GetOrders()
+        public IEnumerable<BO.OrderForList?> GetOrders()
         {
-            IEnumerable<DO.Order> doOrders;
-            IEnumerable<DO.OrderItem> doOrderItems;
+            IEnumerable<DO.Order?> doOrders;
+            IEnumerable<DO.OrderItem?> doOrderItems;
             //  DO.OrderItem orderItem  ;
               
                  doOrders = dal.Order.GetAll();
@@ -84,8 +84,8 @@ namespace BlImplementation
 
             try { doOrder = dal.Order.GetByID(id); }
             catch (DO.MissingIDException ex)  { throw new BO.MissingIDException(ex.Message);}
-
-            IEnumerable<DO.OrderItem> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => orderItem.OrderID == id);
+            IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderID == id);
+            //IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => ((DO.OrderItem)orderItem!).OrderID == id);
             List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
             double orderTotalPrice = 0;// total price for the order 
             foreach (DO.OrderItem DoOrderItem in doOrderItems)
@@ -138,7 +138,8 @@ namespace BlImplementation
             catch (DO.MissingIDException) { throw new BO.MissingIDException("order ont found"); }
             if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
             if (doOrder.ShipDate != null) throw new BO.invalidInputException(" order is already in the system");
-            IEnumerable<DO.OrderItem> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => orderItem.OrderID == id); // list if order items from data layer 
+            IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderID == id);
+           // IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => ((DO.OrderItem)orderItem!).OrderID == id); // list if order items from data layer 
             doOrder.ShipDate = DateTime.Now; // update the DO order 
             dal.Order.Update(doOrder.ID, doOrder);
             List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
@@ -189,8 +190,8 @@ namespace BlImplementation
             if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
             if (doOrder.ShipDate == null) throw new BO.invalidInputException(" order ship date is null");
             if (doOrder.DeliveryDate != null) throw new BO.invalidInputException(" order has already been delivered");
-
-            IEnumerable<DO.OrderItem> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => orderItem.OrderID == id); // list if order items from data layer 
+            IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderID == id);
+           // IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where( orderItem => ((DO.OrderItem)orderItem!).OrderID == id); // list if order items from data layer 
             doOrder.DeliveryDate = DateTime.Now;            // update the DO order 
             dal.Order.Update(doOrder.ID, doOrder);
             List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();

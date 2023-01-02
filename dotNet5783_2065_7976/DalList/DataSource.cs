@@ -47,9 +47,9 @@ namespace Dal
         //internal static Product[] P_arr = new Product[P_capacity];
         //internal static Order[] O_arr = new Order[O_capacity];
  
-        internal static List<OrderItem> OI_list = new();
-        internal static List<Product> P_list = new();
-        internal static List<Order> O_list = new();
+        internal static List<OrderItem?> OI_list = new();
+        internal static List<Product?> P_list = new();
+        internal static List<Order?> O_list = new();
 
         private static void addOrderItem() // initialize order item
         {
@@ -57,13 +57,13 @@ namespace Dal
             for (int i =1; i <= 40; i++)
             {
                 int index = Config.rand.Next(P_list.Count);
-                Product p = P_list[index]; // draw of any product randomally
+                Product p = (Product)P_list[index]; // draw of any product randomally
 
                 OrderItem oi = new OrderItem()
                 {
                     ID = Config.rand.Next(100000, 999999),
                     ProductID = p.ID,// get a random id of an existing product
-                    OrderID = O_list[Config.rand.Next(O_list.Count)].ID, // random order id from the order list
+                    OrderID = ((Order)O_list[Config.rand.Next(O_list.Count)]).ID, // random order id from the order list
                     Amount = Config.rand.Next(1, 5),
                     Price = p.Price
                 };
@@ -71,8 +71,8 @@ namespace Dal
             // i++;
             // Config.OrderItemFirstClear++;
 
+            }
         }
-    }
         private static void addOrder() // initialize order
         {
 

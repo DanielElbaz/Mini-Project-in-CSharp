@@ -13,15 +13,15 @@ public struct Order
     /// <summary>
     /// id
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     /// customer name   
     /// </summary>
-    public string CustomerEmail { get; set; }  
+    public string? CustomerEmail { get; set; }  
     /// <summary>
     /// costumer email
     /// </summary>
-    public string CustomerAddress{ get; set; }
+    public string? CustomerAddress{ get; set; }
     /// <summary>
     /// customer address
     /// </summary>

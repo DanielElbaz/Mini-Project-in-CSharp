@@ -15,7 +15,7 @@ namespace DO
         /// <summary>
         /// id
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
         /// <summary>
         /// name
         /// </summary>

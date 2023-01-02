@@ -66,36 +66,62 @@ namespace Dal
 
         public OrderItem GetByID(int id)
         {
-            //int i;
-            int index = -1;
-            //Boolean flag = false;
-            foreach (OrderItem orderitem in DataSource.OI_list)
-
-                if (id == orderitem.ID)
-                {
-                    //flag = true;
-
-                    index = DataSource.OI_list.IndexOf(orderitem);
-                    break;
-                }
-
-            if (index ==-1)
+            var item = DataSource.OI_list.FirstOrDefault(o => ((OrderItem)o!).ID == id);
+            if (item == null)
                 throw new MissingIDException();
-            //throw new Exception("Order Item does not exist");
-            return DataSource.OI_list[index];
-        }
-        public IEnumerable<OrderItem> GetAll()
-        {
-            
+            return (OrderItem)item;
 
-            List<OrderItem> orderItems = new List<OrderItem>();
-            for (int i = 0; i < DataSource.OI_list.Count; i++)
-                orderItems.Add(DataSource.OI_list[i]);
+            //int index = -1;
+            //foreach (OrderItem orderitem in DataSource.OI_list)
+
+            //    if (id == orderitem.ID)
+            //    {
+            //        //flag = true;
+
+            //        index = DataSource.OI_list.IndexOf(orderitem);
+            //        break;
+            //    }
+
+            //if (index ==-1)
+            //    throw new MissingIDException();
+
+            //return DataSource.OI_list[index];
+        }
+        public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null)
+        {
+            if (filter == null)
+                return DataSource.OI_list;
+
+            List<OrderItem?> orderItems = new();
+            foreach (var o in DataSource.OI_list)
+                if (filter(o))
+                    orderItems.Add(o);
             return orderItems;
 
-            
+
         }
 
-        
+        public OrderItem GetBy(Func<OrderItem?, bool> filter)
+        {
+            var item = DataSource.OI_list.FirstOrDefault(o => filter((o)));
+            if (item == null)
+                throw new invalidInputException("no items found");
+            return (OrderItem)item;
+            //bool flag = false;
+            //if (filter == null)
+            //    throw new invalidInputException();
+            //OrderItem orderItem = new();
+            //foreach (var o in DataSource.OI_list)
+            //    if (filter(o))
+            //    {
+            //        flag = true;
+            //        orderItem = (OrderItem)o!;
+            //    }
+            //if (!flag)
+            //    throw new invalidInputException("no items found");
+            //return orderItem;
+
+        }
+
     }
 }

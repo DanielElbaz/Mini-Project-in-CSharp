@@ -45,7 +45,7 @@ namespace BlTest
 
             do
             {
-                Console.WriteLine("Hi, please press: \n" +
+                Console.WriteLine("\nHi, please press: \n" +
                                    "1: For product. \n" +
                                    "2: For order. \n" +
                                    "3: For cart. \n" +
@@ -174,7 +174,7 @@ namespace BlTest
                         double price;
                         string? name;
                         BO.Category category;
-                        Console.WriteLine(" Enter id \n");
+                        Console.WriteLine(" Enter id (6 digits) \n");
                         id = Int32.Parse(Console.ReadLine());
                         Console.WriteLine(" Enter name \n");
                         name = Console.ReadLine();
@@ -182,17 +182,22 @@ namespace BlTest
                         price = Double.Parse(Console.ReadLine());
                         Console.WriteLine(" Enter amount in stock \n");
                         inStock = Int32.Parse(Console.ReadLine());
-                        Console.WriteLine(" Enter category: 0 for phone\n" +
+                        Console.WriteLine(" Enter category:\n" +
+                                           "0 for phone\n" +
                                            "1 for computers\n" +
                                            "2 for Tablets\n" +
                                            "3 for Earphones\n"+
                                            "4 for gameplay \n");
-                        string input = Console.ReadLine();
-                        bool valid = Enum.TryParse(input, out category);
+                        
+                        string input =Console.ReadLine();                        
+                        int v = Convert.ToInt32(input);
+                        bool valid = Enum.TryParse(input, out category) &&(v>=0&&v<5);
                         //category = (BO.Category)System.Console.Read();
-                        if(valid) { category = (BO.Category)category; }
-                        else {                            
-                                Console.WriteLine("Error ");                                                       
+                        if (valid) { category = (BO.Category)category; }
+                        else
+                        {                            
+                            Console.WriteLine("Error ");
+                            MainProduct();
                         }
                         BO.Product product = new BO.Product()
                         {

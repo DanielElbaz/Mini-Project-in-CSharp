@@ -24,11 +24,11 @@ namespace BlImplementation
         /// gets the list of products
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BO.ProductForList> GetAll()
+        public IEnumerable<BO.ProductForList?> GetAll()
         {
 
 
-            IEnumerable<DO.Product> doProducts = dal.Product.GetAll();
+            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll();
             List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
             foreach (DO.Product doProduct in doProducts)
             {
@@ -163,7 +163,7 @@ namespace BlImplementation
                 Category = (DO.Category)p.Category,
                 InStock = p.InStock
             };
-            IEnumerable<DO.Product> doProducts = dal.Product.GetAll();
+            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll();
 
             //Checking if the product is found in the system.
             foreach (DO.Product doProduct in doProducts)
@@ -190,7 +190,7 @@ namespace BlImplementation
             //Product product = new ();
            
             //Check if the product found in other orders.
-            IEnumerable<DO.OrderItem> orders = dal.OrderItem.GetAll();
+            IEnumerable<DO.OrderItem?> orders = dal.OrderItem.GetAll();
             foreach (DO.OrderItem o in orders)
                 if (o.ProductID == id)
                 {
