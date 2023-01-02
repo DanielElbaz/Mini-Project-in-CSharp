@@ -21,7 +21,7 @@ public struct Order
     /// <summary>
     /// costumer email
     /// </summary>
-    public string? CustomerAddress{ get; set; }
+    public string? CustomerAdress{ get; set; }
     /// <summary>
     /// customer address
     /// </summary>
