@@ -42,7 +42,7 @@ public struct Order
     Order ID={ID}: , 
     CustomerName - {CustomerName}
     CustomerEmail: {CustomerEmail}
-    CustomerAdress: {CustomerAdress}
+    CustomerAdress: {CustomerAddress}
     OrderDate: {OrderDate}
     ShipDate: {ShipDate}
     DeliveryDate: {DeliveryDate}";
