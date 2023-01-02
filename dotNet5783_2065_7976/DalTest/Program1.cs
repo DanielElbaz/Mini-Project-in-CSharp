@@ -117,7 +117,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        IEnumerable<Product?> products = dal.Product.GetAll();
+                        List<Product> products =dalProduct.getAllProducts();
                         foreach (Product P in products)
                             Console.WriteLine(P + "\n");
 
