@@ -33,7 +33,7 @@ public struct Order
     /// <summary>
     /// ship date
     /// </summary>
-    public DateTime DeliveryDate { get; set; } /// <summary>
+    public DateTime? DeliveryDate { get; set; } /// <summary>
     /// delivery time
     /// </summary>
     /// <returns></returns>
@@ -42,7 +42,7 @@ public struct Order
     Order ID={ID}: , 
     CustomerName - {CustomerName}
     CustomerEmail: {CustomerEmail}
-    CustomerAdress: {CustomerAdress}
+    CustomerAdress: {CustomerAddress}
     OrderDate: {OrderDate}
     ShipDate: {ShipDate}
     DeliveryDate: {DeliveryDate}";
