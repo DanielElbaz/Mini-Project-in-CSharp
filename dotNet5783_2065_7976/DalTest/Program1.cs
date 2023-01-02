@@ -1,23 +1,21 @@
 ﻿using DO;
-using Dal;
-using System;
+using System.Security.Cryptography.X509Certificates;
 using DalApi;
+using System.Diagnostics;
+using Dal;
 
 namespace DalTest
 {
-    class Program
+   internal class Program1
     {
-         static IDal dal = new DalList();
-        private static DalOrder dalOrder = new DalOrder();
-        private static DalOrderItem dalOrderItem = new DalOrderItem();
-        private static DalProduct dalProduct = new DalProduct();
+        public static IDal dal = DalList.Instance;
+      //private static dal.Order dal.Order = new dal.Order();
+    //  private static dal.OrderItem dal.OrderItem = new dal.OrderItem();
+   //   private static dal.Product dal.Product = new dal.Product();
 
         static void Main(string[] args)
         {
             choice ch;
-
-            // char ch;
-
             do
             {
                 Console.WriteLine("Hi, please press: \n" +
@@ -26,39 +24,29 @@ namespace DalTest
                                    "3: For order item. \n" +
                                    "0: For exit: \n");
                 /*while (!*/
-                Enum.TryParse(Console.ReadLine(), out ch);
-                //{
-                //    Console.WriteLine("Wrong Input!");
-                //}
+                string input = Console.ReadLine();
+                bool valid = Enum.TryParse(input, out ch);
+                               if (!valid)
+                {
+                    Console.WriteLine("Error ");
+                    continue;
+                }
 
                 switch (ch)
                 {
-
-                    case choice.product:
-                        {
-                            MainProduct();
-                        }
+                    case choice.product:                   
+                          MainProduct();                        
                         break;
 
-                    case choice.order:
-                        {
-                            MainOrder();
-                        }
-                        break;
+                    case choice.order:                        
+                           MainOrder();
+                              break;
 
                     case choice.orderItem:
-                        {
-                            MainOrderItem();
-                        }
-                        break;
+                             MainOrderItem();
+                                 break;
                 }
-
-
             } while (ch != choice.exit);
-
-
-
-
         }
         public static void MainProduct()
         {
@@ -69,7 +57,7 @@ namespace DalTest
                         "d- Update a product.\n" +
                         "e- Delete a product.\n");
 
-            char c = (char)System.Console.Read();
+            char c = Char.Parse(Console.ReadLine());
 
             switch (c)
             {
@@ -79,7 +67,7 @@ namespace DalTest
                         // string? category = "Phones"; 
                         Category category;
                         string? name, id1;
-                        Console.WriteLine("enter id,  name, category, price and in stock \n");                        
+                        Console.WriteLine("enter id,  name, category (0-4), price and in stock \n");                        
 
                         id1 = Console.ReadLine();
                         int.TryParse(id1, out id);
@@ -100,7 +88,7 @@ namespace DalTest
                         p.InStock = stock;
                         p.Price = price;
 
-                        try { Console.WriteLine("successfully added product " + dalProduct.Add(p)); }
+                        try { Console.WriteLine("successfully added product " + dal.Product.Add(p)); }
                         catch (Exception st)
                         {
                             Console.WriteLine(st);
@@ -116,7 +104,7 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out id);
                         try
                         {
-                            Product p = DalProduct.GetProduct(id);
+                            Product p = dal.Product.GetByID(id);
                             Console.WriteLine(p);
                         }
                         catch (Exception st)
@@ -129,7 +117,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        List<Product> products =DalProduct.getAllProducts();
+                        List<Product> products =dalProduct.getAllProducts();
                         foreach (Product P in products)
                             Console.WriteLine(P + "\n");
 
@@ -160,7 +148,7 @@ namespace DalTest
                             p.Category = (Category)Enum.Parse(typeof(Category), category);
                             p.InStock = stock;
                             p.Price = price;
-                            dalProduct.Update(newId, p);
+                            dal.Product.Update(newId, p);
                             Console.WriteLine("successfully updated product number" + id);
 
                         }
@@ -179,7 +167,7 @@ namespace DalTest
 
                         try
                         {
-                            dalProduct.Delete(id);
+                            dal.Product.Delete(id);
                             Console.WriteLine(+id + "successfully deleted");
                         }
                         catch (Exception str)
@@ -187,8 +175,6 @@ namespace DalTest
                     }
                     break;
             }
-
-
         }
         public static void MainOrder()
         {
@@ -199,7 +185,7 @@ namespace DalTest
                                        "d- Update an order.\n" +
                                        "e- Delete an order.\n");
 
-            char c = (char)System.Console.Read();
+            char c = Char.Parse(Console.ReadLine());
 
             switch (c)
             {
@@ -229,15 +215,11 @@ namespace DalTest
                         order.OrderDate = orderDate;
                         order.ShipDate = shipDate;
                         order.DeliveryDate = deliveryDate;
-                        try { Console.WriteLine("successfully added product " + dalOrder.Add(order)); }
+                        try { Console.WriteLine("successfully added product " + dal.Order.Add(order)); }
                         catch (Exception st)
                         {
                             Console.WriteLine(st);
                         }
-
-
-
-
                     }
                     break;
                 case 'b':
@@ -248,7 +230,7 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out id);
                         try
                         {
-                            Order order = dalOrder.getOneOrder(id);
+                            Order order = dal.Order.GetByID(id);
                             Console.WriteLine(order);
                         }
                         catch (Exception st)
@@ -259,7 +241,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        List<Order> orders = dalOrder.getAllOrders();
+                        IEnumerable<Order?> orders = dal.Order.GetAll();
                         foreach (Order order in orders)
                             Console.WriteLine(order + "\n");
                     }
@@ -291,7 +273,7 @@ namespace DalTest
                         order.DeliveryDate = deliveryDate;
                         try
                         {
-                            dalOrder.Update(oldId, order);
+                            dal.Order.Update(oldId, order);
                             Console.WriteLine("successfully updated order number" + oldId);
                         }
 
@@ -303,21 +285,17 @@ namespace DalTest
                     }
                     break;
                 case 'e':
-                    {
-                        
+                    {                       
                             int id;
                             Console.WriteLine("enter id of order to delete");
                             id = Console.Read();
-                            //int.TryParse(Console.ReadLine(), out id);
-
                             try
                             {
-                                dalOrder.Delete(id);
+                                dal.Order.Delete(id);
                                 Console.WriteLine(+id + "successfully deleted");
                             }
                             catch (Exception str)
-                            { Console.WriteLine(str); }
-                        
+                            { Console.WriteLine(str); }                      
 
                     }
                     break;
@@ -332,7 +310,7 @@ namespace DalTest
                                          "c- View the order item list.\n" +
                                          "d- Update an order item.\n" +
                                          "e- Delete an order item.\n");
-            char c = (char)System.Console.Read();
+            char c = Char.Parse(Console.ReadLine());
 
             switch (c)
 
@@ -355,7 +333,7 @@ namespace DalTest
                         orderItem.Price = price;
                         orderItem.Amount = amount;
 
-                        try { Console.WriteLine("successfully added orderItem " + dalOrderItem.Add(orderItem)); }
+                        try { Console.WriteLine("successfully added orderItem " + dal.OrderItem.Add(orderItem)); }
                         catch (Exception st)
                         {
                             Console.WriteLine(st);
@@ -370,7 +348,7 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out id);
                         try
                         {
-                            OrderItem orderItem = dalOrderItem.getOneOrderItem(id);
+                            OrderItem orderItem = dal.OrderItem.GetByID(id);
                             Console.WriteLine(orderItem);
                         }
                         catch (Exception st)
@@ -383,7 +361,7 @@ namespace DalTest
 
                 case 'c':
                     {
-                        List<OrderItem> orderItems = dalOrderItem.getAllOrderItems();
+                        IEnumerable<OrderItem?> orderItems = dal.OrderItem.GetAll();
                         foreach (OrderItem orderItem in orderItems)
                             Console.WriteLine(orderItem + "\n");
 
@@ -411,7 +389,7 @@ namespace DalTest
 
                         try {
 
-                        dalOrderItem.Update(oldId, orderItem);
+                        dal.OrderItem.Update(oldId, orderItem);
                         Console.WriteLine("successfully added orderItem " + oldId ); }
                         catch (Exception st)
                         {
@@ -428,7 +406,7 @@ namespace DalTest
 
                         try
                         {
-                            dalOrderItem.Delete(id);
+                            dal.OrderItem.Delete(id);
                             Console.WriteLine("order item"+id + " successfully deleted");
                         }
                         catch (Exception str)
@@ -437,9 +415,6 @@ namespace DalTest
                     }
                     break;
             }
-                   
-
-
-            }
+           }
         }
     }

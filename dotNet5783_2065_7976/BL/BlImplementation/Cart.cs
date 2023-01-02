@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using BL;
 using BlApi;
 using BO;
 using Dal;
@@ -39,6 +41,11 @@ namespace BlImplementation
             {
                 throw new BO.incorrectDataException("invalid product id", dex);
             }
+            catch (DO.MissingIDException dex)
+            {
+                throw new BO.MissingIDException("id not found", dex);
+            }
+
             var item = cart.Items?.FirstOrDefault(elem => elem.ProductID == productId);
             if (item == null) // new product item for cart
             {
@@ -57,6 +64,7 @@ namespace BlImplementation
                         cart.Items = new();
 
                     cart.Items.Add(item);
+                    cart.TotalPrice += product.Price;
                 }
             }
 
@@ -65,7 +73,9 @@ namespace BlImplementation
                 if (product.InStock >= item.Amount + 1)
                 {
                     item.Amount++; // add to the amount of the item
-                    cart.TotalPrice += product.Price; 
+                    cart.TotalPrice += product.Price;
+                    //product.InStock--; // reduce ammount
+                    
                 }
             }
 
@@ -87,71 +97,62 @@ namespace BlImplementation
             {
                 product = dal.Product.GetByID(productId);
             }
-            catch (DO.IncorrectDataException dex)
+            catch (DO.MissingIDException dex)
             {
-                throw new BO.incorrectDataException("invalid product id", dex);
+                throw new BO.MissingIDException("invalid product id", dex);
             }
-            if (newAmount <= 0)
+            if (newAmount < 0)
                 throw new BO.invalidInputException("wrong amount");
 
             var item = cart.Items?.FirstOrDefault(elem => elem.ProductID == productId);
 
             if (item == null) // new product item for cart
+                throw new BO.invalidInputException("item doesnt exist in the cart");
+            int difference = newAmount - item.Amount;
+
+            if (product.InStock >= difference) // there is in stock
             {
-                if (product.InStock >= 1) // there is in stock
+
+                if (newAmount == 0)
                 {
-                    item = new()
-                    {
-                        ItemID = 0,
-                        ProductID = product.ID,
-                        ProductName = product.Name,
-                        ProductPrice = product.Price,
-                        TotalPrice = product.Price,
-                        Amount = 1,
-                    };
-                    if (cart.Items == null) // if there are no items - create
-                        cart.Items = new();
-
-                    cart.Items.Add(item);
-                }
-            }
-
-            else // items exist in the cart
-            {
-               
-
-                if (newAmount >= item.Amount ) //the new amount is bigger
-                {
-                    item.Amount = newAmount;
-                    cart.TotalPrice +=newAmount * product.Price;
-                }
-
-                if (newAmount <= item.Amount)// new amount is smaller 
-                {
-                    item.Amount = newAmount;
-                    cart.TotalPrice -= newAmount * product.Price;
-                }
-
-                if (newAmount ==0)
-                {
-                    cart.TotalPrice -= item!.TotalPrice; // reduce the total price of the cart
+                    cart.TotalPrice -= item!.TotalPrice; // reduce the total price of item from the cart
                     cart.Items!.Remove(item); // delete the order item
-                    
+                }
+                else
+
+                {
+                    item.Amount = newAmount;
+                    cart.TotalPrice += difference * product.Price;
+                    //product.InStock += difference;
                 }
             }
-                                
-
-
+            else // not enough in stock
+            {
+                throw new BO.invalidInputException("not enough in stock");
+            }                
+                
+                            
             return cart; 
         }
         /// <summary>
         /// confirm cart for order
         /// </summary>
-        public void ConfirmCart(Cart cart)
-        { }
 
-       
+        public bool IsValid(string email)
+        {
+            var valid = true;
 
+            try
+            {
+                var emailAddress = new MailAddress(email);
+            }
+            catch
+            {
+                valid = false;
+            }
+
+            return valid;
+        }
         public void ConfirmCart(BO.Cart cart)
         {
             int orderId =0; // id of order to add 
@@ -159,26 +160,23 @@ namespace BlImplementation
             DO.Order order ;
             if (cart.Items == null)//no itmes in cart
                 throw new BO.incorrectDataException("no items in the cart");
+            
+            if( cart.CustomerEmail!= null && cart.CustomerEmail != " "&& !IsValid(cart.CustomerEmail))
+                throw new BO.incorrectDataException("invalid email address");
+            //if (cart.CustomerEmail != null) // invalid mail
+            //{
+            //    var email = new EmailAddressAttribute();
+            //    if (!email.IsValid(cart.CustomerEmail) || !(cart.CustomerEmail.Equals(" ")))
+            //        throw new BO.incorrectDataException("invalid email address");
+            //}
 
-            if (cart.CustomerEmail != null) // invalid mail
-            {
-                var email = new EmailAddressAttribute();
-                if(!email.IsValid(cart.CustomerEmail) || !(cart.CustomerEmail.Equals(" ")))
-                    throw new BO.incorrectDataException("invalid email address");
+            //else
+            //    throw new BO.incorrectDataException("invalid email address");
 
-            }
 
-            else
-            {
-                    throw new BO.incorrectDataException("invalid email address");
-
-            }
-
-            if (cart.CustomerName == null)
-                throw new BO.incorrectDataException("customer name is null ");
-
-            if (cart.CustomerAddress == null)
-                throw new BO.incorrectDataException("customer address is null ");
+            if (cart.CustomerName == null || cart.CustomerAddress == null)
+                throw new BO.incorrectDataException("customer name or address null ");
+           
 
             foreach (BO.OrderItem orderItem in cart.Items)
             {
@@ -192,8 +190,8 @@ namespace BlImplementation
                     throw new BO.MissingIDException() ;
                 } // get the product in the orderItem list
                 if (orderItem.Amount <= 0) // negative amount
-                    throw new BO.incorrectDataException("invalid amount if orderitem  " + orderItem.ProductName);
-                if (product.InStock < orderItem.Amount)
+                    throw new BO.incorrectDataException("invalid amount if order item  " + orderItem.ProductName);
+                if (product.InStock < orderItem.Amount)// not enough in stock
                     throw new BO.incorrectDataException("not enough in stock for Product " + product.Name);
 
              }
@@ -203,8 +201,8 @@ namespace BlImplementation
                 CustomerEmail = cart.CustomerEmail,
                 CustomerAddress = cart.CustomerAddress ?? throw new BO.incorrectDataException(" null customer name"),
                 OrderDate = DateTime.Now,
-                ShipDate = DateTime.MinValue,
-                DeliveryDate = DateTime.MinValue
+                ShipDate = null,
+                DeliveryDate = null
 
             };
 
@@ -221,13 +219,7 @@ namespace BlImplementation
 
             //DO.OrderItem orderItem2 = new DO.OrderItem();
             foreach (BO.OrderItem orderItem1 in cart.Items)
-            {
-                ////orderItem2.ID = orderItem1.ItemID;
-                //orderItem2.Amount = orderItem1.Amount;
-                //// orderItem2.OrderID = orderItem1.
-                //orderItem2.Price = orderItem1.TotalPrice;
-                //orderItem2.OrderID = orderId;
-                //orderItem2.ProductID = orderItem1.ProductID;
+            {                
                 try
                 {
                     dal.OrderItem.Add(new DO.OrderItem
@@ -241,6 +233,7 @@ namespace BlImplementation
 
                     product = dal.Product.GetByID(orderItem1.ProductID);
                     product.InStock -= orderItem1.Amount;
+                    dal.Product.Update(product.ID,product);
 
 
                     // dal.OrderItem.Add(orderItem2);
@@ -250,19 +243,9 @@ namespace BlImplementation
                     Console.WriteLine(ex.Message);
                 }
             }
-
-            //foreach (BO.OrderItem orderItem in cart.Items) // update the amount of products in data layer
-            //{
-            //    product = dal.Product.GetByID(orderItem.ProductID);
-            //    product.InStock -= orderItem.Amount;
-
-            //}
-
-
-
-
-
+                      
 
         }
+        
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BL;
 using DO;
 
 namespace BO
@@ -14,5 +15,9 @@ namespace BO
         public OrderStatus OrderStatus { get; set; }
         public int AmountOfItems { get; set; }
         public double TotalPrice { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

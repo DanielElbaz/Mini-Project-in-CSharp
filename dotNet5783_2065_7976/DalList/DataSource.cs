@@ -11,17 +11,23 @@ namespace Dal
         internal class Config
         {
 
-            internal static int OrderItemFirstClear = 0;
-            internal static int ProductFirstClear = 0; // the first index in the array which is clear
-            internal static int OrderFirstClear = 0;
+            //internal static int OrderItemFirstClear = 0;
+            //internal static int ProductFirstClear = 0; // the first index in the array which is clear
+            //internal static int OrderFirstClear = 0;
 
             static internal Random rand = new Random();
 
 
-            internal static int OrderLastId; // running index number of order
+            internal static int OrderLastId=1; // running index number of order
+            internal static int OrderItemLastId = 1;
+
             internal static int getOrderLastId()
             {
                 return OrderLastId++;
+            }
+            internal static int getOrderItemLastId()
+            {
+                return OrderItemLastId++;
             }
 
         }
@@ -33,34 +39,37 @@ namespace Dal
         }
 
 
-        internal static int OI_capacity = 200;
-        internal static int P_capacity = 50;
-        internal static int O_capacity = 100;
+        //internal static int OI_capacity = 200;
+        //internal static int P_capacity = 50;
+        //internal static int O_capacity = 100;
 
         //internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
-        internal static List<OrderItem> OI_list = new List<OrderItem>();
         //internal static Product[] P_arr = new Product[P_capacity];
-        internal static List<Product> P_list = new List<Product>();
         //internal static Order[] O_arr = new Order[O_capacity];
-        internal static List<Order> O_list = new List<Order>();
+ 
+        internal static List<OrderItem?> OI_list = new();
+        internal static List<Product?> P_list = new();
+        internal static List<Order?> O_list = new();
 
         private static void addOrderItem() // initialize order item
         {
 
-            for (int i = 0; i < 40; i++)
+            for (int i =1; i <= 40; i++)
             {
                 int index = Config.rand.Next(P_list.Count);
-                Product p = P_list[index]; // draw of any product randomally
+                Product p = (Product)P_list[index]; // draw of any product randomally
 
-                OrderItem oi = new OrderItem();
-                oi.ID = Config.rand.Next(100000, 999999);
-                oi.ProductID = p.ID;// get a random id of שמ existing product
-                oi.OrderID = OI_list[Config.rand.Next(Config.OrderItemFirstClear)].ID;
-                oi.Amount = Config.rand.Next(1, 5);
-                oi.Price = p.Price;
+                OrderItem oi = new OrderItem()
+                {
+                    ID = Config.rand.Next(100000, 999999),
+                    ProductID = p.ID,// get a random id of an existing product
+                    OrderID = ((Order)O_list[Config.rand.Next(O_list.Count)]).ID, // random order id from the order list
+                    Amount = Config.rand.Next(1, 5),
+                    Price = p.Price
+                };
                 OI_list.Add(oi);
-                i++;
-                Config.OrderItemFirstClear++;
+            // i++;
+            // Config.OrderItemFirstClear++;
 
             }
         }
@@ -73,19 +82,20 @@ namespace Dal
             ,"preciousDana57@frontiernet.net" ,"clumsyAshlee41@me.com" ,"lonelyRuben@wanadoo.fr" , "Lucasfoolish@yahoo.com.sg",
              "zanyTrevor71@t-online.de","curiousKatie@blueyonder.co.uk","Ramonelated@gmx.net","helplessNathan@yahoo.co.id","Latoyadrab@outlook.com","illLawrence@skynet.be","famousGrace@live.com.au"};
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 1; i <=20; i++)
             {
                 Order o = new Order();
                 o = new Order();
-                o.ID = Config.OrderLastId;
+                o.ID = Config.OrderLastId++;
+                o.CustomerName = "costumer " + i;
                 o.CustomerEmail = emails[Config.rand.Next(20)];
                 o.OrderDate = DateTime.Now - new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 o.CustomerAddress = i + "/" + 2 * i + "begin road jerusalem";
                 o.ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-                o.DeliveryDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-                i++;
+                o.DeliveryDate = DateTime.Now + 2* new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
+               // i++;
                 O_list.Add(o);
-                Config.OrderFirstClear++;
+                //Config.OrderFirstClear++;
             }
         }
         private static void addProduct() // add 10 products
@@ -94,7 +104,7 @@ namespace Dal
 
 
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i <=10; i++)
             {
                 Product p = new Product();
 
@@ -110,9 +120,9 @@ namespace Dal
                 p.Name = ProductNames[Config.rand.Next(0, 7)];
                 p.Price = Config.rand.Next(2000, 5000);
                 p.InStock = Config.rand.Next(0, 20);
-                i++;
+                //i++;
                 P_list.Add(p);
-                Config.ProductFirstClear++;
+                //Config.ProductFirstClear++;
 
             }
         }

@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Dal
 {
@@ -13,7 +14,8 @@ namespace Dal
             foreach (Order order1 in DataSource.O_list)
                 if (order1.ID == order.ID)
                     throw new DuplicateIDExeption(); //duplicateID
-                                             //  throw new Exception("order already exists ");
+                                                     //  throw new Exception("order already exists ");
+            order.ID = DataSource.Config.getOrderLastId();
             DataSource.O_list.Add(order);
 
             return order.ID;
@@ -28,6 +30,7 @@ namespace Dal
                 {
                     flag = true;
                     DataSource.O_list.Remove(order);
+                    break;
                 }
 
                 if (!flag)
@@ -47,6 +50,7 @@ namespace Dal
                     flag = true;
                     int index = DataSource.O_list.IndexOf(order);
                     DataSource.O_list[index] = newOrder;
+                    break;
 
                 }
             if (!flag)
@@ -56,48 +60,63 @@ namespace Dal
 
         }
 
+
         public Order GetByID(int id)
         {
-            //int i;
-            int index = -1;
-            //Boolean flag = false;
-            foreach (Order order in DataSource.O_list)
-
-                if (id == order.ID)
-                {
-                    //flag = true;
-
-                    index = DataSource.O_list.IndexOf(order);
-                    break;
-                }
-            if (index != -1)
+            var item = DataSource.O_list.FirstOrDefault(o => ((Order)o!).ID == id);
+            if (item == null)
                 throw new MissingIDException();
-            // throw new Exception("Order doesnt exist");
-            return DataSource.O_list[index];
-            //for (i = 0; i < DataSource.Config.OrderFirstClear; i++)
-            //    if (DataSource.O_arr[i].ID == id)
-            //    { flag = true; break; }
+            return (Order)item;
+            //int index = -1;
+            //foreach (Order order in DataSource.O_list)
+
+            //    if (id == order.ID)
+            //    {
+            //        //flag = true;
+
+            //        index = DataSource.O_list.IndexOf(order);
+            //        break;
+            //    }
+            //if (index == -1)
+            //    throw new MissingIDException();
+            //return (Order)DataSource.O_list[index] ;
 
 
         }
 
-        public IEnumerable<Order> GetAll()
+        public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null)
         {
-            int count = 0, i = 0;
-            foreach (var p in DataSource.O_list)
-            {
-                count++;
-            }
+            if(filter ==null)
+                return DataSource.O_list;
 
-            Order[] arr = new Order[count];
-
-            foreach (var p in DataSource.O_list)
-            {
-                arr[i++] = p;
-            }
-            return arr;
+            List<Order?> orders = new();
+            foreach (var o in DataSource.O_list)
+                if(filter(o))
+                    orders.Add(o);
+            return orders;
+            
+           
         }
 
+        public Order GetBy(Func<Order?, bool> filter)
+        {
+            var item = DataSource.O_list.FirstOrDefault(o => filter((o)));
+            if (item == null)
+                throw new invalidInputException("no items found");
+            return (Order)item;
+            //bool flag = false;
+            //if (filter ==null)
+            //  throw new invalidInputException();
+            //Order order = new();
+            //foreach (var o in DataSource.O_list)
+            //    if (filter(o))
+            //    { flag = true;
+            //     order = (Order)o!; 
+            //    }
+            //if(!flag)
+            //    throw new invalidInputException("no items found");
+            //return order;
 
+        }
     }
 }

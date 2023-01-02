@@ -15,7 +15,7 @@ namespace DO
         /// <summary>
         /// id
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
         /// <summary>
         /// name
         /// </summary>
@@ -33,9 +33,9 @@ namespace DO
         /// </summary>
         /// <returns></returns>
         public override string ToString() => $@"
-    Product ID={ID} 
-    Name =  {Name},
-    category - {Category}
+    Product ID:{ID} 
+    Name :  {Name},
+    category: {Category}
     Price: {Price}
     Amount in stock: {InStock}";
 

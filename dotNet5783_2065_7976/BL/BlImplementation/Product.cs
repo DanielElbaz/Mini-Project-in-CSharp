@@ -7,6 +7,7 @@ using BlApi;
 using Dal;
 using DalApi;
 using DO;
+using BL;
 
 namespace BlImplementation
 {
@@ -16,18 +17,18 @@ namespace BlImplementation
 
         bool Check(int id, string? name, double price, int instock)
         {
-            return (id > 0) && (name != null && name != "") && (price > 0) && (instock >= 0);
+            return (id > 100000&& id<1000000) && (name != null && name != "") && (price > 0) && (instock >= 0);
         }
 
         /// <summary>
         /// gets the list of products
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BO.ProductForList> GetAll()
+        public IEnumerable<BO.ProductForList?> GetAll()
         {
 
 
-            IEnumerable<DO.Product> doProducts = dal.Product.GetAll();
+            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll();
             List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
             foreach (DO.Product doProduct in doProducts)
             {
@@ -36,7 +37,8 @@ namespace BlImplementation
                     Category = (BO.Category)doProduct.Category,
                     ProductID = doProduct.ID,
                     ProductName = doProduct.Name,
-                    ProductPrice = doProduct.Price,
+                    ProductPrice = doProduct.Price
+                    
                 });
             }
             return productsForList;
@@ -49,17 +51,21 @@ namespace BlImplementation
         /// <returns></returns>
         public BO.Product GetProduct(int id)
         {
+
             if (id <= 0)
                 throw new BO.invalidInputException("Dosennt found product");
+            DO.Product doProduct;
 
-            DO.Product doprocut = dal.Product.GetByID(id);
+            try {  doProduct = dal.Product.GetByID(id); }
+            catch (DO.MissingIDException ex)
+            { throw new BO.MissingIDException(ex.Message); }
             BO.Product product = new BO.Product()
             {
                 ID = id,
-                Name = doprocut.Name,
-                Price = doprocut.Price,
-                Category = (BO.Category)doprocut.Category,
-                InStock = doprocut.InStock
+                Name = doProduct.Name,
+                Price = doProduct.Price,
+                Category = (BO.Category)doProduct.Category,
+                InStock = doProduct.InStock
             };
             return product;
 
@@ -73,34 +79,37 @@ namespace BlImplementation
         /// <returns>product item   </returns>
         public BO.ProductItem GetProductForCatalog(int id, BO.Cart cart)
         {
+            DO.Product doProdcut =new();
             if (id <= 0)
                 throw new BO.invalidInputException();
             if (cart == null)
                 throw new BO.invalidInputException();
 
-            DO.Product doprocut = dal.Product.GetByID(id);
-            IEnumerable<BO.OrderItem>? orders = cart.Items;
-            int amount = 0;
-            if (orders == null)
-                throw new BO.invalidInputException();
+            try {  doProdcut = dal.Product.GetByID(id); }
+            catch (DO.MissingIDException ex)
+            { throw new BO.MissingIDException(); }
+            IEnumerable<BO.OrderItem>? orderItems = cart.Items;
+            int amount = 0; // amount of the specified product in the customers cart
+            //if (orderItems == null)
+            //    throw new BO.invalidInputException("");
             // Search the product in the cart
-            foreach (BO.OrderItem O in orders)
+            if(orderItems!=null) // cart is not null
+            foreach (BO.OrderItem orderItem in orderItems)
             {
-                if (O.ProductID == id)
-                    amount = O.Amount;
+                if (orderItem.ProductID == id)
+                    amount = orderItem.Amount;
             }
 
-            BO.ProductItem product = new BO.ProductItem()
+            BO.ProductItem productItem = new BO.ProductItem()
             {
-                ProductName = doprocut.Name,
+                ProductName = doProdcut.Name,
                 ProductID = id,
-                ProductPrice = doprocut.Price,
-                IsAvailable = true,
-                Category = (BO.Category)doprocut.Category,
-
+                ProductPrice = doProdcut.Price,
+                IsAvailable = (doProdcut.InStock>=1)? true: false,
+                Category = (BO.Category)doProdcut.Category,
                 AmountInCart = amount
             };
-            return product;
+            return productItem;
 
         }
         /// <summary>
@@ -127,11 +136,11 @@ namespace BlImplementation
             {
                 dal.Product.Add(productToAdd);
             }
-            catch (DuplicateIDExeption e)
+            catch (DO.DuplicateIDExeption e)
             {
 
                 ///????????????????????????????
-                throw e;
+                throw new BO.DuplicateIDException(e.Message);
             }
 
         }
@@ -154,7 +163,7 @@ namespace BlImplementation
                 Category = (DO.Category)p.Category,
                 InStock = p.InStock
             };
-            IEnumerable<DO.Product> doProducts = dal.Product.GetAll();
+            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll();
 
             //Checking if the product is found in the system.
             foreach (DO.Product doProduct in doProducts)
@@ -164,10 +173,10 @@ namespace BlImplementation
                     {
                         dal.Product.Update(doProduct.ID, newproduct);
                     }
-                    catch (Exception)
+                    catch (DO.MissingIDException)
                     {
 
-                        throw;
+                        throw new BO.MissingIDException("product doesnt exist");
                     }
                     return;
                 }
@@ -178,30 +187,42 @@ namespace BlImplementation
         /// <param name="id"></param>
         public void DeleteProduct(int id)
         {
-            Product product = new Product();
-           // Order order = new Order();
-           // DalOrderItem dalOrderItem = new DalOrderItem();
-            //DalProduct dalProduct = new DalProduct();
+            //Product product = new ();
+           
             //Check if the product found in other orders.
-            IEnumerable<DO.OrderItem> orders = dal.OrderItem.GetAll();
+            IEnumerable<DO.OrderItem?> orders = dal.OrderItem.GetAll();
             foreach (DO.OrderItem o in orders)
                 if (o.ProductID == id)
                 {
-                    throw new DuplicateIDExeption("Product found in exsited order...");
+                    throw new BO.DuplicateIDException("Product found in exsited order...");
                 }
 
 
-            IEnumerable<BO.ProductForList> products = product.GetAll();
-            foreach (BO.ProductForList thisproduct in products)
+            //IEnumerable<BO.ProductForList> products = product.GetAll();
+            //foreach (BO.ProductForList thisproduct in products)
+            //{
+            //    if (thisproduct.ProductID == id)
+
+            try
             {
-                if (thisproduct.ProductID == id)
-                {
-                    dal.Product.Delete(id);
-                    return;
-                }
-
-
+                DO.Product doProduct = dal.Product.GetByID(id);// find the product in datasource
+                dal.Product.Delete(id); //delete
             }
+            catch (DO.MissingIDException ex)
+            { throw new BO.MissingIDException(ex.Message); }
+            return;
+            //        { throw new BO.MissingIDException(ex.Message); }
+            //        return;
+
+            //    {
+            //        try { dal.Product.Delete(id); }
+            //        catch(DO.MissingIDException ex)
+            //        { throw new BO.MissingIDException(ex.Message); }
+            //        return;
+            //    }
+
+
+            //}
             throw new BO.MissingIDException("product not found");
 
 
