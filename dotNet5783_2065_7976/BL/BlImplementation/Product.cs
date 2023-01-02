@@ -24,11 +24,11 @@ namespace BlImplementation
         /// gets the list of products
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BO.ProductForList?> GetAll()
+        public IEnumerable<BO.ProductForList?> GetAll(Func< string, bool> func = null)
         {
 
 
-            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll();
+            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll(func);
             List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
             foreach (DO.Product doProduct in doProducts)
             {
