@@ -11,8 +11,8 @@ namespace Dal
 
         public int Add(Order order)
         {
-            foreach (Order order1 in DataSource.O_list)
-                if (order1.ID == order.ID)
+            foreach (Order? order1 in DataSource.O_list)
+                if (order1?.ID == order.ID)
                     throw new DuplicateIDExeption(); //duplicateID
                                                      //  throw new Exception("order already exists ");
             order.ID = DataSource.Config.getOrderLastId();
@@ -24,9 +24,9 @@ namespace Dal
         public void Delete(int id) // delete product by id
         {
             Boolean flag = false;
-            foreach (Order order in DataSource.O_list)
+            foreach (Order? order in DataSource.O_list)
             {
-                if (id == order.ID)
+                if (id == order?.ID)
                 {
                     flag = true;
                     DataSource.O_list.Remove(order);
@@ -44,8 +44,8 @@ namespace Dal
         public void Update(int id, Order newOrder) // update old with new
         {
             Boolean flag = false;
-            foreach (Order order in DataSource.O_list)
-                if (id == order.ID)
+            foreach (Order? order in DataSource.O_list)
+                if (id == order?.ID)
                 {
                     flag = true;
                     int index = DataSource.O_list.IndexOf(order);

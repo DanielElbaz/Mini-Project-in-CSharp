@@ -16,6 +16,19 @@ namespace BL
                 str += "\n" + item.Name + ": " + item.GetValue(t, null);
             return str;
         }
+
+        public static BO.Product ConverToBO(this DO.Product product)
+        {
+            return new BO.Product
+            {
+                ID = product.ID,
+                Name = product.Name,
+                Price = product.Price,
+                Category = (BO.Category)product.Category,
+                InStock = product.InStock
+                
+            };
+        }
     }
 }
 

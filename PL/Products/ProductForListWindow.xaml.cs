@@ -38,8 +38,8 @@ namespace PL.Products
 
         private void combobox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            combobox1.SelectedItem = Enum.GetValues(typeof(BO.Category));
-            ProductListView.ItemsSource = Enum.GetValues(bl.Product.ge);
+            BO.Category category = (BO.Category)combobox1.SelectedItem ;
+            ProductListView.ItemsSource = bl.Product.GetAll( elem => elem.Category== category);
            // combobox1.SelectedItem =
 
         }

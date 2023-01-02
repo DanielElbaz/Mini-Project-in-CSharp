@@ -24,7 +24,7 @@ namespace DalTest
                                    "3: For order item. \n" +
                                    "0: For exit: \n");
                 /*while (!*/
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 bool valid = Enum.TryParse(input, out ch);
                                if (!valid)
                 {
@@ -57,7 +57,7 @@ namespace DalTest
                         "d- Update a product.\n" +
                         "e- Delete a product.\n");
 
-            char c = Char.Parse(Console.ReadLine());
+            char c = Char.Parse(Console.ReadLine()!);
 
             switch (c)
             {
@@ -74,7 +74,7 @@ namespace DalTest
                         //int.TryParse(Console.ReadLine(), out id);
                         name = Console.ReadLine();
 
-                        category = (Category)int.Parse(Console.ReadLine());
+                        category = (Category)int.Parse(Console.ReadLine()!);
                         // price = Console.Read();
                         // stock = Console.Read();
                         int.TryParse(Console.ReadLine(), out price);
@@ -117,7 +117,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        List<Product> products =dalProduct.getAllProducts();
+                        IEnumerable<Product?> products =dal.Product.GetAll();
                         foreach (Product P in products)
                             Console.WriteLine(P + "\n");
 
@@ -185,7 +185,7 @@ namespace DalTest
                                        "d- Update an order.\n" +
                                        "e- Delete an order.\n");
 
-            char c = Char.Parse(Console.ReadLine());
+            char c = Char.Parse(Console.ReadLine()!);
 
             switch (c)
             {
@@ -242,7 +242,7 @@ namespace DalTest
                 case 'c':
                     {
                         IEnumerable<Order?> orders = dal.Order.GetAll();
-                        foreach (Order order in orders)
+                        foreach (Order? order in orders)
                             Console.WriteLine(order + "\n");
                     }
                     break;
@@ -310,7 +310,7 @@ namespace DalTest
                                          "c- View the order item list.\n" +
                                          "d- Update an order item.\n" +
                                          "e- Delete an order item.\n");
-            char c = Char.Parse(Console.ReadLine());
+            char c = Char.Parse(Console.ReadLine()!);
 
             switch (c)
 

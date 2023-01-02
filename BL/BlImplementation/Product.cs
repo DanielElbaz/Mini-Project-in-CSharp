@@ -8,6 +8,7 @@ using Dal;
 using DalApi;
 using DO;
 using BL;
+using BO;
 
 namespace BlImplementation
 {
@@ -17,32 +18,35 @@ namespace BlImplementation
 
         bool Check(int id, string? name, double price, int instock)
         {
-            return (id > 100000&& id<1000000) && (name != null && name != "") && (price > 0) && (instock >= 0);
+            return (id > 100000 && id < 1000000) && (name != null && name != "") && (price > 0) && (instock >= 0);
         }
 
         /// <summary>
         /// gets the list of products
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BO.ProductForList?> GetAll(Func< BO.Category, bool> func = null)
+        public IEnumerable<BO.ProductForList?> GetAll(Func<BO.Product, bool>? func)
         {
-
-
-            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll();
-            List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
-            foreach (DO.Product doProduct in doProducts)
+            if (func == null)
             {
-                productsForList.Add(new BO.ProductForList()
-                {
-                    Category = (BO.Category)doProduct.Category,
-                    ProductID = doProduct.ID,
-                    ProductName = doProduct.Name,
-                    ProductPrice = doProduct.Price
-                    
-                });
+                return dal.Product.GetAll().Select
+                      (doProduct => new BO.ProductForList()
+                      {
+                          Category = (BO.Category)doProduct?.Category!,
+                          ProductID = (int)doProduct?.ID!,
+                          ProductName = doProduct?.Name,
+                          ProductPrice = (double)doProduct?.Price!
+                      }); 
             }
-            return productsForList;
-
+            return dal.Product.GetAll()
+                .Where(doProduct => func(doProduct?.ConverToBO()!))
+                .Select(doProduct => new BO.ProductForList()
+                {
+                    Category = (BO.Category)doProduct?.Category!,
+                    ProductID = (int)doProduct?.ID!,
+                    ProductName = doProduct?.Name,
+                    ProductPrice = (double)doProduct?.Price!
+                });
         }
         /// <summary>
         /// get a product details
@@ -56,7 +60,7 @@ namespace BlImplementation
                 throw new BO.invalidInputException("Dosennt found product");
             DO.Product doProduct;
 
-            try {  doProduct = dal.Product.GetByID(id); }
+            try { doProduct = dal.Product.GetByID(id); }
             catch (DO.MissingIDException ex)
             { throw new BO.MissingIDException(ex.Message); }
             BO.Product product = new BO.Product()
@@ -79,13 +83,13 @@ namespace BlImplementation
         /// <returns>product item   </returns>
         public BO.ProductItem GetProductForCatalog(int id, BO.Cart cart)
         {
-            DO.Product doProdcut =new();
+            DO.Product doProdcut = new();
             if (id <= 0)
                 throw new BO.invalidInputException();
             if (cart == null)
                 throw new BO.invalidInputException();
 
-            try {  doProdcut = dal.Product.GetByID(id); }
+            try { doProdcut = dal.Product.GetByID(id); }
             catch (DO.MissingIDException ex)
             { throw new BO.MissingIDException(); }
             IEnumerable<BO.OrderItem>? orderItems = cart.Items;
@@ -93,19 +97,19 @@ namespace BlImplementation
             //if (orderItems == null)
             //    throw new BO.invalidInputException("");
             // Search the product in the cart
-            if(orderItems!=null) // cart is not null
-            foreach (BO.OrderItem orderItem in orderItems)
-            {
-                if (orderItem.ProductID == id)
-                    amount = orderItem.Amount;
-            }
+            if (orderItems != null) // cart is not null
+                foreach (BO.OrderItem orderItem in orderItems)
+                {
+                    if (orderItem.ProductID == id)
+                        amount = orderItem.Amount;
+                }
 
             BO.ProductItem productItem = new BO.ProductItem()
             {
                 ProductName = doProdcut.Name,
                 ProductID = id,
                 ProductPrice = doProdcut.Price,
-                IsAvailable = (doProdcut.InStock>=1)? true: false,
+                IsAvailable = (doProdcut.InStock >= 1) ? true : false,
                 Category = (BO.Category)doProdcut.Category,
                 AmountInCart = amount
             };
@@ -152,7 +156,7 @@ namespace BlImplementation
         {
             if (p == null)
                 throw new BO.invalidInputException();
-            if (!Check(p.ID , p.Name, p.Price, p.InStock))
+            if (!Check(p.ID, p.Name, p.Price, p.InStock))
                 throw new BO.invalidInputException("Error in ditels");
 
             DO.Product newproduct = new DO.Product()
@@ -188,7 +192,7 @@ namespace BlImplementation
         public void DeleteProduct(int id)
         {
             //Product product = new ();
-           
+
             //Check if the product found in other orders.
             IEnumerable<DO.OrderItem?> orders = dal.OrderItem.GetAll();
             foreach (DO.OrderItem o in orders)
@@ -230,5 +234,6 @@ namespace BlImplementation
 
 
         }
+
     }
 }
