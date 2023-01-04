@@ -25,7 +25,8 @@ namespace PL.Products
         public ProductForListWindow()
         {
             InitializeComponent();
-            this.combobox1.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            this.productList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            this.productList.SelectedIndex = 0;
            this.ProductListView.ItemsSource = bl.Product.GetAll();
 
         }
@@ -36,12 +37,15 @@ namespace PL.Products
 
         }
 
-        private void combobox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void productList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BO.Category category = (BO.Category)combobox1.SelectedItem ;
+            BO.Category category = (BO.Category)productList.SelectedItem ;
             ProductListView.ItemsSource = bl.Product.GetAll( elem => elem.Category== category);
-           // combobox1.SelectedItem =
+           // productList.SelectedItem =
 
         }
+
+        private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+       
     }
 }

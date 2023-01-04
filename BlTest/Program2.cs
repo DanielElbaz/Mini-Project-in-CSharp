@@ -92,7 +92,7 @@ namespace BlTest
                        "x- main menu.\n");
 
 
-            char c = Char.Parse(Console.ReadLine());
+            char c = Char.Parse(Console.ReadLine()!);
 
             switch (c)
             {

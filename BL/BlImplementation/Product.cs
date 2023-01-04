@@ -18,7 +18,7 @@ namespace BlImplementation
 
         bool Check(int id, string? name, double price, int instock)
         {
-            return (id > 100000 && id < 1000000) && (name != null && name != "") && (price > 0) && (instock >= 0);
+            return (id > 100000 && id < 1000000)  && (name != null && name != "") && (price > 0) && (instock >= 0);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace BlImplementation
             {
 
                 ///????????????????????????????
-                throw new BO.DuplicateIDException(e.Message);
+                throw new BO.DuplicateIDException("Item already exists ");
             }
 
         }
