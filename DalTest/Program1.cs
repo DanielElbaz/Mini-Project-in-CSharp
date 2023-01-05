@@ -8,10 +8,12 @@ namespace DalTest
 {
    internal class Program1
     {
-        public static IDal dal = DalList.Instance;
-      //private static dal.Order dal.Order = new dal.Order();
-    //  private static dal.OrderItem dal.OrderItem = new dal.OrderItem();
-   //   private static dal.Product dal.Product = new dal.Product();
+        public static DalApi.IDal? dal = DalApi.Factory.Get();
+
+        //public static IDal dal = DalList.Instance;
+        //private static dal.Order dal.Order = new dal.Order();
+        //  private static dal.OrderItem dal.OrderItem = new dal.OrderItem();
+        //   private static dal.Product dal.Product = new dal.Product();
 
         static void Main(string[] args)
         {
@@ -88,7 +90,7 @@ namespace DalTest
                         p.InStock = stock;
                         p.Price = price;
 
-                        try { Console.WriteLine("successfully added product " + dal.Product.Add(p)); }
+                        try { Console.WriteLine("successfully added product " + dal?.Product.Add(p)); }
                         catch (Exception st)
                         {
                             Console.WriteLine(st);
@@ -104,7 +106,7 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out id);
                         try
                         {
-                            Product p = dal.Product.GetByID(id);
+                            Product p = dal!.Product.GetByID(id);
                             Console.WriteLine(p);
                         }
                         catch (Exception st)
@@ -117,8 +119,8 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        IEnumerable<Product?> products =dal.Product.GetAll();
-                        foreach (Product P in products)
+                        IEnumerable<Product?> products =dal?.Product.GetAll()!;
+                        foreach (Product? P in products)
                             Console.WriteLine(P + "\n");
 
                     }
@@ -145,10 +147,10 @@ namespace DalTest
                             Product p = new Product();
                             p.ID = id;
                             p.Name = name ?? "avi ";
-                            p.Category = (Category)Enum.Parse(typeof(Category), category);
+                            p.Category = (Category)Enum.Parse(typeof(Category), category!);
                             p.InStock = stock;
                             p.Price = price;
-                            dal.Product.Update(newId, p);
+                            dal?.Product.Update(newId, p);
                             Console.WriteLine("successfully updated product number" + id);
 
                         }
@@ -167,7 +169,7 @@ namespace DalTest
 
                         try
                         {
-                            dal.Product.Delete(id);
+                            dal?.Product.Delete(id);
                             Console.WriteLine(+id + "successfully deleted");
                         }
                         catch (Exception str)
@@ -200,9 +202,9 @@ namespace DalTest
                         DateTime orderDate, shipDate, deliveryDate;
                         Console.WriteLine("enter id,  customerName, customerEmail, customerAddress, \n");
                         id = Console.Read();
-                        customerName = Console.ReadLine();
-                        customerEmail = Console.ReadLine();
-                        customerAddress = Console.ReadLine();
+                        customerName = Console.ReadLine()!;
+                        customerEmail = Console.ReadLine()!;
+                        customerAddress = Console.ReadLine()!;
                         orderDate = DateTime.Now - new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                         shipDate = DateTime.Now + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                         deliveryDate = DateTime.Now + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
@@ -215,7 +217,7 @@ namespace DalTest
                         order.OrderDate = orderDate;
                         order.ShipDate = shipDate;
                         order.DeliveryDate = deliveryDate;
-                        try { Console.WriteLine("successfully added product " + dal.Order.Add(order)); }
+                        try { Console.WriteLine("successfully added product " + dal!.Order.Add(order)); }
                         catch (Exception st)
                         {
                             Console.WriteLine(st);
@@ -230,7 +232,7 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out id);
                         try
                         {
-                            Order order = dal.Order.GetByID(id);
+                            Order order = dal!.Order.GetByID(id);
                             Console.WriteLine(order);
                         }
                         catch (Exception st)
@@ -241,7 +243,7 @@ namespace DalTest
                     break;
                 case 'c':
                     {
-                        IEnumerable<Order?> orders = dal.Order.GetAll();
+                        IEnumerable<Order?> orders = dal!.Order.GetAll();
                         foreach (Order? order in orders)
                             Console.WriteLine(order + "\n");
                     }
@@ -256,9 +258,9 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out oldId);
                         Console.WriteLine("enter of product to update: id, customerName, customerEmail, customerAddress \n");
                         newId = Console.Read();
-                        customerName = Console.ReadLine();
-                        customerEmail = Console.ReadLine();
-                        customerAddress = Console.ReadLine();
+                        customerName = Console.ReadLine()!;
+                        customerEmail = Console.ReadLine()!;
+                        customerAddress = Console.ReadLine()!;
                         orderDate = DateTime.Now - new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                         shipDate = DateTime.Now + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                         deliveryDate = DateTime.Now + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
@@ -273,7 +275,7 @@ namespace DalTest
                         order.DeliveryDate = deliveryDate;
                         try
                         {
-                            dal.Order.Update(oldId, order);
+                            dal?.Order.Update(oldId, order);
                             Console.WriteLine("successfully updated order number" + oldId);
                         }
 
@@ -291,7 +293,7 @@ namespace DalTest
                             id = Console.Read();
                             try
                             {
-                                dal.Order.Delete(id);
+                                dal?.Order.Delete(id);
                                 Console.WriteLine(+id + "successfully deleted");
                             }
                             catch (Exception str)
@@ -333,7 +335,7 @@ namespace DalTest
                         orderItem.Price = price;
                         orderItem.Amount = amount;
 
-                        try { Console.WriteLine("successfully added orderItem " + dal.OrderItem.Add(orderItem)); }
+                        try { Console.WriteLine("successfully added orderItem " + dal!.OrderItem.Add(orderItem)); }
                         catch (Exception st)
                         {
                             Console.WriteLine(st);
@@ -348,7 +350,7 @@ namespace DalTest
                         int.TryParse(Console.ReadLine(), out id);
                         try
                         {
-                            OrderItem orderItem = dal.OrderItem.GetByID(id);
+                            OrderItem orderItem = dal!.OrderItem.GetByID(id);
                             Console.WriteLine(orderItem);
                         }
                         catch (Exception st)
@@ -361,8 +363,8 @@ namespace DalTest
 
                 case 'c':
                     {
-                        IEnumerable<OrderItem?> orderItems = dal.OrderItem.GetAll();
-                        foreach (OrderItem orderItem in orderItems)
+                        IEnumerable<OrderItem?> orderItems = dal!.OrderItem.GetAll();
+                        foreach (OrderItem? orderItem in orderItems)
                             Console.WriteLine(orderItem + "\n");
 
                     }
@@ -389,7 +391,7 @@ namespace DalTest
 
                         try {
 
-                        dal.OrderItem.Update(oldId, orderItem);
+                        dal?.OrderItem.Update(oldId, orderItem);
                         Console.WriteLine("successfully added orderItem " + oldId ); }
                         catch (Exception st)
                         {
@@ -406,7 +408,7 @@ namespace DalTest
 
                         try
                         {
-                            dal.OrderItem.Delete(id);
+                            dal?.OrderItem.Delete(id);
                             Console.WriteLine("order item"+id + " successfully deleted");
                         }
                         catch (Exception str)

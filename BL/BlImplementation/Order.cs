@@ -5,16 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 //using BO;
-using Dal;
+//using Dal;
 using DalApi;
 using DO;
-//using DO;
+
 
 namespace BlImplementation
 {
     internal class Order : BlApi.IOrder
     {
-        IDal dal = DalList.Instance;
+        //IDal dal = DalList.Instance;
+        DalApi.IDal? dal = DalApi.Factory.Get();
+
 
         /// <summary>
         /// returns list of orders
