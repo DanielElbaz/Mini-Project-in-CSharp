@@ -11,7 +11,7 @@ namespace BlImplementation
 {
 
 
-    sealed public class Bl : IBl
+    sealed internal class Bl : IBl
 
     {
         public IOrder Order { get; } = new BlImplementation.Order();

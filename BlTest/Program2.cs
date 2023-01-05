@@ -16,10 +16,12 @@ namespace BlTest
 {
     internal class Program2
     {
-        private static IBl bl = new Bl();
-        public static IDal dal = DalList.Instance;
+        //private static IBl bl = new Bl();
+        //public static IDal dal = DalList.Instance;
+        public static BlApi.IBl? bl = BlApi.Factory.Get();
+        public static DalApi.IDal? dal = DalApi.Factory.Get();
 
-        static BO.Cart cart = new()
+        static BO.Cart? cart = new()
         {
             CustomerName = "unknown",
             CustomerEmail = "unknown",
@@ -51,7 +53,7 @@ namespace BlTest
                                    "3: For cart. \n" +
                                    "0: For exit: \n");
                 /*while (!*/
-                string input = Console.ReadLine();
+                string input = Console.ReadLine()!;
                 bool valid = Enum.TryParse(input, out ch);
                 //{
                 //    Console.WriteLine("Wrong Input!");
@@ -92,14 +94,14 @@ namespace BlTest
                        "x- main menu.\n");
 
 
-            char c = Char.Parse(Console.ReadLine());
+            char c = Char.Parse(Console.ReadLine()!);
 
             switch (c)
             {
                 case 'a': // product list
                     {
                         IEnumerable<BO.ProductForList> products;
-                        products = bl.Product.GetAll();
+                        products = bl?.Product.GetAll()!;
 
                         foreach (BO.ProductForList product in products)
                         {
@@ -111,14 +113,14 @@ namespace BlTest
                     break;
                 case 'b': // product details
                     {
-                        BO.Product product = new();
+                        BO.Product? product = new();
                         // string? val;
                         int id;
                         Console.WriteLine(" Enter id of a product \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         //if (!)
                         try {
-                            product = bl.Product.GetProduct(id);
+                            product = bl?.Product.GetProduct(id);
                             Console.WriteLine(product);
                         }
                         catch (BO.invalidInputException ex)
@@ -141,11 +143,11 @@ namespace BlTest
                         //List<BO.OrderItem> items = new();
                         //BO.OrderItem item;
                         int productId;
-                        BO.ProductItem productItem = new();
+                        BO.ProductItem? productItem = new();
                         // string? email, name, address;
                         Console.WriteLine(" Enter id of a product \n");
-                        productId = Int32.Parse(Console.ReadLine());
-                        try { productItem = bl.Product.GetProductForCatalog(productId, cart);
+                        productId = Int32.Parse(Console.ReadLine()!);
+                        try { productItem = bl?.Product.GetProductForCatalog(productId, cart);
                             Console.WriteLine(productItem);
                         }
                         catch (BO.invalidInputException ex)
@@ -175,13 +177,13 @@ namespace BlTest
                         string? name;
                         BO.Category category;
                         Console.WriteLine(" Enter id (6 digits) \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         Console.WriteLine(" Enter name \n");
-                        name = Console.ReadLine();
+                        name = Console.ReadLine()!;
                         Console.WriteLine(" Enter  price \n");
-                        price = Double.Parse(Console.ReadLine());
+                        price = Double.Parse(Console.ReadLine()!);
                         Console.WriteLine(" Enter amount in stock \n");
-                        inStock = Int32.Parse(Console.ReadLine());
+                        inStock = Int32.Parse(Console.ReadLine()!);
                         Console.WriteLine(" Enter category:\n" +
                                            "0 for phone\n" +
                                            "1 for computers\n" +
@@ -189,13 +191,14 @@ namespace BlTest
                                            "3 for Earphones\n"+
                                            "4 for gameplay \n");
                         
-                        string input =Console.ReadLine();                        
+                        string input =Console.ReadLine()!;                        
                         int v = Convert.ToInt32(input);
                         bool valid = Enum.TryParse(input, out category) &&(v>=0&&v<5);
                         //category = (BO.Category)System.Console.Read();
-                        if (valid) { category = (BO.Category)category; }
-                        else
-                        {                            
+                        if (!valid)
+                        //{ category = (BO.Category)category; }
+                        {   //else
+                            //{                            
                             Console.WriteLine("Error ");
                             MainProduct();
                         }
@@ -223,9 +226,9 @@ namespace BlTest
                     {
                         int id;
                         Console.WriteLine(" Enter id \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         try {
-                            bl.Product.DeleteProduct(id);
+                            bl?.Product.DeleteProduct(id);
                             Console.WriteLine(" product {0} removed successfully", id);
                         }
                         catch (BO.DuplicateIDException ex)
@@ -247,24 +250,26 @@ namespace BlTest
                         string? name;
                         BO.Category category;
                         Console.WriteLine(" Enter id of product to update\n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         Console.WriteLine(" Enter name \n");
                         name = Console.ReadLine();
                         Console.WriteLine(" Enter  price \n");
-                        price = Double.Parse(Console.ReadLine());
+                        price = Double.Parse(Console.ReadLine()!);
                         Console.WriteLine(" Enter amount in stock \n");
-                        inStock = Int32.Parse(Console.ReadLine());
+                        inStock = Int32.Parse(Console.ReadLine()!);
                         Console.WriteLine(" Enter category: 0 for phone\n" +
                                            "1 for computers\n" +
                                            "2 for Tablets\n" +
                                            "3 for Earphones\n" +
                                            "4 for gameplay \n");
-                        string input = Console.ReadLine();
+                        string input = Console.ReadLine()!;
                         bool valid = Enum.TryParse(input, out category);
                         //category = (BO.Category)System.Console.Read();
-                        if (valid) { category = (BO.Category)category; }
-                        else
-                        {
+                        if (!valid)
+                        {   
+                        //{ category = (BO.Category)category; }
+                        //else
+                        //{
                             Console.WriteLine("Error ");
                         }
                         BO.Product product = new BO.Product()
@@ -277,7 +282,7 @@ namespace BlTest
                         };
 
                         try
-                        { bl.Product.UpdateProduct(product);
+                        { bl?.Product.UpdateProduct(product);
                             Console.WriteLine(" product {0} updated successfully {1}", product.ID, product);
                         }
                         catch (BO.MissingIDException ex)
@@ -308,13 +313,13 @@ namespace BlTest
                       "e- track an order.\n" +
                       "x - main menu.\n");
 
-            char c = Char.Parse(Console.ReadLine());
+            char c = Char.Parse(Console.ReadLine()!);
             switch (c)
             {
                 case 'a': // get list 
                     {
                         IEnumerable<BO.OrderForList> orders;
-                        orders = bl.Order.GetOrders();
+                        orders = bl?.Order.GetOrders()!;
 
                         foreach (BO.OrderForList order in orders)
                         {
@@ -326,13 +331,13 @@ namespace BlTest
 
                 case 'b': //get order
                     {
-                        BO.Order order = new();
+                        BO.Order? order = new();
                         int id;
                         Console.WriteLine(" Enter id of a order \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         //if (!)
                         try { 
-                            order = bl.Order.GetOrder(id);
+                            order = bl?.Order.GetOrder(id);
                             Console.WriteLine(order);
                         }
                         catch (BO.invalidInputException ex)
@@ -351,11 +356,11 @@ namespace BlTest
                 case 'c'://update order sent
                     {
                         int id;
-                        BO.Order order = new();
+                        BO.Order? order = new();
                         Console.WriteLine(" Enter id of a order \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         try {
-                            order = bl.Order.UpdateOrderSent(id);
+                            order = bl?.Order.UpdateOrderSent(id);
                             Console.WriteLine(order);
                         }
                         catch (BO.MissingIDException ex)
@@ -371,11 +376,11 @@ namespace BlTest
                 case 'd':// update order delivered
                     {
                         int id;
-                        BO.Order order = new();
+                        BO.Order? order = new();
                         Console.WriteLine(" Enter id of a order \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         try {
-                            order = bl.Order.UpdateOrderSupply(id);
+                            order = bl?.Order.UpdateOrderSupply(id);
                             Console.WriteLine(order);
                         }
                         catch (BO.MissingIDException ex)
@@ -394,10 +399,10 @@ namespace BlTest
                     {
                         int id;
 
-                        BO.OrderTracking ot = new();
+                        BO.OrderTracking? ot = new();
                         Console.WriteLine(" Enter id of a order \n");
-                        id = Int32.Parse(Console.ReadLine());
-                        try { ot = bl.Order.OrderTracking(id); }
+                        id = Int32.Parse(Console.ReadLine()!);
+                        try { ot = bl?.Order.OrderTracking(id); }
                         catch (BO.MissingIDException ex)
                         {
                             Console.WriteLine(ex.Message);
@@ -427,7 +432,7 @@ namespace BlTest
             "x- main menu.\n");
 
 
-            char c = Char.Parse(Console.ReadLine());
+            char c = Char.Parse(Console.ReadLine()!);
 
 
             
@@ -436,11 +441,11 @@ namespace BlTest
                 case 'a': // add a product to the cart
                     {
                         int id;
-                        DO.Product product = new();
+                        DO.Product? product = new();
                         Console.WriteLine(" Enter id of a product \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
                         try
-                        { cart = bl.Cart.AddProduct(cart, id);
+                        { cart = bl?.Cart.AddProduct(cart, id);
                              product = dal.Product.GetByID(id);
                             Console.WriteLine("product added successfully to your cart\n" + cart );
                         }
@@ -461,12 +466,12 @@ namespace BlTest
                         int id;
                         int amount;
                         Console.WriteLine("Enter id of product \n");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine()!);
 
                         Console.WriteLine("Enter a new amount of product \n");
-                        amount = Int32.Parse(Console.ReadLine());
+                        amount = Int32.Parse(Console.ReadLine()!);
                         try { 
-                            cart = bl.Cart.UpdateAmountOfProduct(cart, id, amount);
+                            cart = bl?.Cart.UpdateAmountOfProduct(cart!, id, amount);
                             Console.WriteLine("Amount updated succesfully \n");
                             Console.WriteLine(cart);
                         }
@@ -486,16 +491,16 @@ namespace BlTest
                         string email_address;
                         string adress;
                         Console.WriteLine("Please write your name: \n");
-                        name = Console.ReadLine();
+                        name = Console.ReadLine()!;
                         Console.WriteLine("Please write your email adress: \n");
-                        email_address = Console.ReadLine();
+                        email_address = Console.ReadLine()!;
                         Console.WriteLine("Finally write your adress: \n");
-                        adress = Console.ReadLine();
-                        cart.CustomerName = name;
+                        adress = Console.ReadLine()!;
+                        cart!.CustomerName = name;
                         cart.CustomerEmail = email_address;
                         cart.CustomerAddress = adress;
                         try {
-                            bl.Cart.ConfirmCart(cart);
+                            bl?.Cart.ConfirmCart(cart);
                             Console.WriteLine(" Cart confirmed successfully\n" + cart);                           
                            // Console.WriteLine(cart);
                             cart = new();// reset cart

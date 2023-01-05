@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using BL;
 using BlApi;
 using BO;
-using Dal;
+//using Dal;
 using DalApi;
 using DO;
 
@@ -18,7 +18,8 @@ namespace BlImplementation
 {
     internal class Cart: ICart
     {
-        private IDal dal = DalList.Instance;
+        //private IDal dal = DalList.Instance;
+        DalApi.IDal? dal = DalApi.Factory.Get();
 
         /// <summary>
         /// add product to cart

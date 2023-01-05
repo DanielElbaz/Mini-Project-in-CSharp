@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlApi;
 using Dal;
-using DalApi;
+//using DalApi;
 using DO;
 using BL;
 using BO;
@@ -14,11 +14,12 @@ namespace BlImplementation
 {
     internal class Product : BlApi.IProduct
     {
-        IDal dal = DalList.Instance;
+        //IDal dal = DalList.Instance;
+        DalApi.IDal? dal = DalApi.Factory.Get();
 
         bool Check(int id, string? name, double price, int instock)
         {
-            return (id > 100000 && id < 1000000) && (name != null && name != "") && (price > 0) && (instock >= 0);
+            return (id > 100000 && id < 1000000)  && (name != null && name != "") && (price > 0) && (instock >= 0);
         }
 
         /// <summary>
@@ -144,7 +145,7 @@ namespace BlImplementation
             {
 
                 ///????????????????????????????
-                throw new BO.DuplicateIDException(e.Message);
+                throw new BO.DuplicateIDException("Item already exists ");
             }
 
         }
@@ -152,7 +153,7 @@ namespace BlImplementation
         /// update product for manager
         /// </summary>
         /// <param name="product"></param>
-        public void UpdateProduct(BO.Product p)
+        public void UpdateProduct(BO.Product? p)
         {
             if (p == null)
                 throw new BO.invalidInputException();

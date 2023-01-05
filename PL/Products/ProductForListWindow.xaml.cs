@@ -1,5 +1,5 @@
-﻿using BlApi;
-using BlImplementation;
+﻿//using BlApi;
+//using BlImplementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +21,12 @@ namespace PL.Products
     /// </summary>
     public partial class ProductForListWindow : Window
     {
-        private IBl bl = new Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
         public ProductForListWindow()
         {
             InitializeComponent();
-            this.combobox1.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            this.categoryList.SelectedIndex = 0;
            this.ProductListView.ItemsSource = bl.Product.GetAll();
 
         }
@@ -36,12 +37,24 @@ namespace PL.Products
 
         }
 
-        private void combobox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void categoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BO.Category category = (BO.Category)combobox1.SelectedItem ;
+            BO.Category category = (BO.Category)categoryList.SelectedItem ;
+            categoryList.Focus();
             ProductListView.ItemsSource = bl.Product.GetAll( elem => elem.Category== category);
-           // combobox1.SelectedItem =
+           // productList.SelectedItem =
 
+        }
+
+        private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+
+        private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.ProductForList p = (BO.ProductForList)ProductListView.SelectedItem;
+            int id = p.ProductID;
+            new ProductWindow(id).Show();
+            InitializeComponent();
+           // this.Refresh();
         }
     }
 }

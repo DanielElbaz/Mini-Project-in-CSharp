@@ -57,13 +57,13 @@ namespace Dal
             for (int i =1; i <= 40; i++)
             {
                 int index = Config.rand.Next(P_list.Count);
-                Product p = (Product)P_list[index]; // draw of any product randomally
+                Product p = (Product)P_list[index]!; // draw of any product randomally
 
                 OrderItem oi = new OrderItem()
                 {
                     ID = Config.rand.Next(100000, 999999),
                     ProductID = p.ID,// get a random id of an existing product
-                    OrderID = ((Order)O_list[Config.rand.Next(O_list.Count)]).ID, // random order id from the order list
+                    OrderID = ((Order)O_list[Config.rand.Next(O_list.Count)]!).ID, // random order id from the order list
                     Amount = Config.rand.Next(1, 5),
                     Price = p.Price
                 };
@@ -116,7 +116,7 @@ namespace Dal
                         p.ID = Config.rand.Next(100000, 999999);
 
                 p.ID = Config.rand.Next(100000, 999999);
-                p.Category = Category.Phones;
+                p.Category = (DO.Category)(Config.rand.Next(0,4));
                 p.Name = ProductNames[Config.rand.Next(0, 7)];
                 p.Price = Config.rand.Next(2000, 5000);
                 p.InStock = Config.rand.Next(0, 20);
