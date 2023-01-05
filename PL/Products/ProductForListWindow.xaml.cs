@@ -25,8 +25,8 @@ namespace PL.Products
         public ProductForListWindow()
         {
             InitializeComponent();
-            this.productList.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            this.productList.SelectedIndex = 0;
+            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            this.categoryList.SelectedIndex = 0;
            this.ProductListView.ItemsSource = bl.Product.GetAll();
 
         }
@@ -37,15 +37,24 @@ namespace PL.Products
 
         }
 
-        private void productList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void categoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BO.Category category = (BO.Category)productList.SelectedItem ;
+            BO.Category category = (BO.Category)categoryList.SelectedItem ;
+            categoryList.Focus();
             ProductListView.ItemsSource = bl.Product.GetAll( elem => elem.Category== category);
            // productList.SelectedItem =
 
         }
 
         private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
-       
+
+        private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.ProductForList p = (BO.ProductForList)ProductListView.SelectedItem;
+            int id = p.ProductID;
+            new ProductWindow(id).Show();
+            InitializeComponent();
+           // this.Refresh();
+        }
     }
 }

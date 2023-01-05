@@ -17,10 +17,10 @@
             <ColumnDefinition Width="479*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Category" FontSize="40"  />
-        <ComboBox Name="productList" HorizontalAlignment= "Stretch" VerticalAlignment ="Stretch" Margin="10" 
-                      Grid.Column="1" SelectionChanged="productList_SelectionChanged"/>
-        <ListView x:Name="ProductListView"  Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Button Content="AddButton" x:Name="addProductBtn" Grid.Row="2" Grid.Column="1"
+        <ComboBox Name="categoryList" HorizontalAlignment= "Stretch" FontSize="20"  VerticalAlignment ="Stretch" Margin="10" 
+                      Grid.Column="1" SelectionChanged="categoryList_SelectionChanged"/>
+        <ListView x:Name="ProductListView" MouseDoubleClick="ProductListView_MouseDoubleClick"  Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Button Content="Add Product" x:Name="addProductBtn" Grid.Row="2" Grid.Column="1"
                 HorizontalAlignment="Right" Margin="5" Padding="5" FontSize="20" Click="addProductBtn_Click"/>
     </Grid>
 

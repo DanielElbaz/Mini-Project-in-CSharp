@@ -29,6 +29,20 @@ namespace PL.Products
             this.categoryList.SelectedIndex = 0;
         }
 
+        public ProductWindow(int id)
+        {
+            InitializeComponent();
+            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            BO.Product product = bl.Product.GetProduct(id);
+            addButton.Content = "Update";
+            this.id.Text = Convert.ToString(product.ID);
+            this.id.IsEnabled = false;
+            this.name.Text = Convert.ToString(product.Name);
+            this.price.Text = Convert.ToString(product.Price);
+            this.inStock.Text = Convert.ToString(product.InStock);
+            this.categoryList.SelectedItem = product.Category;
+        }
+
         private bool check(string id,string price,string instock)
         {
             int id1, instock1;
@@ -62,13 +76,29 @@ namespace PL.Products
             try { bl.Product.AddProduct(product); }
             catch (BO.invalidInputException ex)
             { MessageBox.Show(ex.Message);  }
-            catch(BO.DuplicateIDException ex)
-            { MessageBox.Show(ex.Message); }
+            catch(BO.DuplicateIDException ex1)
+            {
+                bool updated = false;
+                try
+                {
+                    bl.Product.UpdateProduct(product);
+                    MessageBox.Show("The item has been updated");
+                    updated = true; 
+                    this.Close();
+                }
+                catch(BO.MissingIDException ex2)
+                { 
+                    MessageBox.Show(ex2.Message);
+                    
+                }
+                if(!updated)
+                  MessageBox.Show(ex1.Message); 
+            }
 
            this.Close();
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
+        private void cancelButton_Click(object sender, RoutedEventArgs e) => this.Close();
        
     }
 }
