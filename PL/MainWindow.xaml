@@ -8,7 +8,9 @@
         Title="MainWindow" Height="650" Width="800">
     <Grid>
         <Grid>
-            <Button Content="Start" HorizontalAlignment="Center" Margin="0,188,0,0" VerticalAlignment="Top" Height="33" Width="124" Click="ShowProductsButton_Click"/>
+            <Button Content="Admin" HorizontalAlignment="Center" Margin="0,154,0,0" VerticalAlignment="Top" Height="33" Width="124" Click="ShowManagerButton_Click"/>
+            <Button Content="New Order" HorizontalAlignment="Center" Margin="0,226,0,0" VerticalAlignment="Top" Height="33" Width="124"/>
+            <Button Content="Order Tracking" HorizontalAlignment="Center" Margin="0,284,0,0" VerticalAlignment="Top" Height="33" Width="124" RenderTransformOrigin="-1.551,0.345" />
         </Grid>
 
     </Grid>
