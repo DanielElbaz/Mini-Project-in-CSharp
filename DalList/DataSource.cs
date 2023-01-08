@@ -47,27 +47,27 @@ namespace Dal
         //internal static Product[] P_arr = new Product[P_capacity];
         //internal static Order[] O_arr = new Order[O_capacity];
  
-        internal static List<OrderItem?> OI_list = new();
-        internal static List<Product?> P_list = new();
-        internal static List<Order?> O_list = new();
+        internal static List<OrderItem?> OrderItemDataList = new();
+        internal static List<Product?> ProductDataList = new();
+        internal static List<Order?> OrderDataList = new();
 
         private static void addOrderItem() // initialize order item
         {
 
             for (int i =1; i <= 40; i++)
             {
-                int index = Config.rand.Next(P_list.Count);
-                Product p = (Product)P_list[index]!; // draw of any product randomally
+                int index = Config.rand.Next(ProductDataList.Count);
+                Product p = (Product)ProductDataList[index]!; // draw of any product randomally
 
                 OrderItem oi = new OrderItem()
                 {
                     ID = Config.rand.Next(100000, 999999),
                     ProductID = p.ID,// get a random id of an existing product
-                    OrderID = ((Order)O_list[Config.rand.Next(O_list.Count)]!).ID, // random order id from the order list
+                    OrderID = ((Order)OrderDataList[Config.rand.Next(OrderDataList.Count)]!).ID, // random order id from the order list
                     Amount = Config.rand.Next(1, 5),
                     Price = p.Price
                 };
-                OI_list.Add(oi);
+                OrderItemDataList.Add(oi);
             // i++;
             // Config.OrderItemFirstClear++;
 
@@ -94,7 +94,7 @@ namespace Dal
                 o.ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 o.DeliveryDate = DateTime.Now + 2* new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                // i++;
-                O_list.Add(o);
+                OrderDataList.Add(o);
                 //Config.OrderFirstClear++;
             }
         }
@@ -111,7 +111,7 @@ namespace Dal
                 p.ID = Config.rand.Next(100000, 999999);
                 //for (int j = 0; j< Config.ProductFirstClear; j++) //check if there is no other product with the same id
                 //  while(P_arr[j].ID == P_arr[i].ID) // if theres product with same id
-                foreach (Product pr in P_list)
+                foreach (Product pr in ProductDataList)
                     if (p.ID == pr.ID)
                         p.ID = Config.rand.Next(100000, 999999);
 
@@ -121,7 +121,7 @@ namespace Dal
                 p.Price = Config.rand.Next(2000, 5000);
                 p.InStock = Config.rand.Next(0, 20);
                 //i++;
-                P_list.Add(p);
+                ProductDataList.Add(p);
                 //Config.ProductFirstClear++;
 
             }

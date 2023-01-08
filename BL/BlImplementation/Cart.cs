@@ -164,17 +164,7 @@ namespace BlImplementation
             
             if( cart.CustomerEmail!= null && cart.CustomerEmail != " "&& !IsValid(cart.CustomerEmail))
                 throw new BO.incorrectDataException("invalid email address");
-            //if (cart.CustomerEmail != null) // invalid mail
-            //{
-            //    var email = new EmailAddressAttribute();
-            //    if (!email.IsValid(cart.CustomerEmail) || !(cart.CustomerEmail.Equals(" ")))
-            //        throw new BO.incorrectDataException("invalid email address");
-            //}
-
-            //else
-            //    throw new BO.incorrectDataException("invalid email address");
-
-
+           
             if (cart.CustomerName == null || cart.CustomerAddress == null)
                 throw new BO.incorrectDataException("customer name or address null ");
            
@@ -183,15 +173,15 @@ namespace BlImplementation
             {
                 try
                 {
-                    product = dal.Product.GetByID(orderItem.ProductID);
+                    product = dal!.Product.GetByID(orderItem.ProductID);
                 }
                 catch (DO.MissingIDException ex)
                 {
 
-                    throw new BO.MissingIDException() ;
+                    throw new BO.MissingIDException( ex.Message+ " id " + orderItem.ProductID ) ;
                 } // get the product in the orderItem list
                 if (orderItem.Amount <= 0) // negative amount
-                    throw new BO.incorrectDataException("invalid amount if order item  " + orderItem.ProductName);
+                    throw new BO.incorrectDataException("invalid amount in order item  " + orderItem.ProductName);
                 if (product.InStock < orderItem.Amount)// not enough in stock
                     throw new BO.incorrectDataException("not enough in stock for Product " + product.Name);
 
@@ -205,15 +195,13 @@ namespace BlImplementation
                 ShipDate = null,
                 DeliveryDate = null
 
-            };
-
-             
+            };             
             try
             {
-                orderId = dal.Order.Add(order);
+                orderId = dal!.Order.Add(order);
             }
 
-            catch(DO.DuplicateIDExeption ex)
+            catch(DO.DuplicateIDException ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -223,9 +211,8 @@ namespace BlImplementation
             {                
                 try
                 {
-                    dal.OrderItem.Add(new DO.OrderItem
+                    dal!.OrderItem.Add(new DO.OrderItem
                     {
-
                         Amount = orderItem1.Amount,
                         Price = orderItem1.TotalPrice,
                         OrderID = orderId,
@@ -239,7 +226,7 @@ namespace BlImplementation
 
                     // dal.OrderItem.Add(orderItem2);
                 }
-                catch(DO.DuplicateIDExeption ex)
+                catch(DO.DuplicateIDException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }

@@ -14,12 +14,12 @@ namespace Dal
         /// <returns>id <returns>
         public int Add(OrderItem oi)
         {
-            foreach (OrderItem? oi1 in DataSource.OI_list)
+            foreach (OrderItem? oi1 in DataSource.OrderItemDataList)
                 if (oi1?.ID == oi.ID)
-                    throw new DuplicateIDExeption();
+                    throw new DuplicateIDException();
             //throw new Exception("Order Item already exists ");
             oi.ID = DataSource.Config.getOrderItemLastId();
-            DataSource.OI_list.Add(oi);
+            DataSource.OrderItemDataList.Add(oi);
             return oi.ID;
 
         }
@@ -27,12 +27,12 @@ namespace Dal
 
         {
             Boolean flag = false;
-            foreach (OrderItem? oi in DataSource.OI_list)
+            foreach (OrderItem? oi in DataSource.OrderItemDataList)
             {
                 if (id == oi?.ID)
                 {
                     flag = true;
-                    DataSource.OI_list.RemoveAll(item => ((OrderItem)item!).ID ==id);
+                    DataSource.OrderItemDataList.RemoveAll(item => ((OrderItem)item!).ID ==id);
                     break;
                 }
                 if (!flag)
@@ -47,12 +47,12 @@ namespace Dal
         public void Update(int id, OrderItem newOI)
         {
             Boolean flag = false;
-            foreach (OrderItem? orderitem in DataSource.OI_list)
+            foreach (OrderItem? orderitem in DataSource.OrderItemDataList)
                 if (id == orderitem?.ID)
                 {
                     flag = true;
-                    int index = DataSource.OI_list.IndexOf(orderitem);
-                    DataSource.OI_list[index] = newOI;
+                    int index = DataSource.OrderItemDataList.IndexOf(orderitem);
+                    DataSource.OrderItemDataList[index] = newOI;
                     break;
 
                 }
@@ -66,34 +66,34 @@ namespace Dal
 
         public OrderItem GetByID(int id)
         {
-            var item = DataSource.OI_list.FirstOrDefault(o => ((OrderItem)o!).ID == id);
+            var item = DataSource.OrderItemDataList.FirstOrDefault(o => ((OrderItem)o!).ID == id);
             if (item == null)
                 throw new MissingIDException();
             return (OrderItem)item;
 
             //int index = -1;
-            //foreach (OrderItem orderitem in DataSource.OI_list)
+            //foreach (OrderItem orderitem in DataSource.OrderItemDataList)
 
             //    if (id == orderitem.ID)
             //    {
             //        //flag = true;
 
-            //        index = DataSource.OI_list.IndexOf(orderitem);
+            //        index = DataSource.OrderItemDataList.IndexOf(orderitem);
             //        break;
             //    }
 
             //if (index ==-1)
             //    throw new MissingIDException();
 
-            //return DataSource.OI_list[index];
+            //return DataSource.OrderItemDataList[index];
         }
         public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null)
         {
             if (filter == null)
-                return DataSource.OI_list;
+                return DataSource.OrderItemDataList;
 
             List<OrderItem?> orderItems = new();
-            foreach (var o in DataSource.OI_list)
+            foreach (var o in DataSource.OrderItemDataList)
                 if (filter(o))
                     orderItems.Add(o);
             return orderItems;
@@ -103,7 +103,7 @@ namespace Dal
 
         public OrderItem GetBy(Func<OrderItem?, bool> filter)
         {
-            var item = DataSource.OI_list.FirstOrDefault(o => filter((o)));
+            var item = DataSource.OrderItemDataList.FirstOrDefault(o => filter((o)));
             if (item == null)
                 throw new invalidInputException("no items found");
             return (OrderItem)item;
@@ -111,7 +111,7 @@ namespace Dal
             //if (filter == null)
             //    throw new invalidInputException();
             //OrderItem orderItem = new();
-            //foreach (var o in DataSource.OI_list)
+            //foreach (var o in DataSource.OrderItemDataList)
             //    if (filter(o))
             //    {
             //        flag = true;
