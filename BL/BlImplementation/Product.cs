@@ -30,7 +30,7 @@ namespace BlImplementation
         {
             if (func == null)
             {
-                return dal.Product.GetAll().Select
+                return dal!.Product.GetAll().Select
                       (doProduct => new BO.ProductForList()
                       {
                           Category = (BO.Category)doProduct?.Category!,
@@ -39,7 +39,7 @@ namespace BlImplementation
                           ProductPrice = (double)doProduct?.Price!
                       }); 
             }
-            return dal.Product.GetAll()
+            return dal!.Product.GetAll()
                 .Where(doProduct => func(doProduct?.ConverToBO()!))
                 .Select(doProduct => new BO.ProductForList()
                 {
@@ -61,7 +61,7 @@ namespace BlImplementation
                 throw new BO.invalidInputException("Dosennt found product");
             DO.Product doProduct;
 
-            try { doProduct = dal.Product.GetByID(id); }
+            try { doProduct = dal!.Product.GetByID(id); }
             catch (DO.MissingIDException ex)
             { throw new BO.MissingIDException(ex.Message); }
             BO.Product product = new BO.Product()
