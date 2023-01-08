@@ -14,31 +14,40 @@ namespace Dal
         /// <returns>id <returns>
         public int Add(OrderItem oi)
         {
-            foreach (OrderItem? oi1 in DataSource.OrderItemDataList)
-                if (oi1?.ID == oi.ID)
-                    throw new DuplicateIDException();
-            //throw new Exception("Order Item already exists ");
+            if (DataSource.OrderItemDataList.Find(o => ((OrderItem)o!).ID == oi.ID) != null)
+                throw new DuplicateIDException();
             oi.ID = DataSource.Config.getOrderItemLastId();
             DataSource.OrderItemDataList.Add(oi);
             return oi.ID;
+
+            //foreach (OrderItem? oi1 in DataSource.OrderItemDataList)
+            //    if (oi1?.ID == oi.ID)
+            //        throw new DuplicateIDException();
+            ////throw new Exception("Order Item already exists ");
+            //oi.ID = DataSource.Config.getOrderItemLastId();
+            //DataSource.OrderItemDataList.Add(oi);
+            //return oi.ID;
 
         }
         public void Delete(int id)
 
         {
-            Boolean flag = false;
-            foreach (OrderItem? oi in DataSource.OrderItemDataList)
-            {
-                if (id == oi?.ID)
-                {
-                    flag = true;
-                    DataSource.OrderItemDataList.RemoveAll(item => ((OrderItem)item!).ID ==id);
-                    break;
-                }
-                if (!flag)
-                    throw new MissingIDException();
-                // throw new Exception("Order Item not found ");
-            }
+            int count = DataSource.OrderItemDataList.RemoveAll(o => ((OrderItem)o!).ID == id);
+            if (count == 0)
+                throw new MissingIDException("not found " + id);
+            //    Boolean flag = false;
+            //    foreach (OrderItem? oi in DataSource.OrderItemDataList)
+            //    {
+            //        if (id == oi?.ID)
+            //        {
+            //            flag = true;
+            //            DataSource.OrderItemDataList.RemoveAll(item => ((OrderItem)item!).ID ==id);
+            //            break;
+            //        }
+            //        if (!flag)
+            //            throw new MissingIDException();
+            //        // throw new Exception("Order Item not found ");
+            //    }
 
 
 
@@ -46,19 +55,25 @@ namespace Dal
         }
         public void Update(int id, OrderItem newOI)
         {
-            Boolean flag = false;
-            foreach (OrderItem? orderitem in DataSource.OrderItemDataList)
-                if (id == orderitem?.ID)
-                {
-                    flag = true;
-                    int index = DataSource.OrderItemDataList.IndexOf(orderitem);
-                    DataSource.OrderItemDataList[index] = newOI;
-                    break;
 
-                }
-            if (!flag)
-                throw new MissingIDException();
-            // throw new Exception("Order Item not found");//for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
+            int count = DataSource.OrderItemDataList.RemoveAll(o => ((OrderItem)o!).ID == id);
+            if (count == 0)
+                throw new MissingIDException("not found " + id);
+            DataSource.OrderItemDataList.Add(newOI);
+
+            //Boolean flag = false;
+            //foreach (OrderItem? orderitem in DataSource.OrderItemDataList)
+            //    if (id == orderitem?.ID)
+            //    {
+            //        flag = true;
+            //        int index = DataSource.OrderItemDataList.IndexOf(orderitem);
+            //        DataSource.OrderItemDataList[index] = newOI;
+            //        break;
+
+            //    }
+            //if (!flag)
+            //    throw new MissingIDException();
+            //// throw new Exception("Order Item not found");//for (int i = 0; i < DataSource.Config.ProductFirstClear; i++)// check if old exist        
 
         }
 

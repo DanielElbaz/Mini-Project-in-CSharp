@@ -12,47 +12,59 @@ namespace Dal
 
         public int Add(Product P)
         {
-            foreach (Product product1 in DataSource.ProductDataList)
-                if (product1.ID == P.ID)
-                    throw new DuplicateIDException();
-            // throw new Exception("Product already exists ");
+            if(DataSource.ProductDataList.Find(p => ((Product)p!).ID == P.ID) != null)
+                throw new DuplicateIDException();
             DataSource.ProductDataList.Add(P);
             return P.ID;
+            //foreach (Product product1 in DataSource.ProductDataList)
+            //    if (product1.ID == P.ID)
+            //        throw new DuplicateIDException();
+            //// throw new Exception("Product already exists ");
+            //DataSource.ProductDataList.Add(P);
+            //return P.ID;
 
         }
 
         public void Delete(int id) // delete product by id
         {
-            Boolean flag = false;
-            foreach (Product product in DataSource.ProductDataList)
-            {
-                if (id == product.ID)
-                {
-                    flag = true;
-                    DataSource.ProductDataList.Remove(product);
-                    break;
-                }           
+            int count = DataSource.ProductDataList.RemoveAll(p => ((Product)p!).ID == id);
+            if (count == 0)
+                throw new MissingIDException("not found " + id);
+            //Boolean flag = false;
+            //foreach (Product product in DataSource.ProductDataList)
+            //{
+            //    if (id == product.ID)
+            //    {
+            //        flag = true;
+            //        DataSource.ProductDataList.Remove(product);
+            //        break;
+            //    }           
 
 
-            }
-            if (!flag)
-                // throw new Exception("product not found ");
-                throw new MissingIDException();
+            //}
+            //if (!flag)
+            //    // throw new Exception("product not found ");
+            //    throw new MissingIDException();
         }
         public void Update(int id, Product newP) // update old with new
         {
-            Boolean flag = false;
-            foreach (Product product in DataSource.ProductDataList)
-                if (id == product.ID)
-                {
-                    flag = true;
-                    int index = DataSource.ProductDataList.IndexOf(product);
-                    DataSource.ProductDataList[index] = newP;
-                    break;
+            //Boolean flag = false;
+            int count  = DataSource.ProductDataList.RemoveAll(p =>((Product)p!).ID==id);
+                if(count==0)
+                  throw new MissingIDException("not found " + id);
+            DataSource.ProductDataList.Add(newP);
 
-                }
-            if (!flag)
-                throw new MissingIDException();
+            //foreach (Product product in DataSource.ProductDataList)
+            //    if (id == product.ID)
+            //    {
+            //        flag = true;
+            //        int index = DataSource.ProductDataList.IndexOf(product);
+            //        DataSource.ProductDataList[index] = newP;
+            //        break;
+
+            //    }
+            //if (!flag)
+            //    throw new MissingIDException();
             // throw new Exception("product not found");
 
 
