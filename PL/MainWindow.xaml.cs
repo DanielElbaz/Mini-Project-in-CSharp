@@ -17,6 +17,8 @@ using BlApi;
 using BL;
 using BlImplementation;
 using PL.Products;
+using static System.Net.WebRequestMethods;
+
 
 namespace PL
 {
@@ -31,11 +33,16 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            backgroundImage.Source = new BitmapImage(new Uri("C:\\Users\\danie\\OneDrive\\Bureau\\bestmobilejpg.jpg"));
+            backgroundImage.Stretch = Stretch.Fill;
+            backgroundImage.SetValue(Panel.ZIndexProperty, -1);
+
         }
+       
 
         //private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
         private void ShowManagerButton_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
-       // private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new OrderForListWindow().Show();
-       
+        // private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new OrderForListWindow().Show();
+      
     }
 }
