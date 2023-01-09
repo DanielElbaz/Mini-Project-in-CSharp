@@ -9,6 +9,8 @@ using Dal;
 using DO;
 using BL;
 using BO;
+using System.Data.Common;
+using DalApi;
 
 namespace BlImplementation
 {
@@ -30,7 +32,7 @@ namespace BlImplementation
         {
             if (func == null)
             {
-                return dal.Product.GetAll().Select
+                return dal!.Product.GetAll().Select
                       (doProduct => new BO.ProductForList()
                       {
                           Category = (BO.Category)doProduct?.Category!,
@@ -39,7 +41,7 @@ namespace BlImplementation
                           ProductPrice = (double)doProduct?.Price!
                       }); 
             }
-            return dal.Product.GetAll()
+            return dal!.Product.GetAll()
                 .Where(doProduct => func(doProduct?.ConverToBO()!))
                 .Select(doProduct => new BO.ProductForList()
                 {
@@ -61,7 +63,7 @@ namespace BlImplementation
                 throw new BO.invalidInputException("Dosennt found product");
             DO.Product doProduct;
 
-            try { doProduct = dal.Product.GetByID(id); }
+            try { doProduct = dal!.Product.GetByID(id); }
             catch (DO.MissingIDException ex)
             { throw new BO.MissingIDException(ex.Message); }
             BO.Product product = new BO.Product()
@@ -90,22 +92,26 @@ namespace BlImplementation
             if (cart == null)
                 throw new BO.invalidInputException();
 
-            try { doProdcut = dal.Product.GetByID(id); }
+            try { doProdcut = dal!.Product.GetByID(id); }
             catch (DO.MissingIDException ex)
-            { throw new BO.MissingIDException(); }
+            { throw new BO.MissingIDException(ex.Message); }
             IEnumerable<BO.OrderItem>? orderItems = cart.Items;
             int amount = 0; // amount of the specified product in the customers cart
-            //if (orderItems == null)
-            //    throw new BO.invalidInputException("");
-            // Search the product in the cart
-            if (orderItems != null) // cart is not null
-                foreach (BO.OrderItem orderItem in orderItems)
-                {
-                    if (orderItem.ProductID == id)
-                        amount = orderItem.Amount;
-                }
+            BO.OrderItem? orderItem =null;
 
-            BO.ProductItem productItem = new BO.ProductItem()
+            // Search the product in the cart
+            if (orderItems != null) // cart is not empty
+            {
+                orderItem = orderItems.FirstOrDefault(o => o.ProductID == id);
+                if (orderItem != null)
+                    amount = orderItem.Amount;
+            }
+                //foreach (BO.OrderItem orderItem in orderItems)
+                //{
+                //    if (orderItem.ProductID == id)
+                //        amount = orderItem.Amount;
+                //}
+            BO.ProductItem productItem = new()
             {
                 ProductName = doProdcut.Name,
                 ProductID = id,
@@ -139,9 +145,9 @@ namespace BlImplementation
 
             try
             {
-                dal.Product.Add(productToAdd);
+                dal!.Product.Add(productToAdd);
             }
-            catch (DO.DuplicateIDExeption e)
+            catch (DO.DuplicateIDException e)
             {
 
                 ///????????????????????????????
@@ -168,23 +174,37 @@ namespace BlImplementation
                 Category = (DO.Category)p.Category,
                 InStock = p.InStock
             };
-            IEnumerable<DO.Product?> doProducts = dal.Product.GetAll();
+            IEnumerable<DO.Product?> doProducts = dal!.Product.GetAll();
 
             //Checking if the product is found in the system.
-            foreach (DO.Product doProduct in doProducts)
-                if (doProduct.ID == p.ID)
-                {  //If found - try to do update.
-                    try
-                    {
-                        dal.Product.Update(doProduct.ID, newproduct);
-                    }
-                    catch (DO.MissingIDException)
-                    {
-
-                        throw new BO.MissingIDException("product doesnt exist");
-                    }
-                    return;
+            DO.Product? dp = null;
+             dp = doProducts?.FirstOrDefault(pr => ((DO.Product)pr!).ID == p.ID);
+            if(dp!=null)
+                try
+                {
+                    dal.Product.Update(((DO.Product)dp).ID, newproduct);
                 }
+                catch (DO.MissingIDException)
+                {
+
+                    throw new BO.MissingIDException("product doesnt exist");
+                }
+            return;
+
+            //foreach (DO.Product doProduct in doProducts)
+            //    if (doProduct.ID == p.ID)
+            //    {  //If found - try to do update.
+            //        try
+            //        {
+            //            dal.Product.Update(doProduct.ID, newproduct);
+            //        }
+            //        catch (DO.MissingIDException)
+            //        {
+
+            //            throw new BO.MissingIDException("product doesnt exist");
+            //        }
+            //        return;
+            //    }
         }
         /// <summary>
         /// delete product for manger
@@ -195,18 +215,14 @@ namespace BlImplementation
             //Product product = new ();
 
             //Check if the product found in other orders.
-            IEnumerable<DO.OrderItem?> orders = dal.OrderItem.GetAll();
-            foreach (DO.OrderItem o in orders)
-                if (o.ProductID == id)
-                {
-                    throw new BO.DuplicateIDException("Product found in exsited order...");
-                }
-
-
-            //IEnumerable<BO.ProductForList> products = product.GetAll();
-            //foreach (BO.ProductForList thisproduct in products)
-            //{
-            //    if (thisproduct.ProductID == id)
+            IEnumerable<DO.OrderItem?> orders = dal!.OrderItem.GetAll();            
+            if(orders.FirstOrDefault(o =>((DO.OrderItem)o!).ProductID == id)!=null)
+                throw new BO.DuplicateIDException("Product found in exsited order...");
+            //foreach (DO.OrderItem o in orders)
+            //    if (o.ProductID == id)
+            //    {
+            //        throw new BO.DuplicateIDException("Product found in exsited order...");
+            //    }
 
             try
             {
@@ -214,25 +230,10 @@ namespace BlImplementation
                 dal.Product.Delete(id); //delete
             }
             catch (DO.MissingIDException ex)
-            { throw new BO.MissingIDException(ex.Message); }
-            return;
-            //        { throw new BO.MissingIDException(ex.Message); }
-            //        return;
-
-            //    {
-            //        try { dal.Product.Delete(id); }
-            //        catch(DO.MissingIDException ex)
-            //        { throw new BO.MissingIDException(ex.Message); }
-            //        return;
-            //    }
-
-
-            //}
-            throw new BO.MissingIDException("product not found");
-
-
-
-
+            {
+                throw new BO.MissingIDException("product not found"); }
+            return;            
+            //throw new BO.MissingIDException("product not found");
 
         }
 

@@ -48,12 +48,12 @@ namespace DO
     /// <summary>
     /// throw when one or more of the data is incorrect
     /// </summary>
-    public class DuplicateIDExeption : Exception
+    public class DuplicateIDException : Exception
     {
-        public DuplicateIDExeption() : base(" invalid input") { }
-        public DuplicateIDExeption(string message) : base(message) { }
-        public DuplicateIDExeption(string message, Exception inner) : base(message, inner) { }
-        protected DuplicateIDExeption(
+        public DuplicateIDException() : base(" invalid input") { }
+        public DuplicateIDException(string message) : base(message) { }
+        public DuplicateIDException(string message, Exception inner) : base(message, inner) { }
+        protected DuplicateIDException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }

@@ -12,47 +12,59 @@ namespace Dal
 
         public int Add(Product P)
         {
-            foreach (Product product1 in DataSource.P_list)
-                if (product1.ID == P.ID)
-                    throw new DuplicateIDExeption();
-            // throw new Exception("Product already exists ");
-            DataSource.P_list.Add(P);
+            if(DataSource.ProductDataList.Find(p => ((Product)p!).ID == P.ID) != null)
+                throw new DuplicateIDException();
+            DataSource.ProductDataList.Add(P);
             return P.ID;
+            //foreach (Product product1 in DataSource.ProductDataList)
+            //    if (product1.ID == P.ID)
+            //        throw new DuplicateIDException();
+            //// throw new Exception("Product already exists ");
+            //DataSource.ProductDataList.Add(P);
+            //return P.ID;
 
         }
 
         public void Delete(int id) // delete product by id
         {
-            Boolean flag = false;
-            foreach (Product product in DataSource.P_list)
-            {
-                if (id == product.ID)
-                {
-                    flag = true;
-                    DataSource.P_list.Remove(product);
-                    break;
-                }           
+            int count = DataSource.ProductDataList.RemoveAll(p => ((Product)p!).ID == id);
+            if (count == 0)
+                throw new MissingIDException("not found " + id);
+            //Boolean flag = false;
+            //foreach (Product product in DataSource.ProductDataList)
+            //{
+            //    if (id == product.ID)
+            //    {
+            //        flag = true;
+            //        DataSource.ProductDataList.Remove(product);
+            //        break;
+            //    }           
 
 
-            }
-            if (!flag)
-                // throw new Exception("product not found ");
-                throw new MissingIDException();
+            //}
+            //if (!flag)
+            //    // throw new Exception("product not found ");
+            //    throw new MissingIDException();
         }
         public void Update(int id, Product newP) // update old with new
         {
-            Boolean flag = false;
-            foreach (Product product in DataSource.P_list)
-                if (id == product.ID)
-                {
-                    flag = true;
-                    int index = DataSource.P_list.IndexOf(product);
-                    DataSource.P_list[index] = newP;
-                    break;
+            //Boolean flag = false;
+            int count  = DataSource.ProductDataList.RemoveAll(p =>((Product)p!).ID==id);
+                if(count==0)
+                  throw new MissingIDException("not found " + id);
+            DataSource.ProductDataList.Add(newP);
 
-                }
-            if (!flag)
-                throw new MissingIDException();
+            //foreach (Product product in DataSource.ProductDataList)
+            //    if (id == product.ID)
+            //    {
+            //        flag = true;
+            //        int index = DataSource.ProductDataList.IndexOf(product);
+            //        DataSource.ProductDataList[index] = newP;
+            //        break;
+
+            //    }
+            //if (!flag)
+            //    throw new MissingIDException();
             // throw new Exception("product not found");
 
 
@@ -62,24 +74,24 @@ namespace Dal
         public Product GetByID(int id)
 
         {
-            var item = DataSource.P_list.FirstOrDefault(p => ((Product)p!).ID == id);
+            var item = DataSource.ProductDataList.FirstOrDefault(p => ((Product)p!).ID == id);
             if (item == null)
                 throw new MissingIDException();
             return (Product)item;
             //int index = -1;
-            //foreach (Product product in DataSource.P_list)
+            //foreach (Product product in DataSource.ProductDataList)
 
             //    if (id == product.ID)
             //    {
             //        //flag = true;
 
-            //        index = DataSource.P_list.IndexOf(product);
+            //        index = DataSource.ProductDataList.IndexOf(product);
             //        break;
             //    }
             //if (index == -1)
             //    throw new MissingIDException();
 
-            //return DataSource.P_list[index];
+            //return DataSource.ProductDataList[index];
 
 
         }
@@ -89,10 +101,10 @@ namespace Dal
             public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
             {
                 if (filter == null)
-                    return DataSource.P_list;
+                    return DataSource.ProductDataList;
 
                 List<Product?> products = new();
-                foreach (var p in DataSource.P_list)
+                foreach (var p in DataSource.ProductDataList)
                     if (filter(p))
                         products.Add(p);
                 return products;
@@ -102,7 +114,7 @@ namespace Dal
 
         public Product GetBy(Func<Product?, bool> filter)
         {
-            var item = DataSource.P_list.FirstOrDefault(p => filter((p)));
+            var item = DataSource.ProductDataList.FirstOrDefault(p => filter((p)));
             if(item == null)
                 throw new invalidInputException("no items found");
             return (Product)item;
@@ -110,7 +122,7 @@ namespace Dal
             //if (filter == null)
             //    throw new invalidInputException();
             //Order order = new();
-            //foreach (var o in DataSource.O_list)
+            //foreach (var o in DataSource.OrderDataList)
             //    if (filter(o))
             //    {
             //        flag = true;

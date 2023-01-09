@@ -24,34 +24,33 @@ namespace BlImplementation
         /// <returns></returns>
         public IEnumerable<BO.OrderForList?> GetOrders()
         {
-            IEnumerable<DO.Order?> doOrders;
-            IEnumerable<DO.OrderItem?> doOrderItems;
+            IEnumerable<DO.Order?> doOrders = dal!.Order.GetAll();
+            IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll();
             //  DO.OrderItem orderItem  ;
-              
-                 doOrders = dal.Order.GetAll();
-               doOrderItems = dal.OrderItem.GetAll();
-            
+            //doOrders = dal.Order.GetAll();
+              // doOrderItems = dal.OrderItem.GetAll();           
           
             List<BO.OrderForList> orderForList = new List<BO.OrderForList>();
-
-
             foreach (DO.Order doOrder in doOrders) //run on bo order list
-
             {
-
                 int amount = 0; // amount of each order item
                 double totalPrice = 0; // total price of each order
 
-                foreach (DO.OrderItem doOrderItem in doOrderItems)
+                // theres a match between order and orderitem
+                if (doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID) != null) 
                 {
-
-                    if (doOrderItem.OrderID == doOrder.ID)
-
-                    {
-                        amount += doOrderItem.Amount;
-                        totalPrice += doOrderItem.Price * amount;
-                    }
+                    amount += ((DO.OrderItem)doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID)!).Amount;
+                    totalPrice += ((DO.OrderItem)doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID)!).Price * amount;
                 }
+
+                //foreach (DO.OrderItem doOrderItem in doOrderItems)
+                //{
+                //    if (doOrderItem.OrderID == doOrder.ID)
+                //    {
+                //        amount += doOrderItem.Amount;
+                //        totalPrice += doOrderItem.Price * amount;
+                //    }
+                //}
                     orderForList.Add(new BO.OrderForList()
                     {
                         OrderID = doOrder.ID,
@@ -79,46 +78,56 @@ namespace BlImplementation
         public BO.Order GetOrder(int id)
         {
             DO.Order doOrder;
-            DO.Product doProduct;
-
+            //DO.Product doProduct;
 
           if  (id <= 0)  throw new BO.invalidInputException(" invalid id") ;
 
-            try { doOrder = dal.Order.GetByID(id); }
+            try { doOrder = dal!.Order.GetByID(id); }
             catch (DO.MissingIDException ex)  { throw new BO.MissingIDException(ex.Message);}
             IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderID == id);
             //IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => ((DO.OrderItem)orderItem!).OrderID == id);
-            List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
-            double orderTotalPrice = 0;// total price for the order 
-            foreach (DO.OrderItem DoOrderItem in doOrderItems)
-            {
-                doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
-                orderTotalPrice += DoOrderItem.Price * DoOrderItem.Amount;
-                BoOrderItems.Add(new()
+            IEnumerable<BO.OrderItem> BoOrderItems ;
+            //double orderTotalPrice = 0;// total price for the order 
+            BoOrderItems = doOrderItems.Where
+                (doOrderItem => dal.Product.GetByID(((DO.OrderItem)doOrderItem!).ProductID).ID == ((DO.OrderItem)doOrderItem).ProductID).Select
+                (doOrderItem => new BO.OrderItem()
                 {
-                    ItemID = DoOrderItem.ID,
-                    ProductID = DoOrderItem.ProductID,
-                    Amount = DoOrderItem.Amount,
-                    ProductName = doProduct.Name,
-                    ProductPrice = doProduct.Price,
-                    TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
+                    ItemID = ((DO.OrderItem)doOrderItem!).ID,
+                    ProductID = ((DO.OrderItem)doOrderItem).ProductID,
+                    Amount = ((DO.OrderItem)doOrderItem).Amount,
+                    ProductName = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Name,
+                    ProductPrice = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Price,
+                    TotalPrice = ((DO.OrderItem)doOrderItem).Price * ((DO.OrderItem)doOrderItem).Amount
+                }
+
+            );
+
+            //foreach (DO.OrderItem DoOrderItem in doOrderItems) // before the lambda. starts from BoOrderItems = doOrderItems.Where
+            //{
+            //    doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
+            //    orderTotalPrice += DoOrderItem.Price * DoOrderItem.Amount;
+            //    BoOrderItems.Add(new()
+            //    {
+            //        ItemID = DoOrderItem.ID,
+            //        ProductID = DoOrderItem.ProductID,
+            //        Amount = DoOrderItem.Amount,
+            //        ProductName = doProduct.Name,
+            //        ProductPrice = doProduct.Price,
+            //        TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
+            //    });
+            //}
 
 
-
-                });
-            }
-
-
-            BO.Order order = new BO.Order()
-            { 
+            BO.Order order = new()
+            {
                 CustomerName = doOrder.CustomerName,
                 CustomerAddress = doOrder.CustomerAddress,
                 CustomerEmail = doOrder.CustomerEmail,
                 //OrderStatus =   doOrder.OrderStatus
                 OrderDate = doOrder.OrderDate,
-                ShipDate =  doOrder.ShipDate,
+                ShipDate = doOrder.ShipDate,
                 DeliveryDate = doOrder.ShipDate,
-                TotalPrice = orderTotalPrice,
+                TotalPrice = BoOrderItems.Sum(items => items.TotalPrice),                
                 Items = BoOrderItems
             };
 
@@ -134,9 +143,9 @@ namespace BlImplementation
         /// <returns></returns>
         public BO.Order UpdateOrderSent(int id)
         {
-            DO.Product doProduct;
+            //DO.Product doProduct;
             DO.Order doOrder;
-            try { doOrder = dal.Order.GetByID(id);}
+            try { doOrder = dal!.Order.GetByID(id);}
             catch (DO.MissingIDException) { throw new BO.MissingIDException("order ont found"); }
             if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
             if (doOrder.ShipDate != null) throw new BO.invalidInputException(" order is already in the system");
@@ -144,21 +153,37 @@ namespace BlImplementation
            // IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => ((DO.OrderItem)orderItem!).OrderID == id); // list if order items from data layer 
             doOrder.ShipDate = DateTime.Now; // update the DO order 
             dal.Order.Update(doOrder.ID, doOrder);
-            List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
-            foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
-            {
-                doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
-                BoOrderItems.Add(new()
-                {
-                    ItemID = DoOrderItem.ID,
-                    ProductID = DoOrderItem.ProductID,
-                    Amount = DoOrderItem.Amount,
-                    ProductName = doProduct.Name,
-                    ProductPrice = doProduct.Price,
-                    TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
+            //List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
+            IEnumerable<BO.OrderItem> BoOrderItems; // build new BO order item list
 
-                });
-            }
+            BoOrderItems = doOrderItems.Where
+               (doOrderItem => dal.Product.GetByID(((DO.OrderItem)doOrderItem!).ProductID).ID == ((DO.OrderItem)doOrderItem).ProductID).Select
+               (doOrderItem => new BO.OrderItem()
+               {
+                   ItemID = ((DO.OrderItem)doOrderItem!).ID,
+                   ProductID = ((DO.OrderItem)doOrderItem).ProductID,
+                   Amount = ((DO.OrderItem)doOrderItem).Amount,
+                   ProductName = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Name,
+                   ProductPrice = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Price,
+                   TotalPrice = ((DO.OrderItem)doOrderItem).Price * ((DO.OrderItem)doOrderItem).Amount
+               }
+
+           );
+
+            //foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
+            //{
+            //    doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
+            //    BoOrderItems.Add(new()
+            //    {
+            //        ItemID = DoOrderItem.ID,
+            //        ProductID = DoOrderItem.ProductID,
+            //        Amount = DoOrderItem.Amount,
+            //        ProductName = doProduct.Name,
+            //        ProductPrice = doProduct.Price,
+            //        TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
+
+            //    });
+            //}
 
             BO.Order boOrder = new ()// build new BO order
                 {
@@ -168,7 +193,8 @@ namespace BlImplementation
                 CustomerEmail = doOrder.CustomerEmail,
                 OrderDate =doOrder.OrderDate,
                 ShipDate = doOrder.ShipDate,
-                DeliveryDate = null,                
+                DeliveryDate = null,
+                TotalPrice = BoOrderItems.Sum(items => items.TotalPrice),
                 Items = BoOrderItems
 
                  };        
@@ -185,9 +211,9 @@ namespace BlImplementation
         public BO.Order UpdateOrderSupply(int id)
         {
 
-            DO.Product doProduct;
+           // DO.Product doProduct;
             DO.Order doOrder;
-            try { doOrder = dal.Order.GetByID(id); }
+            try { doOrder = dal!.Order.GetByID(id); }
             catch (DO.MissingIDException) { throw new BO.MissingIDException("order ont found"); }
             if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
             if (doOrder.ShipDate == null) throw new BO.invalidInputException(" order ship date is null");
@@ -196,21 +222,36 @@ namespace BlImplementation
            // IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where( orderItem => ((DO.OrderItem)orderItem!).OrderID == id); // list if order items from data layer 
             doOrder.DeliveryDate = DateTime.Now;            // update the DO order 
             dal.Order.Update(doOrder.ID, doOrder);
-            List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
-            foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
-            {
-                doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
-                BoOrderItems.Add(new()
-                {
-                    ItemID = DoOrderItem.ID,
-                    ProductID = DoOrderItem.ProductID,
-                    Amount = DoOrderItem.Amount,
-                    ProductName = doProduct.Name,
-                    ProductPrice = doProduct.Price,
-                    TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
+            //List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
+            IEnumerable<BO.OrderItem> BoOrderItems;
 
-                });
-            }
+            BoOrderItems = doOrderItems.Where
+               (doOrderItem => dal.Product.GetByID(((DO.OrderItem)doOrderItem!).ProductID).ID == ((DO.OrderItem)doOrderItem).ProductID).Select
+               (doOrderItem => new BO.OrderItem()
+               {
+                   ItemID = ((DO.OrderItem)doOrderItem!).ID,
+                   ProductID = ((DO.OrderItem)doOrderItem).ProductID,
+                   Amount = ((DO.OrderItem)doOrderItem).Amount,
+                   ProductName = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Name,
+                   ProductPrice = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Price,
+                   TotalPrice = ((DO.OrderItem)doOrderItem).Price * ((DO.OrderItem)doOrderItem).Amount
+               }
+           );
+
+            //foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
+            //{
+            //    doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
+            //    BoOrderItems.Add(new()
+            //    {
+            //        ItemID = DoOrderItem.ID,
+            //        ProductID = DoOrderItem.ProductID,
+            //        Amount = DoOrderItem.Amount,
+            //        ProductName = doProduct.Name,
+            //        ProductPrice = doProduct.Price,
+            //        TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
+
+            //    });
+            //}
 
             BO.Order boOrder = new()// build new BO order
             {
@@ -221,14 +262,12 @@ namespace BlImplementation
                 OrderDate = doOrder.OrderDate,
                 ShipDate = doOrder.ShipDate,
                 DeliveryDate = doOrder.DeliveryDate,
-                Items = BoOrderItems
+                TotalPrice = BoOrderItems.Sum(items => items.TotalPrice),
+                Items = BoOrderItems               
 
             };
 
             return boOrder;
-
-
-
         }
         /// <summary>
         /// returns order track information object
@@ -239,7 +278,7 @@ namespace BlImplementation
         {
             //DO.Product doProduct;
             DO.Order doOrder;
-            try { doOrder = dal.Order.GetByID(id); }
+            try { doOrder = dal!.Order.GetByID(id); }
             catch (DO.MissingIDException) { throw new BO.MissingIDException("order ont found"); }
             //if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
            // if (doOrder.ShipDate == null) throw new BO.invalidInputException(" order ship date is null");
@@ -263,13 +302,9 @@ namespace BlImplementation
                     { ShipDate: not null } => BO.OrderStatus.shipped,
                     { OrderDate: not null } => BO.OrderStatus.ordered,
                     _ => BO.OrderStatus.nullState
-                },
-
-               
+                },              
                 
             };
-
-
             return boOrderTracking;
         }
     }
