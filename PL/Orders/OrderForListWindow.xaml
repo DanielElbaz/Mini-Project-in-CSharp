@@ -6,8 +6,22 @@
         xmlns:local="clr-namespace:PL.Orders"
         mc:Ignorable="d"
         Title="OrderForListWindow" Height="450" Width="800">
-    <Grid Name="MainGrid" >
-        
+    <Grid>
+        <Window>
+            <ListView Name="orderListView">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding ID}" />
+                        <GridViewColumn Header="Customer Name" Width="150" DisplayMemberBinding="{Binding CustomerName}" />
+                        <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Status}" />
+                        <GridViewColumn Header="Order Date" Width="100" DisplayMemberBinding="{Binding OrderDate}" />
+                        <GridViewColumn Header="Number of Items" Width="100" DisplayMemberBinding="{Binding NumberOfItems}" />
+                        <GridViewColumn Header="Total Price" Width="100" DisplayMemberBinding="{Binding TotalPrice}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Window>
+
 
 
     </Grid>

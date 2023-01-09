@@ -22,7 +22,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Id:"
+        <TextBlock Text="ID:"
  Grid.Row="0"
  Grid.Column="0" />
         <TextBox  x:Name="id" Grid.Row="0"
