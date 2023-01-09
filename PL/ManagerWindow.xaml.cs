@@ -1,4 +1,5 @@
 ﻿using PL.Products;
+using PL.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,14 @@ namespace PL
     /// </summary>
     public partial class ManagerWindow : Window
     {
+        BlApi.IBl? bl = BlApi.Factory.Get();
         public ManagerWindow()
         {
             InitializeComponent();
         }
+        private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
+        private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new OrderForListWindow().Show();
     }
-    private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
+    
+    
 }

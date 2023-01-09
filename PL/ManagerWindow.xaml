@@ -8,6 +8,6 @@
         Title="ManagerWindow" Height="450" Width="800">
     <Grid>
         <Button Content="List of Products" HorizontalAlignment="Center" Margin="0,154,0,0" VerticalAlignment="Top" Height="33" Width="124" Click="ShowProductsButton_Click"/>
-        <Button Content="List of Orders" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="124" Click="ShowOrdersButton_Click"/>
+        <Button Content="List of Orders" HorizontalAlignment="Center" VerticalAlignment="Top" Height="33" Width="124" Margin="0,217,0,0" Click="ShowOrdersButton_Click"/>
     </Grid>
 </Window>
