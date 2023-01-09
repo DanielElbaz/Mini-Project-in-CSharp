@@ -27,12 +27,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{503DFE4E-730
 		xml\dal-config.xml = xml\dal-config.xml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pictures", "pictures", "{43860F9F-5151-44F6-9B8B-1055138042C3}"
-	ProjectSection(SolutionItems) = preProject
-		pictures\bestmobilejpg.jpg = pictures\bestmobilejpg.jpg
-		pictures\imagefixed.jpg = pictures\imagefixed.jpg
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,7 +67,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{503DFE4E-7303-423D-BB53-6FDBF83834BB} = {BE4C77BA-5849-47CD-9A6A-2F0B6A5EF089}
-		{43860F9F-5151-44F6-9B8B-1055138042C3} = {BE4C77BA-5849-47CD-9A6A-2F0B6A5EF089}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7EABEAF7-6717-4479-852A-3750CA89C9D0}

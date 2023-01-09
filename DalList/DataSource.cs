@@ -87,7 +87,7 @@ namespace Dal
                 Order o = new Order();
                 o = new Order();
                 o.ID = Config.OrderLastId++;
-                o.CustomerName = "costumer " + i;
+                o.CustomerName = "Customer " + i;
                 o.CustomerEmail = emails[Config.rand.Next(20)];
                 o.OrderDate = DateTime.Now - new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 o.CustomerAddress = i + "/" + 2 * i + "begin road jerusalem";

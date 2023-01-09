@@ -40,7 +40,7 @@ namespace PL
 
         //private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
         private void ShowManagerButton_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
-        // private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new OrderForListWindow().Show();
+        private void ShowCatalog_Click(object sender, RoutedEventArgs e) => new CatalogWindow().Show();
       
     }
 }

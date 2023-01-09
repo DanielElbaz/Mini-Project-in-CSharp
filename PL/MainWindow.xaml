@@ -9,12 +9,13 @@
 
     <Grid>
         <Grid>
-            <Button Content="Admin" HorizontalAlignment="Left" Margin="140,132,0,0" VerticalAlignment="Top" Height="33" Width="166" Click="ShowManagerButton_Click"/>
-            <Button Content="New Order" HorizontalAlignment="Left" Margin="349,132,0,0" VerticalAlignment="Top" Height="33" Width="187" RenderTransformOrigin="-0.185,0.607"/>
-            <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="582,132,0,0" VerticalAlignment="Top" Height="33" Width="171" RenderTransformOrigin="-1.551,0.345" />
+            <Button Content="Admin" HorizontalAlignment="Center" Margin="0,95,0,0" VerticalAlignment="Top" Height="33" Width="172" Click="ShowManagerButton_Click"/>
+            <!--<Button Content="Orders" HorizontalAlignment="Left" Margin="526,78,0,0" VerticalAlignment="Top" Height="33" Width="171" RenderTransformOrigin="-0.185,0.607"/>-->
+            <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="540,95,0,0" VerticalAlignment="Top" Height="33" Width="171" RenderTransformOrigin="-1.551,0.345" />
+            <Button Content="Catalog - New Order" HorizontalAlignment="Left" Margin="78,100,0,0" VerticalAlignment="Top" Height="33" Width="171" Click="ShowCatalog_Click" RenderTransformOrigin="-1.551,0.345" />
         </Grid>
-        <Image Name="backgroundImage" Source = "pictures/bestmobilejpg.jpg"  Stretch="Fill" Panel.ZIndex="-1"/>
-        <Image Name="secondbackgroundImage" Source="C:\Users\danie\Downloads\imagefixed.jpg" Stretch="Fill" Panel.ZIndex="0" Margin="236,436,0,-34"/>
+        <Image Name="backgroundImage"   Stretch="Fill" Panel.ZIndex="-1" Source="/bestmobilejpg.jpg" />
+        <Image Name="secondbackgroundImage" Stretch="Fill" Panel.ZIndex="0" Margin="236,436,0,-34" Source="/imagefixed.jpg" />
     </Grid>
 
 </Window>
