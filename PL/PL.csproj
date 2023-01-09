@@ -13,7 +13,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="bestmobilejpg.jpg" />
+    <None Remove="imagefixed.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="bestmobilejpg.jpg" />
+    <Resource Include="imagefixed.jpg" />
   </ItemGroup>
 
 </Project>

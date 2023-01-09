@@ -33,9 +33,7 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            backgroundImage.Source = new BitmapImage(new Uri("C:\\Users\\danie\\OneDrive\\Bureau\\bestmobilejpg.jpg"));
-            backgroundImage.Stretch = Stretch.Fill;
-            backgroundImage.SetValue(Panel.ZIndexProperty, -1);
+          
 
         }
        
