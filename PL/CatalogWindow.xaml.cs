@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace PL
 {
     /// <summary>
@@ -24,17 +25,21 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public static readonly DependencyProperty ProductsDepedency = DependencyProperty.Register(nameof(Products), typeof(ObservableCollection<ProductForList?>), typeof(Window));
-        public ObservableCollection<ProductForList?>Products
-        {
-            get => (ObservableCollection<ProductForList?>)GetValue(ProductsDepedency);
-            private set => SetValue(ProductsDepedency, value);
-        }
+        //public static readonly DependencyProperty ProductsDepedency = DependencyProperty.Register(nameof(Products), typeof(ObservableCollection<ProductForList?>), typeof(Window));
+        //public ObservableCollection<ProductForList?> Products
+        //{
+        //    get => (ObservableCollection<ProductForList?>)GetValue(ProductsDepedency);
+        //    private set => SetValue(ProductsDepedency, value);
+        //}
         public CatalogWindow()
         {
+           //var temp = bl.Product.GetAll();
+           //Products = temp == null ? new() : new(temp);           
             InitializeComponent();
-            var temp = bl.Product.GetAll();
-            Products = temp == null ? new() : new(temp);
+            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            this.categoryList.SelectedIndex = 0;
+            this.ProductItemListView.ItemsSource = bl.Product.GetAll();
+
         }
         private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -51,7 +56,7 @@ namespace PL
         }
         private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
 
-        private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ProductItemView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductForList p = (BO.ProductForList)ProductItemListView.SelectedItem;
             int id = p.ProductID;
