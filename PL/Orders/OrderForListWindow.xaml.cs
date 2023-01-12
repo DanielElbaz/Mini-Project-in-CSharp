@@ -29,7 +29,7 @@ namespace PL.Orders
             IEnumerable<BO.OrderForList?> orders = bl.Order.GetOrders(); 
             this.orderListView.ItemsSource = orders;
         }
-       
 
+        private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e) => new OrderWindow().Show();
     }
 }

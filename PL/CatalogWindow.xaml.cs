@@ -25,20 +25,34 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        //public static readonly DependencyProperty ProductsDepedency = DependencyProperty.Register(nameof(Products), typeof(ObservableCollection<ProductForList?>), typeof(Window));
-        //public ObservableCollection<ProductForList?> Products
-        //{
-        //    get => (ObservableCollection<ProductForList?>)GetValue(ProductsDepedency);
-        //    private set => SetValue(ProductsDepedency, value);
-        //}
+        public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(BO.Cart), typeof(Cart), typeof(Window));
+        public Cart Cart
+        {
+            get => (Cart)GetValue(CartDependency);
+            private set => SetValue(CartDependency, value);
+        }
+
+        public static readonly DependencyProperty ProductsDependency = DependencyProperty.Register(nameof(Products1), typeof(ObservableCollection<ProductItem>), typeof(Window));
+        public ObservableCollection<ProductItem?> Products1
+        {
+            get => (ObservableCollection<ProductItem?>)GetValue(ProductsDependency);
+            private set => SetValue(ProductsDependency, value);
+        }
+        public Category Category { get; set; }
         public CatalogWindow()
         {
-           //var temp = bl.Product.GetAll();
-           //Products = temp == null ? new() : new(temp);           
+
+            Cart = new() { Items = new() };
+            Category = Category.None;
+            var temp = bl?.Product.GetAllCatalog(null);
+            Products1 = temp == null ? new() : new(temp);
             InitializeComponent();
-            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            this.categoryList.SelectedIndex = 0;
-            this.ProductItemListView.ItemsSource = bl.Product.GetAll();
+            //var temp = bl.Product.GetAll();
+            //Products = temp == null ? new() : new(temp);           
+            //InitializeComponent();
+            //this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //this.categoryList.SelectedIndex = 0;
+            //this.ProductItemListView.ItemsSource = bl?.Product.GetAllCatalog( null);
 
         }
         private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,7 +72,7 @@ namespace PL
 
         private void ProductItemView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.ProductForList p = (BO.ProductForList)ProductItemListView.SelectedItem;
+            BO.ProductItem p = (BO.ProductItem)ProductItemListView.SelectedItem;
             int id = p.ProductID;
             new ProductWindow(id).Show();
             InitializeComponent();

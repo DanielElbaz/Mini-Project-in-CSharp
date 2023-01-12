@@ -10,13 +10,13 @@
             <ListView Name="orderListView">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding ID}" />
+                        <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding OrderID}" />
                         <GridViewColumn Header="Customer Name" Width="150" DisplayMemberBinding="{Binding CustomerName}" />
-                        <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding Status}" />
-                        <GridViewColumn Header="Order Date" Width="100" DisplayMemberBinding="{Binding OrderDate}" />
-                        <GridViewColumn Header="Number of Items" Width="100" DisplayMemberBinding="{Binding NumberOfItems}" />
+                        <GridViewColumn Header="Status" Width="100" DisplayMemberBinding="{Binding OrderStatus}" />                        
+                        <GridViewColumn Header="Number of Items" Width="100" DisplayMemberBinding="{Binding AmountOfItems}" />
                         <GridViewColumn Header="Total Price" Width="100" DisplayMemberBinding="{Binding TotalPrice}" />
-                    </GridView>
+                    
+                </GridView>
                 </ListView.View>
             </ListView>
 

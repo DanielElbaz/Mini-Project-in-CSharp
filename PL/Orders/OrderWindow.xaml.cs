@@ -20,10 +20,11 @@ namespace PL.Orders
     /// </summary>
     public partial class OrderWindow : Window
     {
+        BlApi.IBl? bl = BlApi.Factory.Get();
         public OrderWindow()
         {
             InitializeComponent();
-          
+           
         }
 
      }

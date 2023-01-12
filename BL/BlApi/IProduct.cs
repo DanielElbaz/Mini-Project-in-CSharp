@@ -18,6 +18,10 @@ namespace BlApi
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        
+        public IEnumerable<BO.ProductItem?> GetAllCatalog(Func<BO.Product, bool>? func);
+
+
         public Product GetProduct(int id);
         /// <summary>
         /// get product fo catalog

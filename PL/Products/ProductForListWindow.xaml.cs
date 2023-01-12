@@ -1,7 +1,9 @@
 ﻿//using BlApi;
 //using BlImplementation;
+using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +24,23 @@ namespace PL.Products
     public partial class ProductForListWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
+        public static readonly DependencyProperty ProductsDependency = DependencyProperty.Register(nameof(Products), typeof(ObservableCollection<ProductForList?>), typeof(Window));
+
+        public ObservableCollection<ProductForList?> Products
+        {
+            get => (ObservableCollection<ProductForList?>)GetValue(ProductsDependency);
+            private set => SetValue(ProductsDependency, value);
+        }
+        public Category Category { get; set; } = Category.None;
         public ProductForListWindow()
         {
             InitializeComponent();
-            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            this.categoryList.SelectedIndex = 0;
-           this.ProductListView.ItemsSource = bl.Product.GetAll();
+            var temp = bl?.Product.GetAll();
+            Products = temp == null ? new() : new(temp);
+            //InitializeComponent();
+            //this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //this.categoryList.SelectedIndex = 5;
+            //this.ProductListView.ItemsSource = bl.Product.GetAll();
 
         }
 
@@ -39,10 +52,14 @@ namespace PL.Products
 
         private void categoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BO.Category category = (BO.Category)categoryList.SelectedItem ;
-            categoryList.Focus();
-            ProductListView.ItemsSource = bl.Product.GetAll( elem => elem.Category== category);
-           // productList.SelectedItem =
+            var temp = Category == BO.Category.None ?
+            bl?.Product.GetAll() : bl?.Product.GetAll().Where(item => item!.Category == Category);
+            Products = temp == null ? new() : new(temp);
+
+            //BO.Category category = (BO.Category)categoryList.SelectedItem ;
+            //categoryList.Focus();
+            //ProductListView.ItemsSource = bl.Product.GetAll( elem => elem.Category== category);
+            // productList.SelectedItem =
 
         }
 
@@ -50,11 +67,15 @@ namespace PL.Products
 
         private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.ProductForList p = (BO.ProductForList)ProductListView.SelectedItem;
-            int id = p.ProductID;
+            int id = ((ProductForList?)(sender as ListViewItem)?.DataContext)?.ProductID
+          ?? throw new NullReferenceException("null event sender");
             new ProductWindow(id).Show();
-            InitializeComponent();
-           // this.Refresh();
+
+            //BO.ProductForList p = (BO.ProductForList)ProductListView.SelectedItem;
+            //int id = p.ProductID;
+            //new ProductWindow(id).Show();
+            //InitializeComponent();
+            // this.Refresh();
         }
     }
 }

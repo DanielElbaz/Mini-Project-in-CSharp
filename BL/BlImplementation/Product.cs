@@ -52,6 +52,41 @@ namespace BlImplementation
                 });
         }
         /// <summary>
+        /// get all products for catalog
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public IEnumerable<BO.ProductItem?> GetAllCatalog(Func<BO.Product, bool>? func)
+        {
+
+            if (func == null)
+            {
+                return dal!.Product.GetAll().Select
+                      (doProduct => new BO.ProductItem()
+                      {
+                          Category = (BO.Category)doProduct?.Category!,
+                          ProductID = (int)doProduct?.ID!,
+                          ProductName = doProduct?.Name,
+                          ProductPrice = (double)doProduct?.Price!,
+                          IsAvailable = ((int)doProduct?.InStock! > 0) ? true : false,
+                          AmountInCart = 0
+                      }) ;
+            }
+            return dal!.Product.GetAll()
+                .Where(doProduct => func(doProduct?.ConverToBO()!))
+                .Select(doProduct => new BO.ProductItem()
+                {
+                    Category = (BO.Category)doProduct?.Category!,
+                    ProductID = (int)doProduct?.ID!,
+                    ProductName = doProduct?.Name,
+                    ProductPrice = (double)doProduct?.Price!,
+                    IsAvailable = ((int)doProduct?.InStock! > 0) ? true : false,
+                    AmountInCart = 0
+                });
+
+
+        }
+        /// <summary>
         /// get a product details
         /// </summary>
         /// <param name="id"></param>
