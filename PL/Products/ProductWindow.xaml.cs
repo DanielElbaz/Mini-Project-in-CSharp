@@ -1,4 +1,5 @@
-﻿//using BlApi;
+﻿using BlApi;
+using BO;
 //using BlImplementation;
 using System;
 using System.Collections.Generic;
@@ -23,26 +24,45 @@ namespace PL.Products
     {
         // private IBl bl = new Bl();
         BlApi.IBl? bl = BlApi.Factory.Get();
-        public ProductWindow()
-        {
-            InitializeComponent();
-            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            this.categoryList.SelectedIndex = 0;
-        }
 
-        public ProductWindow(int id)
+        public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
+        public Product? Product { get => (Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
+
+        public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
+
+        //public ProductWindow()
+        //{
+        //    InitializeComponent();
+        //    this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //    this.categoryList.SelectedIndex = 0;
+        //}
+
+        public ProductWindow(int id = 0)
         {
-            InitializeComponent();
-            this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            BO.Product product = bl.Product.GetProduct(id);
-            addButton.Content = "Update";
-            this.id.Text = Convert.ToString(product.ID);
-            this.id.IsEnabled = false;
-            this.name.Text = Convert.ToString(product.Name);
-            this.price.Text = Convert.ToString(product.Price);
-            this.inStock.Text = Convert.ToString(product.InStock);
-            this.categoryList.SelectedItem = product.Category;
+            try
+            {
+                Product = id == 0 ? new() { Category = BO.Category.None } : bl.Product.GetProduct(id);
+                InitializeComponent();
+            }
+            catch (MissingIDException ex)
+            {
+                Close();
+                MessageBox.Show(ex.Message, "Failed to get the entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
+        //public ProductWindow(int id)
+        //{
+        //    InitializeComponent();
+        //    this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //    BO.Product product = bl.Product.GetProduct(id);
+        //    addButton.Content = "Update";
+        //    this.id.Text = Convert.ToString(product.ID);
+        //    this.id.IsEnabled = false;
+        //    this.name.Text = Convert.ToString(product.Name);
+        //    this.price.Text = Convert.ToString(product.Price);
+        //    this.inStock.Text = Convert.ToString(product.InStock);
+        //    this.categoryList.SelectedItem = product.Category;
+        //}
 
         private bool check(string id,string price,string instock)
         {

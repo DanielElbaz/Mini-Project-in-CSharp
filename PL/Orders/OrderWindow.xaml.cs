@@ -21,11 +21,23 @@ namespace PL.Orders
     public partial class OrderWindow : Window
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
-        public OrderWindow()
+
+
+        public static readonly DependencyProperty OrderDependency = DependencyProperty.Register(nameof(Order), typeof(BO.Order), typeof(Window));
+        public Order? Order { get => (Order)GetValue(OrderDependency); private set => SetValue(OrderDependency, value); }
+        public OrderWindow(int id = 0)
         {
-            InitializeComponent();
-           
+            try
+            {
+                Order = id == 0 ? new() { } : bl.Order.GetOrder(id);
+                InitializeComponent();
+            }
+            catch (MissingIDException ex)
+            {
+                Close();
+                MessageBox.Show(ex.Message, "Failed to get the entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
-     }
+    }
 }

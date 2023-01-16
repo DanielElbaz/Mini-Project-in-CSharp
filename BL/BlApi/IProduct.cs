@@ -19,7 +19,7 @@ namespace BlApi
         /// <param name="id"></param>
         /// <returns></returns>
         
-        public IEnumerable<BO.ProductItem?> GetAllCatalog(Func<BO.Product, bool>? func);
+        public IEnumerable<BO.ProductItem?> GetAllCatalog(Func<BO.Product, bool>? func=null);
 
 
         public Product GetProduct(int id);

@@ -18,7 +18,7 @@
             <ColumnDefinition Width="479*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Category" FontSize="40"  />
-        <ComboBox Name="categoryList" FontSize="20" Margin="146,10,5,10" SelectionChanged="categoryList_SelectionChanged" Grid.Column="1"/>
+        <ComboBox Name="categoryList" FontSize="20" Margin="146,10,5,10" SelectionChanged="categoryList_SelectionChanged" Grid.Column="1" Text="{Binding Category}" SelectedIndex="5" SelectedItem="{Binding Category, Mode=OneWayToSource}" ItemsSource="{Binding Categories}"/>
         <ListView Name="ProductItemListView" ItemsSource="{Binding Products1}" Grid.ColumnSpan="2" Margin="10,10,110,10" Grid.Row="1">
             <ListView.View>
                 <GridView>

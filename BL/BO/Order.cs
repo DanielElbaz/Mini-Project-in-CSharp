@@ -17,6 +17,7 @@ namespace BO
         public OrderStatus OrderStatus { get; set; }
 
         public DateTime? OrderDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
         public DateTime? ShipDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public IEnumerable<OrderItem>? Items { get; set; }
@@ -24,7 +25,8 @@ namespace BO
 
         public override string ToString()
         {
-           string str = "Order Date:" + OrderDate +'\n' +
+           string str = "Order Date:" + OrderDate +'\n'+
+                           "Payment Date:" + PaymentDate +'\n'+
                          "Ship Date:" + ShipDate + '\n' +
                          "Delivery Date:" + DeliveryDate + '\n'+
                           "Total Price:" + TotalPrice + '\n' +
