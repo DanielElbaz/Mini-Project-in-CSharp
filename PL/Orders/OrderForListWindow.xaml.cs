@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 using DO;
+using PL.Products;
 
 namespace PL.Orders
 {
@@ -42,6 +43,11 @@ namespace PL.Orders
             //this.orderListView.ItemsSource = orders;
         }
 
-        private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e) => new OrderWindow().Show();
+        private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            int id = ((OrderForList?)(sender as ListViewItem)?.DataContext)?.OrderID
+          ?? throw new NullReferenceException("null event sender");
+            new OrderWindow(id).Show();
+        }
     }
 }

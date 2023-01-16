@@ -119,12 +119,13 @@ namespace BlImplementation
 
 
             BO.Order order = new()
-            {
+            {   ID =id,
                 CustomerName = doOrder.CustomerName,
                 CustomerAddress = doOrder.CustomerAddress,
                 CustomerEmail = doOrder.CustomerEmail,
                 //OrderStatus =   doOrder.OrderStatus
                 OrderDate = doOrder.OrderDate,
+                PaymentDate = doOrder.OrderDate,
                 ShipDate = doOrder.ShipDate,
                 DeliveryDate = doOrder.DeliveryDate,
                 TotalPrice = BoOrderItems.Sum(items => items.TotalPrice),                
