@@ -25,14 +25,14 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(BO.Cart), typeof(Cart), typeof(Window));
+        public static  DependencyProperty CartDependency = DependencyProperty.Register(nameof(BO.Cart), typeof(Cart), typeof(Window));
         public Cart Cart
         {
             get => (Cart)GetValue(CartDependency);
             private set => SetValue(CartDependency, value);
         }
 
-        public static readonly DependencyProperty ProductsDependency = DependencyProperty.Register(nameof(Products1), typeof(ObservableCollection<ProductItem>), typeof(Window));
+        public static  DependencyProperty ProductsDependency = DependencyProperty.Register(nameof(Products1), typeof(ObservableCollection<ProductItem>), typeof(Window));
         public ObservableCollection<ProductItem?> Products1
         {
             get => (ObservableCollection<ProductItem?>)GetValue(ProductsDependency);
@@ -58,12 +58,7 @@ namespace PL
             var temp = bl?.Product.GetAllCatalog(null);
             Products1 = temp == null ? new() : new(temp);
             InitializeComponent();
-            //var temp = bl.Product.GetAll();
-            //Products = temp == null ? new() : new(temp);           
-            //InitializeComponent();
-            //this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            //this.categoryList.SelectedIndex = 0;
-            //this.ProductItemListView.ItemsSource = bl?.Product.GetAllCatalog( null);
+
 
         }
         private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -73,15 +68,12 @@ namespace PL
         }
 
         private void categoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        //    BO.Category category = (BO.Category)categoryList.SelectedItem;
-        //    //categoryList.Focus();
-        //    ProductItemListView.ItemsSource =    bl.Product.GetAll(elem => elem.Category == category);
+        { 
             var temp = Category == BO.Category.None ?
             bl?.Product.GetAllCatalog() : bl?.Product.GetAllCatalog().Where(item => item!.Category == Category);
         Products1 = temp == null ? new () : new (temp);
         }
-        private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+       // private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
 
         private void ProductItemView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -90,6 +82,24 @@ namespace PL
             new ProductWindow(id).Show();
             InitializeComponent();
             // this.Refresh();
+        }
+
+        private void Cart_Click(object sender, RoutedEventArgs e) => new CartWindow(Cart).Show();
+
+        private void AddToCartButton_Click(object sender, RoutedEventArgs e)
+        {
+            ProductItem product = (ProductItem)((sender as Button)!.DataContext!);
+            try
+            {
+                Cart = bl!.Cart.AddProduct(Cart, product.ProductID);
+                MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
+            }
+            catch (DuplicateIDException ex)
+            {
+
+                MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+
         }
     }
 }

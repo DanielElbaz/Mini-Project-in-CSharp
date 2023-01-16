@@ -59,11 +59,6 @@ namespace PL.Products
             bl?.Product.GetAll() : bl?.Product.GetAll().Where(item => item!.Category == Category);
             Products = temp == null ? new() : new(temp);
 
-            //BO.Category category = (BO.Category)categoryList.SelectedItem ;
-            //categoryList.Focus();
-            //ProductListView.ItemsSource = bl.Product.GetAll( elem => elem.Category== category);
-            // productList.SelectedItem =
-
         }
 
         private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
@@ -74,11 +69,7 @@ namespace PL.Products
           ?? throw new NullReferenceException("null event sender");
             new ProductWindow(id).Show();
 
-            //BO.ProductForList p = (BO.ProductForList)ProductListView.SelectedItem;
-            //int id = p.ProductID;
-            //new ProductWindow(id).Show();
-            //InitializeComponent();
-            // this.Refresh();
+          
         }
     }
 }

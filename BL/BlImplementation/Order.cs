@@ -123,7 +123,7 @@ namespace BlImplementation
                 CustomerName = doOrder.CustomerName,
                 CustomerAddress = doOrder.CustomerAddress,
                 CustomerEmail = doOrder.CustomerEmail,
-                //OrderStatus =   doOrder.OrderStatus
+               // OrderStatus =   doOrder.OrderStatus,
                 OrderDate = doOrder.OrderDate,
                 PaymentDate = doOrder.OrderDate,
                 ShipDate = doOrder.ShipDate,
@@ -149,7 +149,7 @@ namespace BlImplementation
             try { doOrder = dal!.Order.GetByID(id);}
             catch (DO.MissingIDException) { throw new BO.MissingIDException("order ont found"); }
             if (doOrder.OrderDate == null) throw new BO.invalidInputException(" order date is null");
-            if (doOrder.ShipDate != null) throw new BO.invalidInputException(" order is already in the system");
+            if (doOrder.ShipDate != null) throw new BO.invalidInputException(" Order has already been shipped");
             IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderID == id);
            // IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => ((DO.OrderItem)orderItem!).OrderID == id); // list if order items from data layer 
             doOrder.ShipDate = DateTime.Now; // update the DO order 
