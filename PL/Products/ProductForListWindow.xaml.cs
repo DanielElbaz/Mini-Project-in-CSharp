@@ -32,6 +32,9 @@ namespace PL.Products
             private set => SetValue(ProductsDependency, value);
         }
         public Category Category { get; set; } = Category.None;
+
+        public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
+
         public ProductForListWindow()
         {
             InitializeComponent();

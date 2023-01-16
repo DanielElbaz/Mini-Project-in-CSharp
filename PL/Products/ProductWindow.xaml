@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:PL.Products"
         mc:Ignorable="d"
         Background="White"
-        Title="ProductWindow" Height="450" Width="500">
-    <Grid  Height="150"  Margin="70" Width="200">
+        Title="ProductWindow" Height="450" Width="500"
+        DataContext="{Binding Product, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+        <!--DataContext="{Binding RelativeSource={RelativeSource Self}}">-->
+
+    <Grid  Height="150"  Margin="70" Width="200"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -25,27 +28,27 @@
         <TextBlock Text="ID:"
  Grid.Row="0"
  Grid.Column="0" />
-        <TextBox  x:Name="id" Grid.Row="0"
+        <TextBox  x:Name="id"    Text ="{Binding ID}"  IsReadOnly="{Binding ID,  Mode=OneTime}" Grid.Row="0"
  Grid.Column="1">
         </TextBox>
         
         <TextBlock Text="Category:"  Grid.Row="1"
  Grid.Column="0" />
-        <ComboBox x:Name="categoryList" Text="Select" Grid.Row="1"
+        <ComboBox x:Name="categoryList"     ItemsSource="{Binding Categories}"  Text="{Binding Category}"  Grid.Row="1"
  Grid.Column="1">
         </ComboBox> <TextBlock Text="Name:" Grid.Row="2"
  Grid.Column="0" />
-                <TextBox x:Name="name" Grid.Row="2" Grid.Column="1">
+                <TextBox x:Name="name" Text="{Binding Name, Mode=TwoWay}" Grid.Row="2" Grid.Column="1">
         </TextBox>
        
-        <TextBox x:Name="price" Grid.Row="3"  Grid.Column="1">
+        <TextBox x:Name="price"  Text ="{Binding Price, Mode=TwoWay}" Grid.Row="3"  Grid.Column="1">
         </TextBox>
         
         <TextBlock Grid.Row="3" Text="Price:"></TextBlock>
         <TextBlock Text="In Stock" Grid.Row="4"
  Grid.Column="0" />
         
-        <TextBox x:Name="inStock" Grid.Row="4" Grid.Column="1">
+        <TextBox x:Name="inStock" Text="{Binding InStock, Mode=TwoWay}" Grid.Row="4" Grid.Column="1">
         </TextBox>
         <StackPanel Grid.Row="5" Orientation='Horizontal'>
             <Button x:Name="addButton" Click="addButton_Click"  Content="Add" Width="auto" Height="20">

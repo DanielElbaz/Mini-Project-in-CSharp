@@ -38,12 +38,23 @@ namespace PL
             get => (ObservableCollection<ProductItem?>)GetValue(ProductsDependency);
             private set => SetValue(ProductsDependency, value);
         }
-        public Category Category { get; set; }
+         public Category Category { get; set; }
+
+        //public static readonly DependencyProperty CategoryDependency = DependencyProperty.Register(nameof(BO.Category), typeof(ObservableCollection<BO.Category>), typeof(Window));
+        //public ObservableCollection<BO.Category> Category
+        //{
+        //    get => (ObservableCollection<BO.Category>) GetValue(CategoryDependency);
+        //    private set => SetValue(CategoryDependency, value);
+        //}
+
+        public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
+
+
         public CatalogWindow()
         {
 
             Cart = new() { Items = new() };
-            Category = Category.None;
+            //Category = Category.None;
             var temp = bl?.Product.GetAllCatalog(null);
             Products1 = temp == null ? new() : new(temp);
             InitializeComponent();
@@ -63,10 +74,12 @@ namespace PL
 
         private void categoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BO.Category category = (BO.Category)categoryList.SelectedItem;
-            categoryList.Focus();
-            ProductItemListView.ItemsSource = bl.Product.GetAll(elem => elem.Category == category);
-            // productList.SelectedItem =
+        //    BO.Category category = (BO.Category)categoryList.SelectedItem;
+        //    //categoryList.Focus();
+        //    ProductItemListView.ItemsSource =    bl.Product.GetAll(elem => elem.Category == category);
+            var temp = Category == BO.Category.None ?
+            bl?.Product.GetAllCatalog() : bl?.Product.GetAllCatalog().Where(item => item!.Category == Category);
+        Products1 = temp == null ? new () : new (temp);
         }
         private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
 
