@@ -89,15 +89,51 @@ namespace PL
         private void AddToCartButton_Click(object sender, RoutedEventArgs e)
         {
             ProductItem product = (ProductItem)((sender as Button)!.DataContext!);
-            try
+            if (product.IsAvailable == true)
             {
-                Cart = bl!.Cart.AddProduct(Cart, product.ProductID);
-                MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
+                try
+                {
+                    Cart = bl!.Cart.AddProduct(Cart, product.ProductID ==0? throw new BO.MissingIDException (" Product not Found"): product.ProductID);
+                    product.AmountInCart++;
+                    Products1 = new(from p in Products1 orderby p.ProductID select p);
+                    // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
+                }
+                catch (BO.MissingIDException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+                                
             }
-            catch (DuplicateIDException ex)
+
+            else
+            {
+                MessageBox.Show(" Product is out of stock ", " ", MessageBoxButton.OK);
+            }
+        }
+
+        private void removeFromCartButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            ProductItem product = (ProductItem)((sender as Button)!.DataContext!);
+            if (product.AmountInCart != 0)
+            {
+                try
+                {
+                    Cart = bl!.Cart.UpdateAmountOfProduct(Cart, (int)product.ProductID, product.AmountInCart - 1);
+                    product.AmountInCart--;
+                    Products1 = new(from p in Products1 orderby p.ProductID select p);
+                    // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
+                }
+                catch (BO.MissingIDException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
+            else
             {
 
-                MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
 
         }

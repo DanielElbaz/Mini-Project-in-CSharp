@@ -74,6 +74,7 @@ namespace BlImplementation
                 if (product.InStock >= item.Amount + 1)
                 {
                     item.Amount++; // add to the amount of the item
+                    item.TotalPrice += item.ProductPrice;
                     cart.TotalPrice += product.Price;
                     //product.InStock--; // reduce ammount
                     
