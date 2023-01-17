@@ -39,5 +39,33 @@ namespace PL.Orders
             }
         }
 
+    
+
+        private void updateSent_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl?.Order.UpdateOrderSent(Order!.ID);
+            }
+            catch (invalidInputException ex)
+            {
+                Close();
+                MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
+
+        private void updateDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl?.Order.UpdateOrderSupply(Order!.ID);
+            }
+            catch (invalidInputException ex)
+            {
+                Close();
+                MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+        }
+
     }
 }

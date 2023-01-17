@@ -18,7 +18,7 @@ namespace Dal
             static internal Random rand = new Random();
 
 
-            internal static int OrderLastId=1; // running index number of order
+            internal static int OrderLastId = 1; // running index number of order
             internal static int OrderItemLastId = 1;
 
             internal static int getOrderLastId()
@@ -46,7 +46,7 @@ namespace Dal
         //internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
         //internal static Product[] P_arr = new Product[P_capacity];
         //internal static Order[] O_arr = new Order[O_capacity];
- 
+
         internal static List<OrderItem?> OrderItemDataList = new();
         internal static List<Product?> ProductDataList = new();
         internal static List<Order?> OrderDataList = new();
@@ -54,7 +54,7 @@ namespace Dal
         private static void addOrderItem() // initialize order item
         {
 
-            for (int i =1; i <= 40; i++)
+            for (int i = 1; i <= 40; i++)
             {
                 int index = Config.rand.Next(ProductDataList.Count);
                 Product p = (Product)ProductDataList[index]!; // draw of any product randomally
@@ -68,8 +68,8 @@ namespace Dal
                     Price = p.Price
                 };
                 OrderItemDataList.Add(oi);
-            // i++;
-            // Config.OrderItemFirstClear++;
+                // i++;
+                // Config.OrderItemFirstClear++;
 
             }
         }
@@ -82,7 +82,7 @@ namespace Dal
             ,"preciousDana57@frontiernet.net" ,"clumsyAshlee41@me.com" ,"lonelyRuben@wanadoo.fr" , "Lucasfoolish@yahoo.com.sg",
              "zanyTrevor71@t-online.de","curiousKatie@blueyonder.co.uk","Ramonelated@gmx.net","helplessNathan@yahoo.co.id","Latoyadrab@outlook.com","illLawrence@skynet.be","famousGrace@live.com.au"};
 
-            for (int i = 1; i <=20; i++)
+            for (int i = 1; i <= 20; i++)
             {
                 Order o = new Order();
                 o = new Order();
@@ -92,8 +92,8 @@ namespace Dal
                 o.OrderDate = DateTime.Now - new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
                 o.CustomerAddress = i + "/" + 2 * i + "begin road jerusalem";
                 o.ShipDate = DateTime.Now + new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-                o.DeliveryDate = DateTime.Now + 2* new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
-               // i++;
+                o.DeliveryDate = DateTime.Now + 2 * new TimeSpan(Config.rand.NextInt64(10L * 1000L * 3600L * 24L * 10L));
+                // i++;
                 OrderDataList.Add(o);
                 //Config.OrderFirstClear++;
             }
@@ -104,7 +104,7 @@ namespace Dal
 
 
 
-            for (int i = 1; i <=10; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 Product p = new Product();
 
@@ -116,7 +116,7 @@ namespace Dal
                         p.ID = Config.rand.Next(100000, 999999);
 
                 p.ID = Config.rand.Next(100000, 999999);
-                p.Category = (DO.Category)(Config.rand.Next(0,4));
+                p.Category = (DO.Category)(Config.rand.Next(0, 4));
                 p.Name = ProductNames[Config.rand.Next(0, 7)];
                 p.Price = Config.rand.Next(2000, 5000);
                 p.InStock = Config.rand.Next(0, 20);
