@@ -39,7 +39,7 @@
         </ListView>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
         <Label FontSize="20"  Width="100" >Total Price</Label>
-            <TextBox x:Name="Total" Width="100" IsReadOnly="True"  Text="{Binding Cart1.TotalPrice}"  Grid.ColumnSpan="2"  />
+            <TextBox x:Name="Total" Width="100" IsReadOnly="True" FontSize="20" Text="{Binding Cart1.TotalPrice}"  Grid.ColumnSpan="2"  />
         <Button Content="Confirm Cart"  Padding="5" FontSize="20"  Click="ConfirmCart_Click"  Width="150"/>
         </StackPanel>
     </Grid>

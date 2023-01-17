@@ -89,7 +89,7 @@ namespace PL
         private void AddToCartButton_Click(object sender, RoutedEventArgs e)
         {
             ProductItem product = (ProductItem)((sender as Button)!.DataContext!);
-            if (product.IsAvailable == true)
+            if (product.IsAvailable == true )
             {
                 try
                 {
