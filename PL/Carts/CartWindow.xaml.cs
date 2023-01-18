@@ -45,20 +45,21 @@ namespace PL
         private set => SetValue(CartDependency1, value);
     }
 
-    public static readonly DependencyProperty itemsDependency = DependencyProperty.Register(nameof(items), typeof(ObservableCollection<OrderItem?>), typeof(Window));
-        public ObservableCollection<OrderItem?> items
-        {
-            get => (ObservableCollection<OrderItem?>)GetValue(itemsDependency);
-            private set => SetValue(itemsDependency, value);
-        }
+    //public static readonly DependencyProperty itemsDependency = DependencyProperty.Register(nameof(items), typeof(ObservableCollection<OrderItem?>), typeof(Window));
+    //    public ObservableCollection<OrderItem?> items
+    //    {
+    //        get => (ObservableCollection<OrderItem?>)GetValue(itemsDependency);
+    //        private set => SetValue(itemsDependency, value);
+    //    }
 
         
         public CartWindow(Cart cart)
         {
             Cart1 = cart==null? new() : cart;
 
-            var temp = cart!.Items;
-            items = temp == null ? new() : new(temp!);
+            // var temp = cart!.Items;
+           // var temp = Cart1!.Items;
+            //items = temp == null ? new() : new(temp!);
             
             InitializeComponent();
         }

@@ -18,7 +18,7 @@
             <ColumnDefinition Width="480*"/>
         </Grid.ColumnDefinitions>
         <Label Content="My Cart" FontSize="40"  />
-        <ListView Name="CartList" ItemsSource="{Binding items}" Grid.ColumnSpan="2" Margin="10,10,110,10" Grid.Row="1">
+        <ListView Name="CartList" ItemsSource="{Binding Cart1.Items}" Grid.ColumnSpan="2" Margin="10,10,110,10" Grid.Row="1">
             <ListView.View>
                 <GridView>
 

@@ -20,7 +20,7 @@
         <Label Content="Category" FontSize="40"  />
         <ComboBox Name="categoryList" SelectedIndex="5" HorizontalAlignment= "Stretch" FontSize="20"  VerticalAlignment ="Stretch" Margin="10" 
                       Grid.Column="1" SelectionChanged="categoryList_SelectionChanged" SelectedItem="{Binding Category, Mode=OneWayToSource}" Text="{Binding Category}" ItemsSource="{Binding Categories}"/>
-        <ListView Name="ProductListView" ItemsSource="{Binding Products}"   Grid.ColumnSpan="2" Margin="10,10,110,10" Grid.Row="1">
+        <ListView Name="ProductListView" ItemsSource="{Binding Products, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="10,10,110,10" Grid.Row="1">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>

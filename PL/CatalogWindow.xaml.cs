@@ -55,7 +55,7 @@ namespace PL
 
             Cart = new() { Items = new() };
             //Category = Category.None;
-            var temp = bl?.Product.GetAllCatalog(null);
+            var temp = bl?.Product.GetAllCatalog().OrderBy(p =>p.ProductID);
             Products1 = temp == null ? new() : new(temp);
             InitializeComponent();
 
@@ -70,7 +70,7 @@ namespace PL
         private void categoryList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         { 
             var temp = Category == BO.Category.None ?
-            bl?.Product.GetAllCatalog() : bl?.Product.GetAllCatalog().Where(item => item!.Category == Category);
+            bl?.Product.GetAllCatalog().OrderBy(p =>p!.ProductID) : bl?.Product.GetAllCatalog().Where(item => item!.Category == Category);
         Products1 = temp == null ? new () : new (temp);
         }
        // private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
