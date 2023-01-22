@@ -11,7 +11,8 @@
     <Grid>
         <Grid>
             <StackPanel>
-                <Grid x:Name="OrderDetailsGrid" HorizontalAlignment="Left" Margin="109,38,0,0" VerticalAlignment="Top">
+                <Label Content=" Order Details" FontSize="40" > </Label>
+                <Grid x:Name="OrderDetailsGrid" HorizontalAlignment="Center" Margin="109,38,0,0" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
@@ -65,7 +66,7 @@
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="9" Text="{Binding TotalPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsReadOnly="{Binding TotalPrice,  Mode=OneTime}" VerticalAlignment="Center" Width="120"/>
 
                 </Grid>
-                <StackPanel x:Name="ButtonsStackPanel" Orientation="Horizontal" Margin="100,20">
+                <StackPanel x:Name="ButtonsStackPanel" HorizontalAlignment="Center"  Orientation="Horizontal" Margin="100,20">
                     <Button Content="Add"/>
                     <Button Content="Update"/>
                 </StackPanel>

@@ -56,7 +56,7 @@ namespace PL
         public CartWindow(Cart cart)
         {
             Cart1 = cart==null? new() : cart;
-
+            
             // var temp = cart!.Items;
            // var temp = Cart1!.Items;
             //items = temp == null ? new() : new(temp!);
@@ -67,6 +67,22 @@ namespace PL
 
         private void ConfirmCart_Click(object sender, RoutedEventArgs e)
         {
+            //Cart1.CustomerEmail = (string)customerName.DataContext;
+            //Cart1.CustomerAddress = (string)customerAddress.DataContext;
+            //Cart1.CustomerEmail = (string)customerEmail.DataContext;
+            try { bl!.Cart.ConfirmCart(Cart1);
+                MessageBox.Show("order added");
+                Cart1 = new();
+                this.Close();
+            }
+            catch(BO.incorrectDataException ex )
+            {
+                MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            catch (BO.MissingIDException ex)
+            {
+                MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
 
         }
     }

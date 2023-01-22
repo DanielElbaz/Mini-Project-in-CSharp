@@ -94,8 +94,11 @@ namespace PL
                 try
                 {
                     Cart = bl!.Cart.AddProduct(Cart, product.ProductID ==0? throw new BO.MissingIDException (" Product not Found"): product.ProductID);
-                    product.AmountInCart++;
+                    
                     Products1 = new(from p in Products1 orderby p.ProductID select p);
+                    product.AmountInCart++;
+                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    product.IsAvailable = tempBool;
                     // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
                 }
                 catch (BO.MissingIDException ex)
@@ -122,6 +125,8 @@ namespace PL
                 {
                     Cart = bl!.Cart.UpdateAmountOfProduct(Cart, (int)product.ProductID, product.AmountInCart - 1);
                     product.AmountInCart--;
+                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    product.IsAvailable = tempBool;
                     Products1 = new(from p in Products1 orderby p.ProductID select p);
                     // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
                 }
