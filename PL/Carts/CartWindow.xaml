@@ -71,7 +71,7 @@
 
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal"  Margin="3" HorizontalAlignment="Right">
         <Label FontSize="20"   Width="auto" >Total</Label>
-            <TextBox x:Name="Total" Width="auto" IsReadOnly="True" FontSize="20" Text="{Binding Cart1.TotalPrice, Mode=TwoWay}"  Grid.ColumnSpan="2"  />
+            <TextBox x:Name="Total" Width="auto" IsReadOnly="True" FontSize="20" Text="{Binding total, Mode=TwoWay}"  Grid.ColumnSpan="2"  />
         <Button Content="Confirm"  Padding="5" FontSize="20"  Click="ConfirmCart_Click"  Width="auto"/>
         </StackPanel>
     </Grid>

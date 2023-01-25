@@ -28,15 +28,15 @@ namespace PL
         BlApi.IBl? bl = BlApi.Factory.Get();
 
 
-        //public int MyProperty
-        //{
-        //    get { return (int)GetValue(MyPropertyProperty); }
-        //    set { SetValue(MyPropertyProperty, value); }
-        //}
+        public double total
+        {
+            get { return (int)GetValue(totalDP); }
+            set { SetValue(totalDP, value); }
+        }
 
-        //// Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty MyPropertyProperty =
-        //    DependencyProperty.Register("MyProperty", typeof(int), typeof(), new PropertyMetadata(0));
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty totalDP =
+            DependencyProperty.Register("total", typeof(double), typeof(CartWindow), new PropertyMetadata(null));
 
 
         public static DependencyProperty CartDependency1 = DependencyProperty.Register(nameof(BO.Cart), typeof(Cart), typeof(CartWindow));
@@ -61,16 +61,14 @@ namespace PL
             //var temp = cart!.Items;
             var temp = Cart1!.Items ;
             items = temp == null ? new() : new(from o in temp orderby o.ProductID select o);
-
+            total = Cart1.TotalPrice;
             InitializeComponent();
         }
 
 
         private void ConfirmCart_Click(object sender, RoutedEventArgs e)
         {
-            //Cart1.CustomerEmail = (string)customerName.DataContext;
-            //Cart1.CustomerAddress = (string)customerAddress.DataContext;
-            //Cart1.CustomerEmail = (string)customerEmail.DataContext;
+            
             try { bl!.Cart.ConfirmCart(Cart1);
                 MessageBox.Show("order added");
                 Cart1 = new();
@@ -98,11 +96,11 @@ namespace PL
                     Cart1 = bl!.Cart.AddProduct(Cart1, product.ProductID == 0 ? throw new BO.MissingIDException(" Product not Found") : product.ProductID);
 
                     items = new(from o in Cart1.Items orderby o.ProductID select o);
+                    total = Cart1.TotalPrice;
                     product.AmountInCart++;                    
                     bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
                     product.IsAvailable = tempBool;
-                   // bl.Cart.UpdateAmountOfProduct(Cart1, orderItem.ProductID, orderItem.Amount++);
-                    // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
+                    //InitializeComponent();
                 }
                 catch (BO.MissingIDException ex)
                 {
@@ -129,8 +127,8 @@ namespace PL
                 try
                 {
                     Cart1 = bl!.Cart.UpdateAmountOfProduct(Cart1, (int)orderItem.ProductID, --product.AmountInCart);
-                   // product.AmountInCart--;
-                    
+                    // product.AmountInCart--;
+                    total = Cart1.TotalPrice;
                     bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
                     product.IsAvailable = tempBool;
                     //bl.Cart.UpdateAmountOfProduct(Cart1, orderItem.ProductID, orderItem.Amount++);
