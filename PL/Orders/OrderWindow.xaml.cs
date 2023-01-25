@@ -24,14 +24,28 @@ namespace PL.Orders
         BlApi.IBl? bl = BlApi.Factory.Get();
 
 
+
+        public bool manager
+        {
+            get { return (bool)GetValue(managerDP); }
+            set { SetValue(managerDP, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for manager.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty managerDP =
+            DependencyProperty.Register("manager", typeof(bool), typeof(OrderWindow), new PropertyMetadata(null));
+
+
         public static readonly DependencyProperty OrderDependency = DependencyProperty.Register(nameof(Order), typeof(BO.Order), typeof(Window));
         public Order? Order { get => (Order)GetValue(OrderDependency); private set => SetValue(OrderDependency, value); }
-        public OrderWindow(int id = 0)
+        public OrderWindow(int id = 0, bool edit = false)
         {
+            manager = edit;
             try
             {
                 Order = id == 0 ? new() { } : bl.Order.GetOrder(id);
                 InitializeComponent();
+            //upd.Visibility = Visibility.Hidden;
             }
             catch (MissingIDException ex)
             {
@@ -73,5 +87,9 @@ namespace PL.Orders
             }
         }
 
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

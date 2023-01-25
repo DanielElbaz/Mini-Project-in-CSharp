@@ -3,6 +3,7 @@ using BO;
 //using BlImplementation;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,8 @@ namespace PL.Products
         public Product? Product { get => (Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
         public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
+
+
 
         //public ProductWindow()
         //{
@@ -119,7 +122,11 @@ namespace PL.Products
            this.Close();
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e) => this.Close();
-       
+        
+
+        private void UpdateButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

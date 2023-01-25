@@ -26,9 +26,7 @@ namespace BlImplementation
         {
             IEnumerable<DO.Order?> doOrders = dal!.Order.GetAll();
             IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll();
-            //  DO.OrderItem orderItem  ;
-            //doOrders = dal.Order.GetAll();
-              // doOrderItems = dal.OrderItem.GetAll();           
+                  
           
             List<BO.OrderForList> orderForList = new List<BO.OrderForList>();
             foreach (DO.Order doOrder in doOrders) //run on bo order list
@@ -43,14 +41,7 @@ namespace BlImplementation
                     totalPrice += ((DO.OrderItem)doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID)!).Price * amount;
                 }
 
-                //foreach (DO.OrderItem doOrderItem in doOrderItems)
-                //{
-                //    if (doOrderItem.OrderID == doOrder.ID)
-                //    {
-                //        amount += doOrderItem.Amount;
-                //        totalPrice += doOrderItem.Price * amount;
-                //    }
-                //}
+               
                     orderForList.Add(new BO.OrderForList()
                     {
                         OrderID = doOrder.ID,
@@ -100,23 +91,7 @@ namespace BlImplementation
                     TotalPrice = ((DO.OrderItem)doOrderItem).Price * ((DO.OrderItem)doOrderItem).Amount
                 }
 
-            );
-
-            //foreach (DO.OrderItem DoOrderItem in doOrderItems) // before the lambda. starts from BoOrderItems = doOrderItems.Where
-            //{
-            //    doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
-            //    orderTotalPrice += DoOrderItem.Price * DoOrderItem.Amount;
-            //    BoOrderItems.Add(new()
-            //    {
-            //        ItemID = DoOrderItem.ID,
-            //        ProductID = DoOrderItem.ProductID,
-            //        Amount = DoOrderItem.Amount,
-            //        ProductName = doProduct.Name,
-            //        ProductPrice = doProduct.Price,
-            //        TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
-            //    });
-            //}
-
+            );           
 
             BO.Order order = new()
             {   ID =id,
@@ -154,56 +129,10 @@ namespace BlImplementation
            // IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where(orderItem => ((DO.OrderItem)orderItem!).OrderID == id); // list if order items from data layer 
             doOrder.ShipDate = DateTime.Now; // update the DO order 
             dal.Order.Update(doOrder.ID, doOrder);
-            //List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
-
-
-
-            // //new 
-            // IEnumerable<BO.OrderItem> BoOrderItems; // build new BO order item list
-
-            // BoOrderItems = doOrderItems.Where
-            //    (doOrderItem => dal.Product.GetByID(((DO.OrderItem)doOrderItem!).ProductID).ID == ((DO.OrderItem)doOrderItem).ProductID).Select
-            //    (doOrderItem => new BO.OrderItem()
-            //    {
-            //        ItemID = ((DO.OrderItem)doOrderItem!).ID,
-            //        ProductID = ((DO.OrderItem)doOrderItem).ProductID,
-            //        Amount = ((DO.OrderItem)doOrderItem).Amount,
-            //        ProductName = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Name,
-            //        ProductPrice = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Price,
-            //        TotalPrice = ((DO.OrderItem)doOrderItem).Price * ((DO.OrderItem)doOrderItem).Amount
-            //    }
-
-            //);
-
-            //old foreach
-            //foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
-            //{
-            //    doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
-            //    BoOrderItems.Add(new()
-            //    {
-            //        ItemID = DoOrderItem.ID,
-            //        ProductID = DoOrderItem.ProductID,
-            //        Amount = DoOrderItem.Amount,
-            //        ProductName = doProduct.Name,
-            //        ProductPrice = doProduct.Price,
-            //        TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
-
-            //    });
-            //} // end of old foreeach
+          
+           
             BO.Order boOrder = GetOrder(doOrder.ID);
-            //BO.Order boOrder = new ()// build new BO order
-            //    {
-            //    ID = doOrder.ID,
-            //    CustomerName = doOrder.CustomerName,
-            //    CustomerAddress = doOrder.CustomerAddress,
-            //    CustomerEmail = doOrder.CustomerEmail,
-            //    OrderDate =doOrder.OrderDate,
-            //    ShipDate = doOrder.ShipDate,
-            //    DeliveryDate = null,
-            //    TotalPrice = BoOrderItems.Sum(items => items.TotalPrice),
-            //    Items = BoOrderItems
-
-            //     };        
+           
 
             return boOrder;       
         
@@ -228,51 +157,10 @@ namespace BlImplementation
            // IEnumerable<DO.OrderItem?> doOrderItems = dal.OrderItem.GetAll().Where( orderItem => ((DO.OrderItem)orderItem!).OrderID == id); // list if order items from data layer 
             doOrder.DeliveryDate = DateTime.Now;            // update the DO order 
             dal.Order.Update(doOrder.ID, doOrder);
-            //List<BO.OrderItem> BoOrderItems = new List<BO.OrderItem>();
-            //new
-            // IEnumerable<BO.OrderItem> BoOrderItems;            
-            // BoOrderItems = doOrderItems.Where
-            //    (doOrderItem => dal.Product.GetByID(((DO.OrderItem)doOrderItem!).ProductID).ID == ((DO.OrderItem)doOrderItem).ProductID).Select
-            //    (doOrderItem => new BO.OrderItem()
-            //    {
-            //        ItemID = ((DO.OrderItem)doOrderItem!).ID,
-            //        ProductID = ((DO.OrderItem)doOrderItem).ProductID,
-            //        Amount = ((DO.OrderItem)doOrderItem).Amount,
-            //        ProductName = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Name,
-            //        ProductPrice = dal.Product.GetByID(((DO.OrderItem)doOrderItem).ProductID).Price,
-            //        TotalPrice = ((DO.OrderItem)doOrderItem).Price * ((DO.OrderItem)doOrderItem).Amount
-            //    }
-            //);
-
-            //foreach (DO.OrderItem DoOrderItem in doOrderItems) // build new BO order item list
-            //{
-            //    doProduct = dal.Product.GetByID(DoOrderItem.ProductID);
-            //    BoOrderItems.Add(new()
-            //    {
-            //        ItemID = DoOrderItem.ID,
-            //        ProductID = DoOrderItem.ProductID,
-            //        Amount = DoOrderItem.Amount,
-            //        ProductName = doProduct.Name,
-            //        ProductPrice = doProduct.Price,
-            //        TotalPrice = DoOrderItem.Price * DoOrderItem.Amount
-
-            //    });
-            //}
+           
             
             BO.Order boOrder = GetOrder(doOrder.ID);
-            //BO.Order boOrder = new()// build new BO order
-            //{
-            //    ID = doOrder.ID,
-            //    CustomerName = doOrder.CustomerName,
-            //    CustomerAddress = doOrder.CustomerAddress,
-            //    CustomerEmail = doOrder.CustomerEmail,
-            //    OrderDate = doOrder.OrderDate,
-            //    ShipDate = doOrder.ShipDate,
-            //    DeliveryDate = doOrder.DeliveryDate,
-            //    TotalPrice = BoOrderItems.Sum(items => items.TotalPrice),
-            //    Items = BoOrderItems               
-
-            //}; //end of new
+            
 
             return boOrder;
         }

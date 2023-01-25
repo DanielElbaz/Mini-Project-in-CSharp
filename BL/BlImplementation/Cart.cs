@@ -119,6 +119,7 @@ namespace BlImplementation
                 {
                     cart.TotalPrice -= item!.TotalPrice; // reduce the total price of item from the cart
                     item.TotalPrice = 0; // reset the total price of the item
+                    item.Amount = 0;
                     cart.Items!.Remove(item); // delete the order item
                 }
                 else // new amount >0

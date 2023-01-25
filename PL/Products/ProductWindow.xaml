@@ -3,14 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Products"
+        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Background="White"
         Title="ProductWindow" Height="450" Width="500"
          DataContext="{Binding RelativeSource={RelativeSource Self}}">
         <!--DataContext="{Binding Product, RelativeSource={RelativeSource Self}, Mode=TwoWay}">-->
-       
 
+    <Window.Resources>
+        <local:ZeroToHidden x:Key="zeroToHidden"/>
+        <local:ZeroToVisible x:Key="zeroToVisible"/>
+        
+    </Window.Resources>
     <Grid  Height="150"  Margin="70" Width="200"  >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -29,34 +33,38 @@
         <TextBlock Text="ID:"
  Grid.Row="0"
  Grid.Column="0" />
-        <TextBox  x:Name="id"    Text ="{Binding Product.ID}"  IsReadOnly="{Binding Product.ID,  Mode=OneTime}" Grid.Row="0"
+        <TextBox  x:Name="id"    Text ="{Binding Product.ID}"  IsReadOnly="true"  Grid.Row="0"
  Grid.Column="1">
         </TextBox>
         
         <TextBlock Text="Category:"  Grid.Row="1"
  Grid.Column="0" />
-        <ComboBox x:Name="categoryList"     ItemsSource="{Binding Categories}"  Text="{Binding Product.Category}"  Grid.Row="1"
+        <ComboBox x:Name="categoryList"     ItemsSource="{Binding Categories}"     Text="{Binding Product.Category}"  Grid.Row="1"
  Grid.Column="1">
         </ComboBox>
         <TextBlock Text="Name:" Grid.Row="2"
  Grid.Column="0" />
-        <TextBox x:Name="name" Text="{Binding Product.Name, Mode=TwoWay}" Grid.Row="2" Grid.Column="1">
+        <TextBox x:Name="name" Text="{Binding Product.Name, Mode=TwoWay}"   Grid.Row="2" Grid.Column="1">
         </TextBox>
 
-        <TextBox x:Name="price"  Text ="{Binding Product.Price, Mode=TwoWay}" Grid.Row="3"  Grid.Column="1">
+        <TextBox x:Name="price"  Text ="{Binding Product.Price, Mode=TwoWay}"  Grid.Row="3"  Grid.Column="1">
         </TextBox>
         
         <TextBlock Grid.Row="3" Text="Price:"></TextBlock>
         <TextBlock Text="In Stock" Grid.Row="4"
  Grid.Column="0" />
 
-        <TextBox x:Name="inStock" Text="{Binding Product.InStock, Mode=TwoWay}" Grid.Row="4" Grid.Column="1">
+        <TextBox x:Name="inStock" Text="{Binding Product.InStock, Mode=TwoWay}"  Grid.Row="4" Grid.Column="1">
         </TextBox>
         <StackPanel Grid.Row="5" Orientation='Horizontal'>
-            <Button x:Name="addButton" Click="addButton_Click"  Content="Add" Width="auto" Height="20">
-            </Button>
-            <Button x:Name="cancelButton" Click="cancelButton_Click"  Content="Cancel" Width="auto" Height="20"></Button>
+            <Button x:Name="addButton" Click="addButton_Click"  Content="Add" Width="auto" Height="20"
+                     Visibility="{Binding Product.ID, Converter={StaticResource zeroToVisible}, Mode=OneTime}"/>
+
+            <Button Content="Update" Click="addButton_Click"
+                        Visibility="{Binding Product.ID, Converter={StaticResource zeroToHidden}, Mode=OneTime}"/>
+            
         </StackPanel>
-        <Label Content="Add New Product" FontStyle="Italic"  HorizontalAlignment="Left" Margin="17,-34,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="163"/>
+        <Label Content="Add New Product" FontStyle="Italic" Visibility="{Binding Product.ID, Converter={StaticResource zeroToVisible}, Mode=OneTime}" HorizontalAlignment="Left" Margin="17,-34,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="163"/>
+        <Label Content="Update New Product" FontStyle="Italic" Visibility="{Binding Product.ID, Converter={StaticResource zeroToHidden}, Mode=OneTime}" HorizontalAlignment="Left" Margin="17,-34,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="163"/>
     </Grid>
 </Window>

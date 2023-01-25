@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
+//using DO;
 using PL;
 
 
@@ -45,22 +46,22 @@ namespace PL
         private set => SetValue(CartDependency1, value);
     }
 
-    //public static readonly DependencyProperty itemsDependency = DependencyProperty.Register(nameof(items), typeof(ObservableCollection<OrderItem?>), typeof(Window));
-    //    public ObservableCollection<OrderItem?> items
-    //    {
-    //        get => (ObservableCollection<OrderItem?>)GetValue(itemsDependency);
-    //        private set => SetValue(itemsDependency, value);
-    //    }
+        public static readonly DependencyProperty itemsDependency = DependencyProperty.Register(nameof(items), typeof(ObservableCollection<OrderItem?>), typeof(Window));
+        public ObservableCollection<OrderItem?> items
+        {
+            get => (ObservableCollection<OrderItem?>)GetValue(itemsDependency);
+            private set => SetValue(itemsDependency, value);
+        }
 
-        
+
         public CartWindow(Cart cart)
         {
             Cart1 = cart==null? new() : cart;
-            
-            // var temp = cart!.Items;
-           // var temp = Cart1!.Items;
-            //items = temp == null ? new() : new(temp!);
-            
+
+            //var temp = cart!.Items;
+            var temp = Cart1!.Items ;
+            items = temp == null ? new() : new(from o in temp orderby o.ProductID select o);
+
             InitializeComponent();
         }
 
@@ -82,6 +83,69 @@ namespace PL
             catch (BO.MissingIDException ex)
             {
                 MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+
+        }
+
+        private void AddToCartButton_Click(object sender, RoutedEventArgs e)
+        {
+            OrderItem orderItem = (OrderItem)((sender as Button)!.DataContext!); // the order item
+            ProductItem product = bl!.Product.GetProductForCatalog(orderItem.ProductID,Cart1); // get the product
+            if (product.IsAvailable == true)
+            {
+                try
+                {
+                    Cart1 = bl!.Cart.AddProduct(Cart1, product.ProductID == 0 ? throw new BO.MissingIDException(" Product not Found") : product.ProductID);
+
+                    items = new(from o in Cart1.Items orderby o.ProductID select o);
+                    product.AmountInCart++;                    
+                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    product.IsAvailable = tempBool;
+                   // bl.Cart.UpdateAmountOfProduct(Cart1, orderItem.ProductID, orderItem.Amount++);
+                    // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
+                }
+                catch (BO.MissingIDException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+
+            }
+
+            else
+            {
+                MessageBox.Show(" Product is out of stock ", " ", MessageBoxButton.OK);
+            }
+        }
+
+        private void removeFromCartButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            OrderItem orderItem = (OrderItem)((sender as Button)!.DataContext!);
+            ProductItem product = bl!.Product.GetProductForCatalog(orderItem.ProductID, Cart1);
+            if (product.AmountInCart != 0)
+            {
+                try
+                {
+                    Cart1 = bl!.Cart.UpdateAmountOfProduct(Cart1, (int)orderItem.ProductID, --product.AmountInCart);
+                   // product.AmountInCart--;
+                    
+                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    product.IsAvailable = tempBool;
+                    //bl.Cart.UpdateAmountOfProduct(Cart1, orderItem.ProductID, orderItem.Amount++);
+                    items = new(from o  in Cart1.Items orderby o.ProductID select o);
+                    // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
+                }
+                catch (BO.MissingIDException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
+            else
+            {
+
             }
 
         }

@@ -141,11 +141,7 @@ namespace BlImplementation
                 if (orderItem != null)
                     amount = orderItem.Amount;
             }
-                //foreach (BO.OrderItem orderItem in orderItems)
-                //{
-                //    if (orderItem.ProductID == id)
-                //        amount = orderItem.Amount;
-                //}
+                
             BO.ProductItem productItem = new()
             {
                 ProductName = doProdcut.Name,

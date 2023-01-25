@@ -30,22 +30,9 @@ namespace Dal
             int count = DataSource.ProductDataList.RemoveAll(p => ((Product)p!).ID == id);
             if (count == 0)
                 throw new MissingIDException("not found " + id);
-            //Boolean flag = false;
-            //foreach (Product product in DataSource.ProductDataList)
-            //{
-            //    if (id == product.ID)
-            //    {
-            //        flag = true;
-            //        DataSource.ProductDataList.Remove(product);
-            //        break;
-            //    }           
-
-
-            //}
-            //if (!flag)
-            //    // throw new Exception("product not found ");
-            //    throw new MissingIDException();
         }
+
+
         public void Update(int id, Product newP) // update old with new
         {
             //Boolean flag = false;
@@ -54,20 +41,7 @@ namespace Dal
                   throw new MissingIDException("not found " + id);
             DataSource.ProductDataList.Add(newP);
 
-            //foreach (Product product in DataSource.ProductDataList)
-            //    if (id == product.ID)
-            //    {
-            //        flag = true;
-            //        int index = DataSource.ProductDataList.IndexOf(product);
-            //        DataSource.ProductDataList[index] = newP;
-            //        break;
-
-            //    }
-            //if (!flag)
-            //    throw new MissingIDException();
-            // throw new Exception("product not found");
-
-
+           
 
         }
 
@@ -78,21 +52,7 @@ namespace Dal
             if (item == null)
                 throw new MissingIDException();
             return (Product)item;
-            //int index = -1;
-            //foreach (Product product in DataSource.ProductDataList)
-
-            //    if (id == product.ID)
-            //    {
-            //        //flag = true;
-
-            //        index = DataSource.ProductDataList.IndexOf(product);
-            //        break;
-            //    }
-            //if (index == -1)
-            //    throw new MissingIDException();
-
-            //return DataSource.ProductDataList[index];
-
+            
 
         }
 
@@ -100,17 +60,24 @@ namespace Dal
 
             public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
             {
-                if (filter == null)
-                    return DataSource.ProductDataList;
-
-                List<Product?> products = new();
-                foreach (var p in DataSource.ProductDataList)
-                    if (filter(p))
-                        products.Add(p);
-                return products;
 
 
-            }
+            //return (filter == null ? DataSource.ProductDataList.Select(item => item)
+            //          : DataSource.ProductDataList.Where(filter!) ?? throw new MissingIDException("Missing product"))
+            //?? throw new MissingIDException ("Missing data or product list"); 
+
+
+            if (filter == null)
+                return DataSource.ProductDataList;
+
+            List<Product?> products = new();
+            foreach (var p in DataSource.ProductDataList)
+                if (filter(p))
+                    products.Add(p);
+            return products;
+
+
+        }
 
         public Product GetBy(Func<Product?, bool> filter)
         {
