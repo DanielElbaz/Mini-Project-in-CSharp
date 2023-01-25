@@ -94,13 +94,12 @@ namespace PL
                 try
                 {
                     Cart1 = bl!.Cart.AddProduct(Cart1, product.ProductID == 0 ? throw new BO.MissingIDException(" Product not Found") : product.ProductID);
-
                     items = new(from o in Cart1.Items orderby o.ProductID select o);
                     total = Cart1.TotalPrice;
-                    product.AmountInCart++;                    
-                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
-                    product.IsAvailable = tempBool;
-                    //InitializeComponent();
+                    //product.AmountInCart++;                    
+                    //bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    //product.IsAvailable = tempBool;
+                    
                 }
                 catch (BO.MissingIDException ex)
                 {
@@ -126,11 +125,10 @@ namespace PL
             {
                 try
                 {
-                    Cart1 = bl!.Cart.UpdateAmountOfProduct(Cart1, (int)orderItem.ProductID, --product.AmountInCart);
-                    // product.AmountInCart--;
+                    Cart1 = bl!.Cart.UpdateAmountOfProduct(Cart1, (int)orderItem.ProductID, --product.AmountInCart);                    
                     total = Cart1.TotalPrice;
-                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
-                    product.IsAvailable = tempBool;
+                   // bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    //product.IsAvailable = tempBool;
                     //bl.Cart.UpdateAmountOfProduct(Cart1, orderItem.ProductID, orderItem.Amount++);
                     items = new(from o  in Cart1.Items orderby o.ProductID select o);
                     // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
@@ -143,5 +141,34 @@ namespace PL
             }            
 
         }
+
+        private void deleteProduct_Click(object sender, RoutedEventArgs e)
+        {
+
+            OrderItem orderItem = (OrderItem)((sender as Button)!.DataContext!);
+            ProductItem product = bl!.Product.GetProductForCatalog(orderItem.ProductID, Cart1);
+            if (product.AmountInCart != 0)
+            {
+                try
+                {
+                    Cart1 = bl!.Cart.UpdateAmountOfProduct(Cart1, (int)orderItem.ProductID, 0);                    
+                    total = Cart1.TotalPrice;
+                    //bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                   // product.IsAvailable = tempBool;                    
+                    items = new(from o in Cart1.Items orderby o.ProductID select o);
+                    
+                }
+                catch (BO.MissingIDException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
+
+
+        }
+
+        private void BackToCart_Click(object sender, RoutedEventArgs e) => this.Close();
+        
     }
 }

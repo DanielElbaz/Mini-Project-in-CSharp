@@ -61,7 +61,7 @@ namespace PL.Products
 
         }
 
-        private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+        private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow(0).Show();
 
         private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

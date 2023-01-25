@@ -1,4 +1,5 @@
 ﻿using BO;
+
 using PL.Products;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace PL
 
             Cart = new() { Items = new() };
             //Category = Category.None;
-            var temp = bl?.Product.GetAllCatalog().OrderBy(p =>p.ProductID);
+            var temp = bl?.Product.GetAllCatalog().OrderBy(p =>p!.ProductID);
             Products1 = temp == null ? new() : new(temp);
             InitializeComponent();
 
@@ -87,7 +88,10 @@ namespace PL
         private void Cart_Click(object sender, RoutedEventArgs e)
         {
             if (Cart.TotalPrice > 0)
-                new CartWindow(Cart).Show();
+            {
+                new CartWindow(Cart).ShowDialog();
+                Reset_Click(sender, e);
+            }
             else
                 MessageBox.Show("No items in the cart", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
@@ -153,6 +157,19 @@ namespace PL
             }
             
 
+        }
+
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            Cart = new() { Items = new() };            
+            foreach( ProductItem product in Products1)
+            {
+                product!.AmountInCart = 0;
+                bool tempBool = (product.AmountInCart < bl!.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                product.IsAvailable = tempBool;
+            }
+            Products1 = new(from p in Products1 orderby p.ProductID select p);
         }
     }
 }

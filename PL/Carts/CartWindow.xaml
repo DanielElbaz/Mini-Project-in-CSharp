@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="230*"/>
+            <ColumnDefinition Width="240*"/>
             <ColumnDefinition Width="200*"/>
             <ColumnDefinition Width="200*"/>
             
@@ -26,10 +26,10 @@
                 <GridView>
 
                    
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding ProductName}" />
-                    <GridViewColumn Header="Price" Width="100" DisplayMemberBinding="{Binding ProductPrice}" />
-                    <GridViewColumn Header="Amount" Width="100" DisplayMemberBinding="{Binding Amount}" />
-                    <GridViewColumn Header="Total Price" Width="100" DisplayMemberBinding="{Binding TotalPrice}" />
+                    <GridViewColumn Header="Name" Width="70" DisplayMemberBinding="{Binding ProductName}" />
+                    <GridViewColumn Header="Price" Width="70" DisplayMemberBinding="{Binding ProductPrice}" />
+                    <GridViewColumn Header="Amount" Width="70" DisplayMemberBinding="{Binding Amount}" />
+                    <GridViewColumn Header="Total Price" Width="70" DisplayMemberBinding="{Binding TotalPrice}" />
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -44,7 +44,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                   
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete"  Width="45" Click="deleteProduct_Click"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>
@@ -70,9 +77,10 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal"  Margin="3" HorizontalAlignment="Right">
-        <Label FontSize="20"   Width="auto" >Total</Label>
+            <Button Content="Cancel"   FontSize="15"  Click="BackToCart_Click"  Width="auto"/>
+            <Label FontSize="15"   Width="auto" >Total</Label>
             <TextBox x:Name="Total" Width="auto" IsReadOnly="True" FontSize="20" Text="{Binding total, Mode=TwoWay}"  Grid.ColumnSpan="2"  />
-        <Button Content="Confirm"  Padding="5" FontSize="20"  Click="ConfirmCart_Click"  Width="auto"/>
+        <Button Content="Confirm"  Padding="5" FontSize="15"  Click="ConfirmCart_Click"  Width="auto"/>
         </StackPanel>
     </Grid>
 </Window>

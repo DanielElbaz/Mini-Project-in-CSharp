@@ -13,7 +13,8 @@
     <Window.Resources>
         <local:ZeroToHidden x:Key="zeroToHidden"/>
         <local:ZeroToVisible x:Key="zeroToVisible"/>
-        
+        <local:NotIDToBoolConverter x:Key="notIDtoBoolConverter"/>
+
     </Window.Resources>
     <Grid  Height="150"  Margin="70" Width="200"  >
         <Grid.RowDefinitions>
@@ -33,7 +34,7 @@
         <TextBlock Text="ID:"
  Grid.Row="0"
  Grid.Column="0" />
-        <TextBox  x:Name="id"    Text ="{Binding Product.ID}"  IsReadOnly="true"  Grid.Row="0"
+        <TextBox  x:Name="id"    Text ="{Binding Product.ID}"  IsReadOnly="False"  Grid.Row="0"
  Grid.Column="1">
         </TextBox>
         

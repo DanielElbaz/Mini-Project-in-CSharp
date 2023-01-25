@@ -46,7 +46,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="My Cart"  Grid.Row="2" Grid.Column="1"
-                HorizontalAlignment="Right" Margin="5" Padding="5" FontSize="20" Click="Cart_Click"/>
+        <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="1">
+        <Button Content="My Cart" HorizontalAlignment="Right" Margin="5" Padding="5" FontSize="20" Click="Cart_Click"/>
+        <Button Content="Reset cart" HorizontalAlignment="Right" Margin="5" Padding="5" FontSize="20" Click="Reset_Click"/>
+        </StackPanel>
+
     </Grid>
 </Window>

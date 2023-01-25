@@ -16,12 +16,7 @@ namespace Dal
                 throw new DuplicateIDException();
             DataSource.ProductDataList.Add(P);
             return P.ID;
-            //foreach (Product product1 in DataSource.ProductDataList)
-            //    if (product1.ID == P.ID)
-            //        throw new DuplicateIDException();
-            //// throw new Exception("Product already exists ");
-            //DataSource.ProductDataList.Add(P);
-            //return P.ID;
+            
 
         }
 

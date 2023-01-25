@@ -176,7 +176,7 @@ namespace BlImplementation
 
             try
             {
-                dal!.Product.Add(productToAdd);
+                 dal!.Product.Add(productToAdd);
             }
             catch (DO.DuplicateIDException e)
             {
