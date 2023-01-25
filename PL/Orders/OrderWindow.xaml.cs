@@ -58,12 +58,13 @@ namespace PL.Orders
 
         private void updateSent_Click(object sender, RoutedEventArgs e)
         {
-            BO.Order order = (BO.Order)((sender as Button)!.DataContext!);
+            // BO.Order order = (BO.Order)((sender as Button)!.DataContext!);
+            
             try
             {
-                bl?.Order.UpdateOrderSent(Order!.ID);
+               Order = bl?.Order.UpdateOrderSent(Order!.ID);
                 //Order = new(bl.Order.GetOrder(order.ID));
-                Order = bl.Order.GetOrder(order.ID);
+               // Order = bl.Order.GetOrder(order.ID);
             }
             catch (invalidInputException ex)
             {
@@ -74,11 +75,11 @@ namespace PL.Orders
 
         private void updateDelivery_Click(object sender, RoutedEventArgs e)
         {
-            Order order = (Order)((sender as Button)!.DataContext!);
+            //Order order = (Order)((sender as Button)!.DataContext!);
             try
             {
-                bl?.Order.UpdateOrderSupply(Order!.ID);
-                Order = bl.Order.GetOrder(order.ID);
+                Order = bl?.Order.UpdateOrderSupply(Order!.ID);
+                //Order = bl.Order.GetOrder(order.ID);
             }
             catch (invalidInputException ex)
             {

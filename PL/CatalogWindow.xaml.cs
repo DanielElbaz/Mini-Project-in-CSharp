@@ -84,8 +84,13 @@ namespace PL
             // this.Refresh();
         }
 
-        private void Cart_Click(object sender, RoutedEventArgs e) => new CartWindow(Cart).Show();
-
+        private void Cart_Click(object sender, RoutedEventArgs e)
+        {
+            if (Cart.TotalPrice > 0)
+                new CartWindow(Cart).Show();
+            else
+                MessageBox.Show("No items in the cart", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
         private void AddToCartButton_Click(object sender, RoutedEventArgs e)
         {
             ProductItem product = (ProductItem)((sender as Button)!.DataContext!);
@@ -106,7 +111,12 @@ namespace PL
 
                     MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
-                                
+                catch (BO.invalidInputException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+
             }
 
             else
@@ -135,11 +145,13 @@ namespace PL
 
                     MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
-            }
-            else
-            {
+                catch (BO.invalidInputException ex)
+                {
 
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
             }
+            
 
         }
     }

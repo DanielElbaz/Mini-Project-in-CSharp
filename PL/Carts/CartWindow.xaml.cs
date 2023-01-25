@@ -28,7 +28,7 @@ namespace PL
         BlApi.IBl? bl = BlApi.Factory.Get();
 
 
-        public double total
+        public double total // total price for cart
         {
             get { return (int)GetValue(totalDP); }
             set { SetValue(totalDP, value); }
@@ -59,7 +59,7 @@ namespace PL
             Cart1 = cart==null? new() : cart;
 
             //var temp = cart!.Items;
-            var temp = Cart1!.Items ;
+            var temp = cart!.Items ;
             items = temp == null ? new() : new(from o in temp orderby o.ProductID select o);
             total = Cart1.TotalPrice;
             InitializeComponent();
@@ -140,11 +140,7 @@ namespace PL
 
                     MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
-            }
-            else
-            {
-
-            }
+            }            
 
         }
     }

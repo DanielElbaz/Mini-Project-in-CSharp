@@ -98,7 +98,14 @@ namespace BlImplementation
                 CustomerName = doOrder.CustomerName,
                 CustomerAddress = doOrder.CustomerAddress,
                 CustomerEmail = doOrder.CustomerEmail,
-               // OrderStatus =   doOrder.OrderStatus,
+
+                OrderStatus = doOrder switch
+                {
+                    { DeliveryDate: not null } => BO.OrderStatus.delivered,
+                    { ShipDate: not null } => BO.OrderStatus.shipped,
+                    { OrderDate: not null } => BO.OrderStatus.ordered,
+                    _ => BO.OrderStatus.nullState
+                },
                 OrderDate = doOrder.OrderDate,
                 PaymentDate = doOrder.OrderDate,
                 ShipDate = doOrder.ShipDate,
@@ -132,7 +139,8 @@ namespace BlImplementation
           
            
             BO.Order boOrder = GetOrder(doOrder.ID);
-           
+            boOrder.OrderStatus = BO.OrderStatus.shipped;
+
 
             return boOrder;       
         
@@ -160,7 +168,7 @@ namespace BlImplementation
            
             
             BO.Order boOrder = GetOrder(doOrder.ID);
-            
+            boOrder.OrderStatus = BO.OrderStatus.delivered;             
 
             return boOrder;
         }

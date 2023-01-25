@@ -24,6 +24,7 @@ namespace BO
             {
                str += t.Item2 + '\n';
             }
+
             return str;
           //  return this.ToStringProperty();
         }

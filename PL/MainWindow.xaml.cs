@@ -56,6 +56,7 @@ namespace PL
         {
             {
                 int id = 0;
+                BO.Order order;
                 try
                 {
 
@@ -63,7 +64,8 @@ namespace PL
 
                     {
                         orderTracking = bl!.Order.OrderTracking(id);
-                       MessageBoxResult result =  MessageBox.Show(orderTracking.ToString() + " Press OK to Show details", " ", MessageBoxButton.OK);
+                        order = bl.Order.GetOrder(id);
+                       MessageBoxResult result =  MessageBox.Show(orderTracking.ToString() + "\n" + order.ToString() +" Press OK to Show details", " ", MessageBoxButton.OK);
                         if(result== MessageBoxResult.OK) 
                         {
                             new OrderWindow(id,false).Show();
