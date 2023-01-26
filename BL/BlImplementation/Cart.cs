@@ -171,7 +171,7 @@ namespace BlImplementation
             if( cart.CustomerEmail!= null && cart.CustomerEmail != " "&& !IsValid(cart.CustomerEmail))
                 throw new BO.incorrectDataException("invalid email address");
            
-            if (cart.CustomerName == null || cart.CustomerAddress == null)
+            if (cart.CustomerName == null || cart.CustomerAddress == " " || cart.CustomerAddress == null)
                 throw new BO.incorrectDataException("customer name or address null ");
            
 
@@ -196,7 +196,7 @@ namespace BlImplementation
             {
                 CustomerName = cart.CustomerName ?? throw new BO.incorrectDataException(" null customer name"),
                 CustomerEmail = cart.CustomerEmail,
-                CustomerAddress = cart.CustomerAddress ?? throw new BO.incorrectDataException(" null customer name"),
+                CustomerAddress = cart.CustomerAddress ?? throw new BO.incorrectDataException(" null customer address"),
                 OrderDate = DateTime.Now,
                 ShipDate = null,
                 DeliveryDate = null

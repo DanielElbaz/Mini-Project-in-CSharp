@@ -80,20 +80,7 @@ namespace Dal
             if(item == null)
                 throw new invalidInputException("no items found");
             return (Product)item;
-            //bool flag = false;
-            //if (filter == null)
-            //    throw new invalidInputException();
-            //Order order = new();
-            //foreach (var o in DataSource.OrderDataList)
-            //    if (filter(o))
-            //    {
-            //        flag = true;
-            //        order = (Order)o!;
-            //    }
-            //if (!flag)
-            //    throw new invalidInputException("no items found");
-            //return order;
-
+          
         }
 
 

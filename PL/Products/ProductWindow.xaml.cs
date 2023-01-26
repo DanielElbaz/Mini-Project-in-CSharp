@@ -75,7 +75,7 @@ namespace PL.Products
             {
                 if (check(id.Text, price.Text, inStock.Text, (BO.Category)categoryList.SelectedItem))
                 {
-                    bl?.Product.AddProduct(Product);
+                    bl?.Product.AddProduct(Product!);
                     MessageBox.Show("The item has been added");
                     this.Close();
                 }
@@ -89,7 +89,7 @@ namespace PL.Products
                 bool updated = false;
                 try
                 {
-                    bl?.Product.UpdateProduct(Product);
+                    bl?.Product.UpdateProduct(Product!);
                     MessageBox.Show("The item has been updated");
                     updated = true; 
                     this.Close();
