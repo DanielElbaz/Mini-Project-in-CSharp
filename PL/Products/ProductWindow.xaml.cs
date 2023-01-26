@@ -45,7 +45,7 @@ namespace PL.Products
             try
             {
                 
-                Product = id == 0 ? new() { Category = BO.Category.None } : bl.Product.GetProduct(id);
+                Product = id == 0 ? new() {  Category = BO.Category.None } : bl.Product.GetProduct(id);
                 InitializeComponent();
                 Product.ID = (Product.ID == 0) ? rand.Next(100000, 999999) : id;
             }
@@ -57,25 +57,30 @@ namespace PL.Products
         }
        
 
-        private bool check(string id,string price,string instock)
+        private bool check(string id,string price,string instock, BO.Category category)
         {
             int id1, instock1;
             double price1;
-            return int.TryParse(id, out id1) && Double.TryParse(price, out price1) && int.TryParse(instock, out instock1);
+            return int.TryParse(id, out id1) && Double.TryParse(price, out price1) && int.TryParse(instock, out instock1) &&(category!=BO.Category.None);
         }
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-           // BO.Product product = new();
-            if (!check(id.Text, price.Text, inStock.Text))
-            {
-                MessageBox.Show("One or more of the inputs are invalid");
-                //this.Close();
-            }
+
+            //if (!check(id.Text, price.Text, inStock.Text, (BO.Category)categoryList.SelectedItem))            
+            //    MessageBox.Show("One or more of the inputs are invalid");
+              
+            
            
             try
-            { bl?.Product.AddProduct(Product);
-                MessageBox.Show("The item has been added");
-                this.Close();
+            {
+                if (check(id.Text, price.Text, inStock.Text, (BO.Category)categoryList.SelectedItem))
+                {
+                    bl?.Product.AddProduct(Product);
+                    MessageBox.Show("The item has been added");
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("One or more of the inputs are invalid");
             }
             catch (BO.invalidInputException ex)
             { MessageBox.Show(ex.Message);  }
