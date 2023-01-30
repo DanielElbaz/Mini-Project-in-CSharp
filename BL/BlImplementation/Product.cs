@@ -11,6 +11,7 @@ using BL;
 using BO;
 using System.Data.Common;
 using DalApi;
+using System.Security.Cryptography;
 
 namespace BlImplementation
 {
@@ -32,14 +33,24 @@ namespace BlImplementation
         {
             if (func == null)
             {
-                return dal!.Product.GetAll().Select
-                      (doProduct => new BO.ProductForList()
-                      {
-                          Category = (BO.Category)doProduct?.Category!,
-                          ProductID = (int)doProduct?.ID!,
-                          ProductName = doProduct?.Name,
-                          ProductPrice = (double)doProduct?.Price!
-                      }); 
+                return from item in dal!.Product.GetAll()
+                       let doProduct = (DO.Product)item
+                       select new BO.ProductForList
+                       
+                           {
+                               Category = (BO.Category)doProduct.Category!,
+                               ProductID = (int)doProduct.ID!,
+                               ProductName = doProduct.Name,
+                               ProductPrice = (double)doProduct.Price!
+                           };
+                //return dal!.Product.GetAll().Select
+                //      (doProduct => new BO.ProductForList()
+                //      {
+                //          Category = (BO.Category)doProduct?.Category!,
+                //          ProductID = (int)doProduct?.ID!,
+                //          ProductName = doProduct?.Name,
+                //          ProductPrice = (double)doProduct?.Price!
+                //      }); 
             }
             return dal!.Product.GetAll()
                 .Where(doProduct => func(doProduct?.ConverToBO()!))
@@ -141,11 +152,7 @@ namespace BlImplementation
                 if (orderItem != null)
                     amount = orderItem.Amount;
             }
-                //foreach (BO.OrderItem orderItem in orderItems)
-                //{
-                //    if (orderItem.ProductID == id)
-                //        amount = orderItem.Amount;
-                //}
+                
             BO.ProductItem productItem = new()
             {
                 ProductName = doProdcut.Name,
@@ -180,7 +187,7 @@ namespace BlImplementation
 
             try
             {
-                dal!.Product.Add(productToAdd);
+                 dal!.Product.Add(productToAdd);
             }
             catch (DO.DuplicateIDException e)
             {
@@ -226,38 +233,18 @@ namespace BlImplementation
                 }
             return;
 
-            //foreach (DO.Product doProduct in doProducts)
-            //    if (doProduct.ID == p.ID)
-            //    {  //If found - try to do update.
-            //        try
-            //        {
-            //            dal.Product.Update(doProduct.ID, newproduct);
-            //        }
-            //        catch (DO.MissingIDException)
-            //        {
-
-            //            throw new BO.MissingIDException("product doesnt exist");
-            //        }
-            //        return;
-            //    }
+           
         }
         /// <summary>
         /// delete product for manger
         /// </summary>
         /// <param name="id"></param>
         public void DeleteProduct(int id)
-        {
-            //Product product = new ();
-
+        {           
             //Check if the product found in other orders.
             IEnumerable<DO.OrderItem?> orders = dal!.OrderItem.GetAll();            
             if(orders.FirstOrDefault(o =>((DO.OrderItem)o!).ProductID == id)!=null)
-                throw new BO.DuplicateIDException("Product found in exsited order...");
-            //foreach (DO.OrderItem o in orders)
-            //    if (o.ProductID == id)
-            //    {
-            //        throw new BO.DuplicateIDException("Product found in exsited order...");
-            //    }
+                throw new BO.DuplicateIDException("Product found in exsited order...");           
 
             try
             {

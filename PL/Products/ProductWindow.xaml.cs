@@ -3,6 +3,7 @@ using BO;
 //using BlImplementation;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace PL.Products
 
         public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
 
+        static internal Random rand = new Random();
+
         //public ProductWindow()
         //{
         //    InitializeComponent();
@@ -41,8 +44,10 @@ namespace PL.Products
         {
             try
             {
-                Product = id == 0 ? new() { Category = BO.Category.None } : bl.Product.GetProduct(id);
+                
+                Product = id == 0 ? new() {  Category = BO.Category.None } : bl.Product.GetProduct(id);
                 InitializeComponent();
+                Product.ID = (Product.ID == 0) ? rand.Next(100000, 999999) : id;
             }
             catch (MissingIDException ex)
             {
@@ -50,51 +55,33 @@ namespace PL.Products
                 MessageBox.Show(ex.Message, "Failed to get the entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
-        //public ProductWindow(int id)
-        //{
-        //    InitializeComponent();
-        //    this.categoryList.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        //    BO.Product product = bl.Product.GetProduct(id);
-        //    addButton.Content = "Update";
-        //    this.id.Text = Convert.ToString(product.ID);
-        //    this.id.IsEnabled = false;
-        //    this.name.Text = Convert.ToString(product.Name);
-        //    this.price.Text = Convert.ToString(product.Price);
-        //    this.inStock.Text = Convert.ToString(product.InStock);
-        //    this.categoryList.SelectedItem = product.Category;
-        //}
+       
 
-        private bool check(string id,string price,string instock)
+        private bool check(string id,string price,string instock, BO.Category category)
         {
             int id1, instock1;
             double price1;
-            return int.TryParse(id, out id1) && Double.TryParse(price, out price1) && int.TryParse(instock, out instock1);
+            return int.TryParse(id, out id1) && Double.TryParse(price, out price1) && int.TryParse(instock, out instock1) &&(category!=BO.Category.None);
         }
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            BO.Product product = new();
-            if (!check(id.Text, price.Text, inStock.Text))
-            {
-                MessageBox.Show("One or more of the inputs are invalid");
-                //this.Close();
-            }
-            //int inStock;
-            //double price;
-            //string name;
-            else
-            {
-                 product = new()
-                {
-                    ID = Int32.Parse(id.Text),
-                    Name = name.Text,
-                    Category = (BO.Category)categoryList.SelectedItem,
-                    Price = Double.Parse(price.Text),
-                    InStock = Int32.Parse(inStock.Text),
 
-                };
+            //if (!check(id.Text, price.Text, inStock.Text, (BO.Category)categoryList.SelectedItem))            
+            //    MessageBox.Show("One or more of the inputs are invalid");
+              
+            
+           
+            try
+            {
+                if (check(id.Text, price.Text, inStock.Text, (BO.Category)categoryList.SelectedItem))
+                {
+                    bl?.Product.AddProduct(Product!);
+                    MessageBox.Show("The item has been added");
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("One or more of the inputs are invalid");
             }
-            // string id = id.Text;
-            try { bl.Product.AddProduct(product); }
             catch (BO.invalidInputException ex)
             { MessageBox.Show(ex.Message);  }
             catch(BO.DuplicateIDException ex1)
@@ -102,7 +89,7 @@ namespace PL.Products
                 bool updated = false;
                 try
                 {
-                    bl.Product.UpdateProduct(product);
+                    bl?.Product.UpdateProduct(Product!);
                     MessageBox.Show("The item has been updated");
                     updated = true; 
                     this.Close();
@@ -116,10 +103,14 @@ namespace PL.Products
                   MessageBox.Show(ex1.Message); 
             }
 
-           this.Close();
+          // this.Close();
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e) => this.Close();
-       
+        
+
+        private void UpdateButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -61,13 +61,13 @@ namespace PL.Products
 
         }
 
-        private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+        private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow(0).Show();
 
         private void ProductListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             int id = ((ProductForList?)(sender as ListViewItem)?.DataContext)?.ProductID
           ?? throw new NullReferenceException("null event sender");
-            new ProductWindow(id).Show();
+            new ProductWindow(id).ShowDialog();
             Products = new(from p in bl.Product.GetAll().OrderBy(p => p!.ProductID) select p);
 
           

@@ -1,4 +1,5 @@
 ﻿using BO;
+
 using PL.Products;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace PL
 
             Cart = new() { Items = new() };
             //Category = Category.None;
-            var temp = bl?.Product.GetAllCatalog().OrderBy(p =>p.ProductID);
+            var temp = bl?.Product.GetAllCatalog().OrderBy(p =>p!.ProductID);
             Products1 = temp == null ? new() : new(temp);
             InitializeComponent();
 
@@ -84,8 +85,16 @@ namespace PL
             // this.Refresh();
         }
 
-        private void Cart_Click(object sender, RoutedEventArgs e) => new CartWindow(Cart).Show();
-
+        private void Cart_Click(object sender, RoutedEventArgs e)
+        {
+            if (Cart.TotalPrice > 0)
+            {
+                new CartWindow(Cart).ShowDialog();
+                Reset_Click(sender, e);
+            }
+            else
+                MessageBox.Show("No items in the cart", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
         private void AddToCartButton_Click(object sender, RoutedEventArgs e)
         {
             ProductItem product = (ProductItem)((sender as Button)!.DataContext!);
@@ -94,8 +103,11 @@ namespace PL
                 try
                 {
                     Cart = bl!.Cart.AddProduct(Cart, product.ProductID ==0? throw new BO.MissingIDException (" Product not Found"): product.ProductID);
-                    product.AmountInCart++;
+                    
                     Products1 = new(from p in Products1 orderby p.ProductID select p);
+                    product.AmountInCart++;
+                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    product.IsAvailable = tempBool;
                     // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
                 }
                 catch (BO.MissingIDException ex)
@@ -103,7 +115,12 @@ namespace PL
 
                     MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
-                                
+                catch (BO.invalidInputException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+
             }
 
             else
@@ -122,6 +139,8 @@ namespace PL
                 {
                     Cart = bl!.Cart.UpdateAmountOfProduct(Cart, (int)product.ProductID, product.AmountInCart - 1);
                     product.AmountInCart--;
+                    bool tempBool = (product.AmountInCart < bl.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                    product.IsAvailable = tempBool;
                     Products1 = new(from p in Products1 orderby p.ProductID select p);
                     // MessageBox.Show(" Succesfully added " ," ", MessageBoxButton.OK);
                 }
@@ -130,12 +149,27 @@ namespace PL
 
                     MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
+                catch (BO.invalidInputException ex)
+                {
+
+                    MessageBox.Show(ex.Message, " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
             }
-            else
+            
+
+        }
+
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            Cart = new() { Items = new() };            
+            foreach( ProductItem product in Products1)
             {
-
+                product!.AmountInCart = 0;
+                bool tempBool = (product.AmountInCart < bl!.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
+                product.IsAvailable = tempBool;
             }
-
+            Products1 = new(from p in Products1 orderby p.ProductID select p);
         }
     }
 }

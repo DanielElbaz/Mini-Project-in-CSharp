@@ -47,7 +47,7 @@ namespace PL.Orders
         {
             int id = ((OrderForList?)(sender as ListViewItem)?.DataContext)?.OrderID
           ?? throw new NullReferenceException("null event sender");
-            new OrderWindow(id).Show();
+            new OrderWindow(id,true).Show();
         }
     }
 }

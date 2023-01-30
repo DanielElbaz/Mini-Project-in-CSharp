@@ -11,13 +11,7 @@ namespace Dal
         internal class Config
         {
 
-            //internal static int OrderItemFirstClear = 0;
-            //internal static int ProductFirstClear = 0; // the first index in the array which is clear
-            //internal static int OrderFirstClear = 0;
-
             static internal Random rand = new Random();
-
-
             internal static int OrderLastId = 1; // running index number of order
             internal static int OrderItemLastId = 1;
 
@@ -39,13 +33,6 @@ namespace Dal
         }
 
 
-        //internal static int OI_capacity = 200;
-        //internal static int P_capacity = 50;
-        //internal static int O_capacity = 100;
-
-        //internal static OrderItem[] OI_arr = new OrderItem[OI_capacity];
-        //internal static Product[] P_arr = new Product[P_capacity];
-        //internal static Order[] O_arr = new Order[O_capacity];
 
         internal static List<OrderItem?> OrderItemDataList = new();
         internal static List<Product?> ProductDataList = new();
@@ -109,8 +96,7 @@ namespace Dal
                 Product p = new Product();
 
                 p.ID = Config.rand.Next(100000, 999999);
-                //for (int j = 0; j< Config.ProductFirstClear; j++) //check if there is no other product with the same id
-                //  while(P_arr[j].ID == P_arr[i].ID) // if theres product with same id
+               
                 foreach (Product pr in ProductDataList)
                     if (p.ID == pr.ID)
                         p.ID = Config.rand.Next(100000, 999999);

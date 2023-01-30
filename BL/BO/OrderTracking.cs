@@ -20,10 +20,11 @@ namespace BO
             string str ="order id:"+OrderID + '\n'+
                                "order status:" + OrderStatus + '\n'+
                                 "order description:"+  '\n';
-            foreach(Tuple<DateTime?, string> t in StatusDescription)
+            foreach(Tuple<DateTime?, string> t in StatusDescription!)
             {
                str += t.Item2 + '\n';
             }
+
             return str;
           //  return this.ToStringProperty();
         }

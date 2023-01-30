@@ -93,6 +93,8 @@ namespace BlImplementation
             DO.Product product;
             if (cart == null)
                 throw new BO.incorrectDataException();
+            //if (cart.Items == null)
+            //    throw new BO.incorrectDataException("cart is empty");
 
 
             try
@@ -119,6 +121,7 @@ namespace BlImplementation
                 {
                     cart.TotalPrice -= item!.TotalPrice; // reduce the total price of item from the cart
                     item.TotalPrice = 0; // reset the total price of the item
+                    item.Amount = 0;
                     cart.Items!.Remove(item); // delete the order item
                 }
                 else // new amount >0
@@ -162,13 +165,13 @@ namespace BlImplementation
             int orderId =0; // id of order to add 
             DO.Product product;
             DO.Order order ;
-            if (cart.Items == null)//no itmes in cart
+            if (cart.Items == null || cart.TotalPrice==0)//no itmes in cart
                 throw new BO.incorrectDataException("no items in the cart");
             
             if( cart.CustomerEmail!= null && cart.CustomerEmail != " "&& !IsValid(cart.CustomerEmail))
                 throw new BO.incorrectDataException("invalid email address");
            
-            if (cart.CustomerName == null || cart.CustomerAddress == null)
+            if (cart.CustomerName == null || cart.CustomerAddress == " " || cart.CustomerAddress == null)
                 throw new BO.incorrectDataException("customer name or address null ");
            
 
@@ -193,7 +196,7 @@ namespace BlImplementation
             {
                 CustomerName = cart.CustomerName ?? throw new BO.incorrectDataException(" null customer name"),
                 CustomerEmail = cart.CustomerEmail,
-                CustomerAddress = cart.CustomerAddress ?? throw new BO.incorrectDataException(" null customer name"),
+                CustomerAddress = cart.CustomerAddress ?? throw new BO.incorrectDataException(" null customer address"),
                 OrderDate = DateTime.Now,
                 ShipDate = null,
                 DeliveryDate = null
