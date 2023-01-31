@@ -191,9 +191,8 @@ namespace BlImplementation
             }
             catch (DO.DuplicateIDException e)
             {
-
                 ///????????????????????????????
-                throw new BO.DuplicateIDException("Item already exists ");
+                throw new BO.DuplicateIDException("Item already exists ", e);
             }
 
         }
@@ -253,7 +252,7 @@ namespace BlImplementation
             }
             catch (DO.MissingIDException ex)
             {
-                throw new BO.MissingIDException("product not found"); }
+                throw new BO.MissingIDException("product not found",ex); }
             return;            
             //throw new BO.MissingIDException("product not found");
 

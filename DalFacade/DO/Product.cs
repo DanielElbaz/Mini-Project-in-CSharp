@@ -33,7 +33,7 @@ namespace DO
         /// </summary>
         /// <returns></returns>
         public override string ToString() => $@"
-    Product ID:{ID} 
+    Product ID: {ID} 
     Name :  {Name},
     category: {Category}
     Price: {Price}

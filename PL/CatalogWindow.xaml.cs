@@ -163,7 +163,7 @@ namespace PL
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             Cart = new() { Items = new() };            
-            foreach( ProductItem product in Products1)
+            foreach( ProductItem? product in Products1)
             {
                 product!.AmountInCart = 0;
                 bool tempBool = (product.AmountInCart < bl!.Product.GetProduct(product.ProductID).InStock); //get the amount fro the data
