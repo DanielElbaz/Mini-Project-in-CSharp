@@ -15,15 +15,18 @@ namespace Dal
         static XElement config = XMLTools.LoadConfig();
         static DO.Product? createProductfromXElement(XElement s)
         {
-            return new DO.Product
+            var result = new DO.Product
             {
-                ID = s.ToIntNullable("ID") ?? throw new FormatException("ID"),
-                Name = (string?)s.Element("Name"),
-               // Category = (DO.Category)s.Element("Category"),
-                Category = (DO.Category)s.ToEnumNullable<DO.Category>("Category")!,
-                Price = (double)s.Element("Price")!,
-                InStock = (int)s.Element("InStock")!
+
+                // ID = Int32.Parse(s?.Element("ID")?.Value!),
+                ID = (int)s.Element("ID")!,
+                Name = s?.Element("Name")?.Value,
+                // Category = (DO.Category)s.Element("Category"),
+                Category = (DO.Category)Enum.Parse(typeof(DO.Category), s?.Element("Category")?.Value!),
+                Price = (double)s?.Element("Price")!,
+                InStock = (int)s?.Element("InStock")!
             };
+            return result;
         }
         public int Add(DO.Product product)
         {
@@ -88,8 +91,9 @@ namespace Dal
             }
             else
             {
-                return from s in product_root.Elements()
+                var result = from s in product_root.Elements()
                        select createProductfromXElement(s);
+                return result;
             }
         }
         public DO.Product GetByID(int id)

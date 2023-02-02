@@ -10,7 +10,7 @@
 	<Product>
 		<ID>100001</ID>
 		<Name>Apple  iPhone 11 </Name>
-		<Category>Mobile</Category>
+		<Category>Phones</Category>
 		<InStock>171</InStock>
 		<Price>4000</Price>
 	</Product>
@@ -18,14 +18,14 @@
 	<Product>
 		<ID>100002</ID>
 		<Name>Apple  iPhone 12 </Name>
-		<Category>Mobile</Category>
+		<Category>Phones</Category>
 		<InStock>171</InStock>
 		<Price>4000</Price>
 	</Product>
 	<Product>
 		<ID>100003</ID>
 		<Name>Apple  iPhone 14 </Name>
-		<Category>Mobile</Category>
+		<Category>Phones</Category>
 		<InStock>171</InStock>
 		<Price>5000</Price>
 	</Product>
@@ -54,7 +54,7 @@
 	<Product>
 		<ID>100007</ID>
 		<Name>Beats Solo 1</Name>
-		<Category>EarPords</Category>
+		<Category>Earphones</Category>
 		<InStock>171</InStock>
 		<Price>1000</Price>
 	</Product>
@@ -62,16 +62,16 @@
 	<Product>
 		<ID>100008</ID>
 		<Name>Beats Solo 2</Name>
-		<Category>EarPords</Category>
+		<Category>Earphones</Category>
 		<InStock>171</InStock>
 		<Price>2000</Price>
 	</Product>
 
 	<Product>
 		<ID>100009</ID>
-		<Name>Beats Solo 2</Name>
-		<Category>EarPords</Category>
+		<Name>Beats Solo 3</Name>
+		<Category>Earphones</Category>
 		<InStock>171</InStock>
-		<Price>2000</Price>
+		<Price>2500</Price>
 	</Product>	
 </ArrayOfProduct>
