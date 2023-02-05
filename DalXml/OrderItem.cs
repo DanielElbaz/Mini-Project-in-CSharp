@@ -19,7 +19,7 @@ namespace Dal
             List<DO.OrderItem?> listOrderItem = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemPath);
 
             if (listOrderItem.FirstOrDefault(orderItem => orderItem?.ID == entity.ID) != null)
-                throw new Exception("id already exist");
+                throw new DO.DuplicateIDException("id already exist");
 
             entity.ID = int.Parse(config.Element("OrderItemId")!.Value) + 1;
             listOrderItem.Add(entity);
@@ -34,7 +34,7 @@ namespace Dal
             List<DO.OrderItem?> listOrderItem = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemPath);
 
             if (listOrderItem.RemoveAll(lec => lec?.ID == id) == 0)
-                throw new Exception("missing id");
+                throw new DO.MissingIDException("missing id");
 
             XMLTools.SaveListToXMLSerializer(listOrderItem, orderItemPath);
         }

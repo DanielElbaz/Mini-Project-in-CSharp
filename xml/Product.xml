@@ -1,77 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<Product>
-		<ID>100000</ID>
-		<Name>Apple iPhone 10</Name>
-		<Category>Phones</Category>
-		<InStock>171</InStock>
-		<Price>3879</Price>
-	</Product>
-	<Product>
-		<ID>100001</ID>
-		<Name>Apple  iPhone 11 </Name>
-		<Category>Phones</Category>
-		<InStock>171</InStock>
-		<Price>4000</Price>
-	</Product>
-
-	<Product>
-		<ID>100002</ID>
-		<Name>Apple  iPhone 12 </Name>
-		<Category>Phones</Category>
-		<InStock>171</InStock>
-		<Price>4000</Price>
-	</Product>
-	<Product>
-		<ID>100003</ID>
-		<Name>Apple  iPhone 14 </Name>
-		<Category>Phones</Category>
-		<InStock>171</InStock>
-		<Price>5000</Price>
-	</Product>
-	<Product>
-		<ID>100004</ID>
-		<Name>Galaxy Tab 2</Name>
-		<Category>Tablets</Category>
-		<InStock>171</InStock>
-		<Price>2000</Price>
-	</Product>
-
-	<Product>
-		<ID>100005</ID>
-		<Name>Galaxy Tab 3</Name>
-		<Category>Tablets</Category>
-		<InStock>171</InStock>
-		<Price>2500</Price>
-	</Product>
-	<Product>
-		<ID>100006</ID>
-		<Name>Galaxy Tab 4</Name>
-		<Category>Tablets</Category>
-		<InStock>171</InStock>
-		<Price>2700</Price>
-	</Product>
-	<Product>
-		<ID>100007</ID>
-		<Name>Beats Solo 1</Name>
-		<Category>Earphones</Category>
-		<InStock>171</InStock>
-		<Price>1000</Price>
-	</Product>
-
-	<Product>
-		<ID>100008</ID>
-		<Name>Beats Solo 2</Name>
-		<Category>Earphones</Category>
-		<InStock>171</InStock>
-		<Price>2000</Price>
-	</Product>
-
-	<Product>
-		<ID>100009</ID>
-		<Name>Beats Solo 3</Name>
-		<Category>Earphones</Category>
-		<InStock>171</InStock>
-		<Price>2500</Price>
-	</Product>	
+  <Product>
+    <ID>100000</ID>
+    <Name>Apple iPhone 10</Name>
+    <Category>Phones</Category>
+    <InStock>171</InStock>
+    <Price>3879</Price>
+  </Product>
+  <Product>
+    <ID>100001</ID>
+    <Name>Apple  iPhone 11 </Name>
+    <Category>Phones</Category>
+    <InStock>171</InStock>
+    <Price>4000</Price>
+  </Product>
+  <Product>
+    <ID>100002</ID>
+    <Name>Apple  iPhone 12 </Name>
+    <Category>Phones</Category>
+    <InStock>171</InStock>
+    <Price>4000</Price>
+  </Product>
+  <Product>
+    <ID>100004</ID>
+    <Name>Galaxy Tab 2</Name>
+    <Category>Tablets</Category>
+    <InStock>171</InStock>
+    <Price>2000</Price>
+  </Product>
+  <Product>
+    <ID>100009</ID>
+    <Name>Beats Solo 3</Name>
+    <Category>Earphones</Category>
+    <InStock>171</InStock>
+    <Price>2500</Price>
+  </Product>
+  <Product>
+    <ID>731681</ID>
+    <Name>dsd</Name>
+    <Category>Computers</Category>
+    <Price>20</Price>
+    <InStock>30</InStock>
+  </Product>
+  <Product>
+    <ID>100003</ID>
+    <Name>Apple  iPhone 14 </Name>
+    <Category>Phones</Category>
+    <Price>5000</Price>
+    <InStock>157</InStock>
+  </Product>
+  <Product>
+    <ID>100008</ID>
+    <Name>Beats Solo 2</Name>
+    <Category>Earphones</Category>
+    <Price>2000</Price>
+    <InStock>1</InStock>
+  </Product>
+  <Product>
+    <ID>289142</ID>
+    <Name>gkala</Name>
+    <Category>Computers</Category>
+    <Price>32</Price>
+    <InStock>30</InStock>
+  </Product>
+  <Product>
+    <ID>100005</ID>
+    <Name>Galaxy Tab 3</Name>
+    <Category>Tablets</Category>
+    <Price>2500</Price>
+    <InStock>167</InStock>
+  </Product>
+  <Product>
+    <ID>100007</ID>
+    <Name>Beats Solo 1</Name>
+    <Category>Earphones</Category>
+    <Price>1000</Price>
+    <InStock>170</InStock>
+  </Product>
+  <Product>
+    <ID>100006</ID>
+    <Name>Galaxy Tab 4</Name>
+    <Category>Tablets</Category>
+    <Price>2700</Price>
+    <InStock>14</InStock>
+  </Product>
 </ArrayOfProduct>

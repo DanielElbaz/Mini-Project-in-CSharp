@@ -40,7 +40,7 @@ namespace Dal
                               where st.ToIntNullable("ID") == product.ID
                               select st).FirstOrDefault();
             if (stud != null)
-                throw new Exception("ID already exist");
+                throw new DO.DuplicateIDException("ID already exist");
 
 
             product_root.Add(new XElement("Product",
@@ -69,8 +69,8 @@ namespace Dal
         }
         public DO.Product GetBy(Func<DO.Product?, bool> filter)
         {
-            if (filter == null)
-                throw new Exception("missing function");
+           // if (filter == null)
+             //   throw new Exception("missing function");
 
             XElement product_root = XMLTools.LoadListFromXMLElement(productPath);
             return ((from p in product_root.Elements()
