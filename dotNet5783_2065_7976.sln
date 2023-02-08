@@ -27,8 +27,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{2CBE11B1-C379-4C8A-9A38-57C922987FDD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{183FB840-7B71-4C50-884B-37C467A38367}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F5B134C5-368A-45C2-9838-61BE8B0311EC} = {F5B134C5-368A-45C2-9838-61BE8B0311EC}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{D861490F-F00D-49A2-B5DF-906BB4E57D8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{D861490F-F00D-49A2-B5DF-906BB4E57D8C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{DB299FA0-E7B8-4200-90FD-3A945A293319}"
 	ProjectSection(SolutionItems) = preProject
@@ -38,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{DB299FA0-E7B
 		xml\OrderItem.xml = xml\OrderItem.xml
 		xml\Product.xml = xml\Product.xml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{F5B134C5-368A-45C2-9838-61BE8B0311EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +82,10 @@ Global
 		{D861490F-F00D-49A2-B5DF-906BB4E57D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D861490F-F00D-49A2-B5DF-906BB4E57D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D861490F-F00D-49A2-B5DF-906BB4E57D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B134C5-368A-45C2-9838-61BE8B0311EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B134C5-368A-45C2-9838-61BE8B0311EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B134C5-368A-45C2-9838-61BE8B0311EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B134C5-368A-45C2-9838-61BE8B0311EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
