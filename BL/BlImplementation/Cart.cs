@@ -36,7 +36,7 @@ namespace BlImplementation
 
             try
             {
-                product = dal.Product.GetByID(productId);
+                product = dal!.Product.GetByID(productId);
             }
             catch (DO.IncorrectDataException dex)
             {
@@ -99,7 +99,7 @@ namespace BlImplementation
 
             try
             {
-                product = dal.Product.GetByID(productId);
+                product = dal!.Product.GetByID(productId);
             }
             catch (DO.MissingIDException dex)
             {

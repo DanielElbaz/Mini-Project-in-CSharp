@@ -68,7 +68,7 @@ namespace PL.Products
             int id = ((ProductForList?)(sender as ListViewItem)?.DataContext)?.ProductID
           ?? throw new NullReferenceException("null event sender");
             new ProductWindow(id).ShowDialog();
-            Products = new(from p in bl.Product.GetAll().OrderBy(p => p!.ProductID) select p);
+            Products = new(from p in bl?.Product.GetAll().OrderBy(p => p!.ProductID) select p);
 
           
         }

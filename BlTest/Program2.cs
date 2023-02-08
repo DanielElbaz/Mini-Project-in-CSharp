@@ -147,7 +147,7 @@ namespace BlTest
                         // string? email, name, address;
                         Console.WriteLine(" Enter id of a product \n");
                         productId = Int32.Parse(Console.ReadLine()!);
-                        try { productItem = bl?.Product.GetProductForCatalog(productId, cart);
+                        try { productItem = bl?.Product.GetProductForCatalog(productId, cart!);
                             Console.WriteLine(productItem);
                         }
                         catch (BO.invalidInputException ex)
@@ -212,7 +212,7 @@ namespace BlTest
                         };
 
                         try
-                        { bl.Product.AddProduct(product);
+                        { bl?.Product.AddProduct(product);
                             Console.WriteLine( " product {0} addedd successfully {1}", product.ID, product);
                         }
                         catch (BO.invalidInputException ex)
@@ -445,8 +445,8 @@ namespace BlTest
                         Console.WriteLine(" Enter id of a product \n");
                         id = Int32.Parse(Console.ReadLine()!);
                         try
-                        { cart = bl?.Cart.AddProduct(cart, id);
-                             product = dal.Product.GetByID(id);
+                        { cart = bl?.Cart.AddProduct(cart!, id);
+                             product = dal!.Product.GetByID(id);
                             Console.WriteLine("product added successfully to your cart\n" + cart );
                         }
                         catch (BO.incorrectDataException ex)
