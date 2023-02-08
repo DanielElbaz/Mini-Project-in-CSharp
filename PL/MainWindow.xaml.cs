@@ -84,6 +84,10 @@ namespace PL
                 }
             }
         }
-        
+
+        private void SimulatorButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
