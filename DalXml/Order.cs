@@ -18,10 +18,12 @@ namespace Dal
         {
             List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(orderPath);
 
+            int lastID = listOrder.Last()!.Value.ID; // take the id of the last
             if (listOrder.FirstOrDefault(order => order?.ID== entity.ID) != null)
                 throw new DO.DuplicateIDException("id already exist");
 
-            entity.ID = int.Parse(config.Element("OrderId")!.Value) + 1;
+            //  entity.ID = int.Parse(config.Element("OrderId")!.Value) + 1;
+            entity.ID = lastID + 1;
             listOrder.Add(entity);
 
             XMLTools.SaveListToXMLSerializer(listOrder, orderPath);
