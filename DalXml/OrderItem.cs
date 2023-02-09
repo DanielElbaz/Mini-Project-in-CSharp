@@ -22,7 +22,8 @@ namespace Dal
                 throw new DO.DuplicateIDException("id already exist");
 
             //entity.ID = int.Parse(config.Element("OrderItemId")!.Value) + 1;
-            entity.ID = lastID + 1;
+            if (entity.ID == 0)
+                entity.ID = lastID + 1;
             listOrderItem.Add(entity);
 
             XMLTools.SaveListToXMLSerializer(listOrderItem, orderItemPath);

@@ -220,7 +220,7 @@ namespace BlImplementation
                     dal!.OrderItem.Add(new DO.OrderItem
                     {
                         Amount = orderItem1.Amount,
-                        Price = orderItem1.TotalPrice,
+                        Price = orderItem1.ProductPrice,
                         OrderID = orderId,
                         ProductID = orderItem1.ProductID
                     });
