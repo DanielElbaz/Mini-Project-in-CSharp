@@ -34,12 +34,16 @@ namespace BlImplementation
                 int amount = 0; // amount of each order item
                 double totalPrice = 0; // total price of each order
 
+                IEnumerable<DO.OrderItem?> items = from item in doOrderItems where item.Value.OrderID == doOrder.ID select item;
+
                 // theres a match between order and orderitem
-                if (doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID) != null) 
+                if (doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID) != null)
+
                 {
-                    amount += ((DO.OrderItem)doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID)!).Amount;
-                    totalPrice += ((DO.OrderItem)doOrderItems.FirstOrDefault(o => ((DO.OrderItem)o!).OrderID == doOrder.ID)!).Price * amount;
-                }
+                    totalPrice = items.Sum(item => item!.Value.Amount * item.Value.Price);
+                    amount = items.Count();
+                }              
+                
 
                
                     orderForList.Add(new BO.OrderForList()
