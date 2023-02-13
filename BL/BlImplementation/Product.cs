@@ -72,8 +72,9 @@ namespace BlImplementation
 
             if (func == null)
             {
+                // If func argument is null, return all products from DAL layer
                 return dal!.Product.GetAll().Select
-                      (doProduct => new BO.ProductItem()
+                      (doProduct => new BO.ProductItem() // Create a new BO.ProductItem object from DAL layer product object
                       {
                           Category = (BO.Category)doProduct?.Category!,
                           ProductID = (int)doProduct?.ID!,
@@ -106,7 +107,7 @@ namespace BlImplementation
         {
 
             if (id <= 0)
-                throw new BO.invalidInputException("Dosennt found product");
+                throw new BO.invalidInputException("Doesnt found product");
             DO.Product doProduct;
 
             try { doProduct = dal!.Product.GetByID(id); }

@@ -19,11 +19,20 @@
     <DeliveryDate>2023-02-09T21:31:55.0653046+02:00</DeliveryDate>
   </Order>
   <Order>
-    <ID>21</ID>
+    <ID>22</ID>
     <CustomerName>Daniel</CustomerName>
-    <CustomerEmail>daniel@gmail.con</CustomerEmail>
+    <CustomerEmail>daniel@gmail.com</CustomerEmail>
     <CustomerAddress>jerusalem</CustomerAddress>
-    <OrderDate>2023-02-08T10:22:50.3812671+02:00</OrderDate>
+    <OrderDate>2023-02-13T12:13:55.9819047+02:00</OrderDate>
+    <ShipDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <ID>23</ID>
+    <CustomerName>Jojo</CustomerName>
+    <CustomerEmail>jojo@yahoo.fr</CustomerEmail>
+    <CustomerAddress>matignon</CustomerAddress>
+    <OrderDate>2023-02-13T15:19:25.2176463+02:00</OrderDate>
     <ShipDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
   </Order>
