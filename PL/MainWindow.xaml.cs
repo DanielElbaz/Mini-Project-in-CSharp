@@ -22,15 +22,19 @@ using PL.Orders;
 
 namespace PL
 {
-    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
 
+        // A dependency property that holds the value of the order tracking information
+        public static DependencyProperty TrackOrderDependency = DependencyProperty.Register(nameof(BO.OrderTracking),
+                                                                                            typeof(OrderTracking),
+                                                                                            typeof(OrderTrackingWindow));
 
-        public static DependencyProperty TrackOrderDependency = DependencyProperty.Register(nameof(BO.OrderTracking), typeof(OrderTracking), typeof(OrderTrackingWindow));
+        // Property to get and set the value of orderTracking                                                                                    
         public OrderTracking orderTracking
         {
             get => (OrderTracking)GetValue(TrackOrderDependency);
@@ -38,17 +42,12 @@ namespace PL
         }
 
 
-        //  private IBl bl = new Bl();
         BlApi.IBl? bl = BlApi.Factory.Get();
         public MainWindow()
         {
             InitializeComponent();
-          
-
         }
-       
 
-        //private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
         private void ShowManagerButton_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
         private void ShowCatalog_Click(object sender, RoutedEventArgs e) => new CatalogWindow().Show();
 
@@ -59,20 +58,22 @@ namespace PL
                 BO.Order order;
                 try
                 {
-
+                    // If the user entered a valid integer for the order ID
                     if (int.TryParse(idBox.Text, out id))
 
                     {
+                        // Get the order tracking information
                         orderTracking = bl!.Order.OrderTracking(id);
                         order = bl.Order.GetOrder(id);
-                       MessageBoxResult result =  MessageBox.Show(orderTracking.ToString() + "\n" + order.ToString() +" Press OK to Show details", " ", MessageBoxButton.OK);
-                        if(result== MessageBoxResult.OK) 
+                        // Show a message box with the order tracking and order information
+                        MessageBoxResult result = MessageBox.Show(orderTracking.ToString() + "\n" + order.ToString() + " Press OK to Show details", " ", MessageBoxButton.OK);
+
+                        if (result == MessageBoxResult.OK)
                         {
-                            new OrderWindow(id,false).Show();
+                            new OrderWindow(id, false).Show();
                         }
-                        
+
                     }
-                    //orderTrackingListView.
 
                     else
                         MessageBox.Show("invalid Input", " ", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -84,6 +85,6 @@ namespace PL
                 }
             }
         }
-        
+
     }
 }

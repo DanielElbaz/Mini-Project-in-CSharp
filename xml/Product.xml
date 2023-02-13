@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>100000</ID>
-    <Name>Apple iPhone 10</Name>
-    <Category>Phones</Category>
-    <InStock>171</InStock>
-    <Price>3879</Price>
-  </Product>
-  <Product>
-    <ID>100001</ID>
-    <Name>Apple  iPhone 11 </Name>
-    <Category>Phones</Category>
-    <InStock>171</InStock>
-    <Price>4000</Price>
-  </Product>
-  <Product>
     <ID>100002</ID>
     <Name>Apple  iPhone 12 </Name>
     <Category>Phones</Category>
@@ -57,13 +43,6 @@
     <InStock>170</InStock>
   </Product>
   <Product>
-    <ID>100003</ID>
-    <Name>Apple  iPhone 14 </Name>
-    <Category>Phones</Category>
-    <Price>5000</Price>
-    <InStock>155</InStock>
-  </Product>
-  <Product>
     <ID>100006</ID>
     <Name>Galaxy Tab 4</Name>
     <Category>Tablets</Category>
@@ -83,5 +62,26 @@
     <Category>Computers</Category>
     <Price>32</Price>
     <InStock>30</InStock>
+  </Product>
+  <Product>
+    <ID>100001</ID>
+    <Name>Apple  iPhone 11 </Name>
+    <Category>Phones</Category>
+    <Price>4000</Price>
+    <InStock>169</InStock>
+  </Product>
+  <Product>
+    <ID>100000</ID>
+    <Name>Apple iPhone 10</Name>
+    <Category>Phones</Category>
+    <Price>3879</Price>
+    <InStock>170</InStock>
+  </Product>
+  <Product>
+    <ID>100003</ID>
+    <Name>Apple  iPhone 14 </Name>
+    <Category>Phones</Category>
+    <Price>5000</Price>
+    <InStock>154</InStock>
   </Product>
 </ArrayOfProduct>

@@ -26,41 +26,35 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
-        public static  DependencyProperty CartDependency = DependencyProperty.Register(nameof(BO.Cart), typeof(Cart), typeof(Window));
+        public static  DependencyProperty CartDependency = DependencyProperty.Register(nameof(BO.Cart), 
+                                                                                       typeof(Cart), 
+                                                                                       typeof(Window));
+
         public Cart Cart
         {
             get => (Cart)GetValue(CartDependency);
             private set => SetValue(CartDependency, value);
         }
 
-        public static  DependencyProperty ProductsDependency = DependencyProperty.Register(nameof(Products1), typeof(ObservableCollection<ProductItem>), typeof(Window));
+        public static  DependencyProperty ProductsDependency = DependencyProperty.Register(nameof(Products1), 
+                                                                                            typeof(ObservableCollection<ProductItem>), 
+                                                                                             typeof(Window));
         public ObservableCollection<ProductItem?> Products1
         {
             get => (ObservableCollection<ProductItem?>)GetValue(ProductsDependency);
             private set => SetValue(ProductsDependency, value);
         }
-         public Category Category { get; set; }
-
-        //public static readonly DependencyProperty CategoryDependency = DependencyProperty.Register(nameof(BO.Category), typeof(ObservableCollection<BO.Category>), typeof(Window));
-        //public ObservableCollection<BO.Category> Category
-        //{
-        //    get => (ObservableCollection<BO.Category>) GetValue(CategoryDependency);
-        //    private set => SetValue(CategoryDependency, value);
-        //}
-
+        public Category Category { get; set; }
+                
         public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
-
 
         public CatalogWindow()
         {
 
             Cart = new() { Items = new() };
-            //Category = Category.None;
             var temp = bl?.Product.GetAllCatalog().OrderBy(p =>p!.ProductID);
             Products1 = temp == null ? new() : new(temp);
             InitializeComponent();
-
-
         }
         private void ProductListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -72,17 +66,16 @@ namespace PL
         { 
             var temp = Category == BO.Category.None ?
             bl?.Product.GetAllCatalog().OrderBy(p =>p!.ProductID) : bl?.Product.GetAllCatalog().Where(item => item!.Category == Category);
-        Products1 = temp == null ? new () : new (temp);
+            Products1 = temp == null ? new () : new (temp);
         }
-       // private void addProductBtn_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
-
+       
         private void ProductItemView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductItem p = (BO.ProductItem)ProductItemListView.SelectedItem;
             int id = p.ProductID;
             new ProductWindow(id).Show();
             InitializeComponent();
-            // this.Refresh();
+            
         }
 
         private void Cart_Click(object sender, RoutedEventArgs e)

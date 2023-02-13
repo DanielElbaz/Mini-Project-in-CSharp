@@ -10,8 +10,6 @@ using System.Windows;
 
 namespace PL
 {
-
-   
     
 
         public class NotIDToBoolConverter : IValueConverter
