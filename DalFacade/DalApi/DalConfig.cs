@@ -13,11 +13,13 @@ static class DalConfig
 {
     internal static string? s_dalName;
     internal static Dictionary<string, string> s_dalPackages;
-    internal static string? s_dir =System.IO.Directory.GetCurrentDirectory()?.FullName + @"\xml\";
+   // internal static string? s_dir =System.IO.Directory.GetCurrentDirectory()?.FullName + @"\xml\";
     static DalConfig()
     {
-        XElement dalConfig = XElement.Load(s_dir+"dal-config.xml")
-            ?? throw new DalConfigException("dal-config.xml file is not found");
+        // XElement dalConfig = XElement.Load(s_dir+"dal-config.xml")
+        XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml")
+
+             ?? throw new DalConfigException("dal-config.xml file is not found");
         s_dalName = dalConfig?.Element("dal")?.Value
             ?? throw new DalConfigException("<dal> element is missing");
         var packages = dalConfig?.Element("dal-packages")?.Elements()
