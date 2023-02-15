@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -14,6 +15,8 @@ namespace Dal
 
         const string orderItemPath = "OrderItem";
         static XElement config = XMLTools.LoadConfig();
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.OrderItem entity)
         {
             List<DO.OrderItem?> listOrderItem = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemPath);
@@ -31,6 +34,7 @@ namespace Dal
             return entity.ID;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             List<DO.OrderItem?> listOrderItem = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemPath);
@@ -41,6 +45,8 @@ namespace Dal
             XMLTools.SaveListToXMLSerializer(listOrderItem, orderItemPath);
         }
 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem GetBy(Func<DO.OrderItem?, bool> filter)
         {
             List<DO.OrderItem?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemPath);
@@ -49,6 +55,9 @@ namespace Dal
                     where filter(item)
                     select (DO.OrderItem)item).FirstOrDefault();
         }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? filter)
         {
             List<DO.OrderItem?> listOrderItem = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemPath);
@@ -59,6 +68,8 @@ namespace Dal
                 return listOrderItem.Where(filter).OrderBy(lec => lec?.ID);
         }
 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.OrderItem GetByID(int id)
         {
             List<DO.OrderItem?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(orderItemPath);
@@ -67,6 +78,9 @@ namespace Dal
                     where id == item.Value.ID
                     select (DO.OrderItem)item).FirstOrDefault();
         }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(int id, DO.OrderItem entity)
         {
             Delete(id);

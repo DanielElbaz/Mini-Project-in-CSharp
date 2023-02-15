@@ -12,6 +12,7 @@ using BO;
 using System.Data.Common;
 using DalApi;
 using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation
 {
@@ -29,6 +30,9 @@ namespace BlImplementation
         /// gets the list of products
         /// </summary>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.ProductForList?> GetAll(Func<BO.Product, bool>? func)
         {
             if (func == null)
@@ -67,6 +71,9 @@ namespace BlImplementation
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.ProductItem?> GetAllCatalog(Func<BO.Product, bool>? func)
         {
 
@@ -103,6 +110,10 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Product GetProduct(int id)
         {
 
@@ -131,6 +142,10 @@ namespace BlImplementation
         /// <param name="id"></param>
         /// <param name="cart"></param>
         /// <returns>product item   </returns>
+        /// 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.ProductItem GetProductForCatalog(int id, BO.Cart cart)
         {
             DO.Product doProdcut = new();
@@ -170,6 +185,9 @@ namespace BlImplementation
         /// add product for manager
         /// </summary>
         /// <param name="product"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void AddProduct(BO.Product p)
         {
             if (p == null)
@@ -201,6 +219,9 @@ namespace BlImplementation
         /// update product for manager
         /// </summary>
         /// <param name="product"></param>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void UpdateProduct(BO.Product? p)
         {
             if (p == null)
@@ -239,6 +260,10 @@ namespace BlImplementation
         /// delete product for manger
         /// </summary>
         /// <param name="id"></param>
+        /// 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void DeleteProduct(int id)
         {           
             //Check if the product found in other orders.

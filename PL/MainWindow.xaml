@@ -13,7 +13,7 @@
             <Button Content="Simulator" HorizontalAlignment="Center" Margin="0,153,0,0" VerticalAlignment="Top" Height="33" Width="172" Click="SimulatorButton_Click"/>
             <!--<Button Content="Orders" HorizontalAlignment="Left" Margin="526,78,0,0" VerticalAlignment="Top" Height="33" Width="171" RenderTransformOrigin="-0.185,0.607"/>-->
             <TextBox x:Name="idBox" HorizontalAlignment="Left" Margin="550,100,0,0" VerticalAlignment="Top" Height="33" Width="121"></TextBox>
-            <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="676,100,0,0" VerticalAlignment="Top" Height="33" Width="71" Click="OrderTracking_Click" RenderTransformOrigin="-1.551,0.345" />
+            <Button Content="Order Tracking" HorizontalAlignment="Left" Margin="676,100,0,0" VerticalAlignment="Top" Height="33" Width="88" Click="OrderTracking_Click" RenderTransformOrigin="-1.551,0.345" />
             <Button Content="Catalog - New Order" HorizontalAlignment="Left" Margin="78,100,0,0" VerticalAlignment="Top" Height="33" Width="171" Click="ShowCatalog_Click" RenderTransformOrigin="-1.551,0.345" />
         </Grid>
         <Image Name="backgroundImage"   Stretch="Fill" Panel.ZIndex="-1" Source="/bestmobilejpg.jpg" />

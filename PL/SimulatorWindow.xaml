@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource= {RelativeSource self}}"
         Title="Simulator" Height="450" Width="800">
-    <Grid Background="#FF616060">
-        <StackPanel Background="#FF7C7C7D">
+    <Grid >
+        <StackPanel >
             <Grid x:Name="ProductDetailsGrid" Margin="109,38,0,0" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

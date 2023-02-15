@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
+
 
 namespace Dal
 {
@@ -14,8 +16,10 @@ namespace Dal
         const string orderPath = "Order";
         static XElement config = XMLTools.LoadConfig();
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Order entity)
         {
+
             List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(orderPath);
 
             int lastID = listOrder.Last()!.Value.ID; // take the id of the last
@@ -32,6 +36,8 @@ namespace Dal
 
             return entity.ID;
         }
+       
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(orderPath);
@@ -41,6 +47,8 @@ namespace Dal
 
             XMLTools.SaveListToXMLSerializer(listOrder, orderPath);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Order GetBy(Func<DO.Order?, bool> filter)
         {
             List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(orderPath);
@@ -49,6 +57,9 @@ namespace Dal
                     where filter(item)
                     select (DO.Order)item).FirstOrDefault();
         }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? filter)
         {
             List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(orderPath);
@@ -58,6 +69,9 @@ namespace Dal
             else
                 return listOrder.Where(filter).OrderBy(lec => lec?.ID);
         }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Order GetByID(int id)
         {
             List<DO.Order?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Order>(orderPath);

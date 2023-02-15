@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
@@ -22,6 +23,9 @@ namespace BlImplementation
         /// returns list of orders
         /// </summary>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public IEnumerable<BO.OrderForList?> GetOrders()
         {
             IEnumerable<DO.Order?> doOrders = dal!.Order.GetAll();
@@ -70,6 +74,9 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Order GetOrder(int id)
         {
             DO.Order doOrder;
@@ -128,6 +135,9 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Order UpdateOrderSent(int id)
         {
             //DO.Product doProduct;
@@ -155,6 +165,10 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.Order UpdateOrderSupply(int id)
         {
 
@@ -181,6 +195,10 @@ namespace BlImplementation
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public BO.OrderTracking OrderTracking(int id)
         {
             //DO.Product doProduct;
@@ -214,6 +232,7 @@ namespace BlImplementation
             };
             return boOrderTracking;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
 
         public BO.Order? nextOrder()
         {

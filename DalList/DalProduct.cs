@@ -2,6 +2,7 @@
 using DO;
 using static Dal.DataSource;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -9,7 +10,7 @@ namespace Dal
 
     public class DalProduct : IProduct
     {
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(Product P)
         {
             if(DataSource.ProductDataList.Find(p => ((Product)p!).ID == P.ID) != null)
@@ -20,6 +21,7 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id) // delete product by id
         {
             int count = DataSource.ProductDataList.RemoveAll(p => ((Product)p!).ID == id);
@@ -28,6 +30,7 @@ namespace Dal
         }
 
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(int id, Product newP) // update old with new
         {
             //Boolean flag = false;
@@ -40,6 +43,7 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Product GetByID(int id)
 
         {
@@ -51,9 +55,9 @@ namespace Dal
 
         }
 
-        
 
-            public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
             {
 
 
@@ -74,6 +78,7 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Product GetBy(Func<Product?, bool> filter)
         {
             var item = DataSource.ProductDataList.FirstOrDefault(p => filter((p)));

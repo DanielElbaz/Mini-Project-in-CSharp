@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using DO;
 using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -12,6 +13,7 @@ namespace Dal
         /// </summary>
         /// <param name="oi"></param>
         /// <returns>id <returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(OrderItem oi)
         {
             if (DataSource.OrderItemDataList.Find(o => ((OrderItem)o!).ID == oi.ID) != null)
@@ -22,6 +24,7 @@ namespace Dal
 
 
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
 
         {
@@ -31,6 +34,7 @@ namespace Dal
           
 
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(int id, OrderItem newOI)
         {
 
@@ -44,6 +48,7 @@ namespace Dal
 
 
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public OrderItem GetByID(int id)
         {
             var item = DataSource.OrderItemDataList.FirstOrDefault(o => ((OrderItem)o!).ID == id);
@@ -53,6 +58,7 @@ namespace Dal
 
            
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null)
         {
             if (filter == null)
@@ -67,6 +73,7 @@ namespace Dal
 
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public OrderItem GetBy(Func<OrderItem?, bool> filter)
         {
             var item = DataSource.OrderItemDataList.FirstOrDefault(o => filter((o)));

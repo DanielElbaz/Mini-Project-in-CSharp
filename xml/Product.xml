@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>100009</ID>
-    <Name>Beats Solo 3</Name>
-    <Category>Earphones</Category>
-    <Price>2500</Price>
-    <InStock>170</InStock>
-  </Product>
-  <Product>
     <ID>100008</ID>
     <Name>Beats Solo 2</Name>
     <Category>Earphones</Category>
@@ -36,32 +29,11 @@
     <InStock>159</InStock>
   </Product>
   <Product>
-    <ID>100001</ID>
-    <Name>Apple  iPhone 11 </Name>
-    <Category>Phones</Category>
-    <Price>4000</Price>
-    <InStock>169</InStock>
-  </Product>
-  <Product>
-    <ID>100000</ID>
-    <Name>Apple iPhone 10</Name>
-    <Category>Phones</Category>
-    <Price>3879</Price>
-    <InStock>170</InStock>
-  </Product>
-  <Product>
     <ID>100003</ID>
     <Name>Apple  iPhone 14 </Name>
     <Category>Phones</Category>
     <Price>5000</Price>
     <InStock>154</InStock>
-  </Product>
-  <Product>
-    <ID>100007</ID>
-    <Name>Beats Solo 1</Name>
-    <Category>Earphones</Category>
-    <Price>1000</Price>
-    <InStock>164</InStock>
   </Product>
   <Product>
     <ID>100006</ID>
@@ -75,6 +47,34 @@
     <Name>Apple  iPhone 12 </Name>
     <Category>Phones</Category>
     <Price>4000</Price>
-    <InStock>158</InStock>
+    <InStock>155</InStock>
+  </Product>
+  <Product>
+    <ID>100001</ID>
+    <Name>Apple  iPhone 11 </Name>
+    <Category>Phones</Category>
+    <Price>4000</Price>
+    <InStock>167</InStock>
+  </Product>
+  <Product>
+    <ID>100000</ID>
+    <Name>Apple iPhone 10</Name>
+    <Category>Phones</Category>
+    <Price>3879</Price>
+    <InStock>169</InStock>
+  </Product>
+  <Product>
+    <ID>100007</ID>
+    <Name>Beats Solo 1</Name>
+    <Category>Earphones</Category>
+    <Price>1000</Price>
+    <InStock>168</InStock>
+  </Product>
+  <Product>
+    <ID>100009</ID>
+    <Name>Beats Solo 3</Name>
+    <Category>Earphones</Category>
+    <Price>2500</Price>
+    <InStock>154</InStock>
   </Product>
 </ArrayOfProduct>

@@ -54,4 +54,13 @@
     <ShipDate>2023-02-15T14:46:53.5718501+02:00</ShipDate>
     <DeliveryDate>2023-02-15T14:47:07.7482692+02:00</DeliveryDate>
   </Order>
+  <Order>
+    <ID>26</ID>
+    <CustomerName>yosef</CustomerName>
+    <CustomerEmail>yo@dc.com</CustomerEmail>
+    <CustomerAddress>dfd</CustomerAddress>
+    <OrderDate>2023-02-15T18:19:05.329743+02:00</OrderDate>
+    <ShipDate>2023-02-15T18:19:22.6422121+02:00</ShipDate>
+    <DeliveryDate>2023-02-15T18:19:33.7132278+02:00</DeliveryDate>
+  </Order>
 </ArrayOfOrder>

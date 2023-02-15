@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BL;
@@ -26,8 +27,8 @@ namespace BlImplementation
         /// returns cart
         /// </summary>
         /// 
-        
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart AddProduct(BO.Cart cart, int productId) // This function adds a product to a cart. 
 
         {
@@ -89,11 +90,13 @@ namespace BlImplementation
 
             return cart;
         }
-        
+
         /// <summary>
         /// update amount of product
         /// </summary>
         /// 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.Cart UpdateAmountOfProduct(BO.Cart cart, int productId, int newAmount)
         {
             DO.Product product;
@@ -163,6 +166,9 @@ namespace BlImplementation
 
             return valid;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
         public void ConfirmCart(BO.Cart cart)
         {
             int orderId =0; // id of order to add 

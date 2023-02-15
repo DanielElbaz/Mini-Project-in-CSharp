@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using static System.Collections.Specialized.BitVector32;
 
 namespace Dal
@@ -9,6 +10,7 @@ namespace Dal
     public class DalOrder : IOrder
     {
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(Order order)
         {
             if (DataSource.OrderDataList.Find(o => ((Order)o!).ID == order.ID) != null)
@@ -19,6 +21,7 @@ namespace Dal
            
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id) // delete product by id
         {
             int count = DataSource.OrderDataList.RemoveAll(o => ((Order)o!).ID == id);
@@ -27,6 +30,7 @@ namespace Dal
             
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(int id, Order newOrder) // update old with new
         {
             int count = DataSource.OrderDataList.RemoveAll(o => ((Order)o!).ID == id);
@@ -36,6 +40,7 @@ namespace Dal
         }
 
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Order GetByID(int id)
         {
             var item = DataSource.OrderDataList.FirstOrDefault(o => ((Order)o!).ID == id);
@@ -45,6 +50,8 @@ namespace Dal
           
         }
 
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null)
         {
             if(filter ==null)
@@ -59,6 +66,7 @@ namespace Dal
            
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Order GetBy(Func<Order?, bool> filter)
         {
             var item = DataSource.OrderDataList.FirstOrDefault(o => filter((o)));

@@ -45,10 +45,7 @@ public partial class SimulatorWindow : Window
 
 
     }
-    //protected override void OnClosing(CancelEventArgs e)
-    //{
-    //    e.Cancel= true; 
-    //}
+    
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {

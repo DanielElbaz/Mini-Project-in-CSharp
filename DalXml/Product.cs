@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
+using System.Runtime.CompilerServices;
 
 namespace Dal
 {
@@ -28,6 +29,8 @@ namespace Dal
             };
             return result;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int Add(DO.Product product)
         {
             XElement product_root = XMLTools.LoadListFromXMLElement(productPath);
@@ -55,6 +58,8 @@ namespace Dal
 
             return product.ID; ;
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Delete(int id)
         {
             XElement product_root = XMLTools.LoadListFromXMLElement(productPath);
@@ -67,6 +72,8 @@ namespace Dal
 
             XMLTools.SaveListToXMLElement(product_root, productPath);
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Product GetBy(Func<DO.Product?, bool> filter)
         {
            // if (filter == null)
@@ -77,6 +84,9 @@ namespace Dal
                      where filter(p.ConvertProduct_Xml_to_D0())
                      select p.ConvertProduct_Xml_to_D0()).FirstOrDefault());
         }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter)
         {
             XElement? product_root = XMLTools.LoadListFromXMLElement(productPath);
@@ -96,6 +106,8 @@ namespace Dal
                 return result;
             }
         }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DO.Product GetByID(int id)
         {
             List<DO.Product?> listOrder = XMLTools.LoadListFromXMLSerializer<DO.Product>(productPath);
@@ -104,6 +116,9 @@ namespace Dal
                     where id == item.Value.ID
                     select (DO.Product)item).FirstOrDefault();
         }
+
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Update(int id,DO.Product product)
         {
             Delete(id);

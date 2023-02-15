@@ -70,4 +70,25 @@
     <Price>4000</Price>
     <Amount>1</Amount>
   </OrderItem>
+  <OrderItem>
+    <ID>11</ID>
+    <OrderID>26</OrderID>
+    <ProductID>100002</ProductID>
+    <Price>4000</Price>
+    <Amount>3</Amount>
+  </OrderItem>
+  <OrderItem>
+    <ID>12</ID>
+    <OrderID>26</OrderID>
+    <ProductID>100001</ProductID>
+    <Price>4000</Price>
+    <Amount>2</Amount>
+  </OrderItem>
+  <OrderItem>
+    <ID>13</ID>
+    <OrderID>26</OrderID>
+    <ProductID>100000</ProductID>
+    <Price>3879</Price>
+    <Amount>1</Amount>
+  </OrderItem>
 </ArrayOfOrderItem>
