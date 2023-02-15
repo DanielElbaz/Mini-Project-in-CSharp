@@ -217,13 +217,26 @@ namespace BlImplementation
 
         public BO.Order? nextOrder()
         {
-           IEnumerable<DO.Order?> orders = dal!.Order.GetAll(order => order!.Value.ShipDate == null || order!.Value.DeliveryDate == null); // orders not delivered
-            if (orders.Any())
+            // IEnumerable<DO.Order?> orders = dal!.Order.GetAll(order => order!.Value.ShipDate == null || order!.Value.DeliveryDate == null); // orders not delivered
+
+            IEnumerable<DO.Order?> orders = dal!.Order.GetAll();
+            if (orders.Count() == 0)
                 //throw new BO.incorrectDataException("All orders have been sent");
                 return null;
-            var shipped = from order in orders where order.Value.ShipDate != null orderby order!.Value.ShipDate select GetOrder(order.Value.ID); //orders shipped 
+            var shipped = from order in orders where (order.Value.ShipDate != null && order.Value.DeliveryDate == null) orderby order!.Value.ShipDate select GetOrder(order.Value.ID); //orders shipped 
             var notShipped = from order in orders where order.Value.ShipDate == null orderby order!.Value.OrderDate select GetOrder(order.Value.ID); // not shipped orders
-            return shipped.First().ShipDate<= notShipped.First().OrderDate? shipped.First():notShipped.First();
+            if (shipped.Count() == 0 && notShipped.Count() == 0)
+                return null;
+            else
+            {
+                if (shipped.Count() == 0)
+                    return notShipped.First();
+                if (notShipped.Count() == 0)
+                    return shipped.First();
+            }
+
+
+                return shipped.First().ShipDate<= notShipped.First().OrderDate? shipped.First():notShipped.First();
 
         }
         

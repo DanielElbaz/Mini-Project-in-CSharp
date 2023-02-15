@@ -24,8 +24,8 @@
     <CustomerEmail>daniel@gmail.com</CustomerEmail>
     <CustomerAddress>jerusalem</CustomerAddress>
     <OrderDate>2023-02-13T12:13:55.9819047+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
+    <ShipDate>2023-02-15T14:39:58.3410395+02:00</ShipDate>
+    <DeliveryDate>2023-02-15T14:40:19.6648393+02:00</DeliveryDate>
   </Order>
   <Order>
     <ID>23</ID>
@@ -33,7 +33,25 @@
     <CustomerEmail>jojo@yahoo.fr</CustomerEmail>
     <CustomerAddress>matignon</CustomerAddress>
     <OrderDate>2023-02-13T15:19:25.2176463+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
+    <ShipDate>2023-02-15T14:40:09.5728991+02:00</ShipDate>
+    <DeliveryDate>2023-02-15T14:40:27.7285798+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>24</ID>
+    <CustomerName>yakov</CustomerName>
+    <CustomerEmail>ya@gmail.com</CustomerEmail>
+    <CustomerAddress>blblb</CustomerAddress>
+    <OrderDate>2023-02-15T14:46:15.7278363+02:00</OrderDate>
+    <ShipDate>2023-02-15T14:46:49.4635219+02:00</ShipDate>
+    <DeliveryDate>2023-02-15T14:47:03.6619738+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <ID>25</ID>
+    <CustomerName>err</CustomerName>
+    <CustomerEmail>ree@gmail.dom</CustomerEmail>
+    <CustomerAddress>uie ei</CustomerAddress>
+    <OrderDate>2023-02-15T14:46:43.1244845+02:00</OrderDate>
+    <ShipDate>2023-02-15T14:46:53.5718501+02:00</ShipDate>
+    <DeliveryDate>2023-02-15T14:47:07.7482692+02:00</DeliveryDate>
   </Order>
 </ArrayOfOrder>
