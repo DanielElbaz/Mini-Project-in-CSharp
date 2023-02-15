@@ -43,5 +43,7 @@ namespace BlApi
         /// <param name="id"></param>
         /// <returns></returns>
         public BO.OrderTracking OrderTracking(int id);
+
+        public BO.Order nextOrder();
     }
 }
