@@ -15,46 +15,11 @@
     <InStock>450</InStock>
   </Product>
   <Product>
-    <ID>100005</ID>
-    <Name>Galaxy Tab 3</Name>
-    <Category>Tablets</Category>
-    <Price>2500</Price>
-    <InStock>150</InStock>
-  </Product>
-  <Product>
-    <ID>100004</ID>
-    <Name>Galaxy Tab 2</Name>
-    <Category>Tablets</Category>
-    <Price>2000</Price>
-    <InStock>159</InStock>
-  </Product>
-  <Product>
-    <ID>100003</ID>
-    <Name>Apple  iPhone 14 </Name>
-    <Category>Phones</Category>
-    <Price>5000</Price>
-    <InStock>154</InStock>
-  </Product>
-  <Product>
     <ID>100006</ID>
     <Name>Galaxy Tab 4</Name>
     <Category>Tablets</Category>
     <Price>2700</Price>
     <InStock>0</InStock>
-  </Product>
-  <Product>
-    <ID>100002</ID>
-    <Name>Apple  iPhone 12 </Name>
-    <Category>Phones</Category>
-    <Price>4000</Price>
-    <InStock>155</InStock>
-  </Product>
-  <Product>
-    <ID>100001</ID>
-    <Name>Apple  iPhone 11 </Name>
-    <Category>Phones</Category>
-    <Price>4000</Price>
-    <InStock>167</InStock>
   </Product>
   <Product>
     <ID>100000</ID>
@@ -76,5 +41,40 @@
     <Category>Earphones</Category>
     <Price>2500</Price>
     <InStock>154</InStock>
+  </Product>
+  <Product>
+    <ID>100004</ID>
+    <Name>Galaxy Tab 2</Name>
+    <Category>Tablets</Category>
+    <Price>2000</Price>
+    <InStock>158</InStock>
+  </Product>
+  <Product>
+    <ID>100003</ID>
+    <Name>Apple  iPhone 14 </Name>
+    <Category>Phones</Category>
+    <Price>5000</Price>
+    <InStock>153</InStock>
+  </Product>
+  <Product>
+    <ID>100005</ID>
+    <Name>Galaxy Tab 3</Name>
+    <Category>Tablets</Category>
+    <Price>2500</Price>
+    <InStock>149</InStock>
+  </Product>
+  <Product>
+    <ID>100002</ID>
+    <Name>Apple  iPhone 12 </Name>
+    <Category>Phones</Category>
+    <Price>4000</Price>
+    <InStock>152</InStock>
+  </Product>
+  <Product>
+    <ID>100001</ID>
+    <Name>Apple  iPhone 11 </Name>
+    <Category>Phones</Category>
+    <Price>4000</Price>
+    <InStock>166</InStock>
   </Product>
 </ArrayOfProduct>
