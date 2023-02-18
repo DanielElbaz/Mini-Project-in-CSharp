@@ -7,6 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stage0", "Stage0\Stage0.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE4C77BA-5849-47CD-9A6A-2F0B6A5EF089}"
 	ProjectSection(SolutionItems) = preProject
+		Bonuses.txt = Bonuses.txt
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -42,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{DB299FA0-E7B
 		xml\Product.xml = xml\Product.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{F5B134C5-368A-45C2-9838-61BE8B0311EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulator", "Simulator\Simulator.csproj", "{F5B134C5-368A-45C2-9838-61BE8B0311EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
