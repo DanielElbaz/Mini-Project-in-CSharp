@@ -1,18 +1,10 @@
+Store Management & Selling - WPF .NET & C# Project 
+Description
+This project is part of the "mini projects in windows system" course, focusing on teaching the SOLID principle and basic design patterns such as Singleton and Factory. The project aims to create a store management and selling application using WPF in C#.
 
-#first
+Usage
+This application consists of two main parts:
 
-# dotNet5783_2065_7976
-# welcome daniel
-#Merge Daniel
-#UpdateStage1
-#HI
-#Update
-#TagStage1
-#Start Stage 2
-#Update Stage 2
-#Stage 3 and 4
-#Stage 5
-# End stage 5
-# End Stage 6 and start 7
-# Merge
-# Hagana Daniel
+Manager's Interface: In this section, the manager can add, update, and manage the inventory of the store.
+
+User's Interface: Users can purchase items and view their orders.
