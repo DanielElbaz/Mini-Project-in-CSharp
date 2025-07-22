@@ -1,4 +1,4 @@
-Store Management & Selling - WPF .NET & C# Project.
+<b>Store Management & Selling - WPF .NET & C# Project.<b>
 
 Description
 
